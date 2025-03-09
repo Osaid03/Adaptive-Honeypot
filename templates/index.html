@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Honeypot Real-Time Monitor</title>
+    <style>
+      body { font-family: Arial, sans-serif; }
+      #log { white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; height: 500px; overflow-y: scroll; background: #f8f8f8; }
+    </style>
+</head>
+<body>
+    <h1>Honeypot Real-Time Log Monitor</h1>
+    <div id="log"></div>
+    <script>
+        const logElement = document.getElementById("log");
+        const eventSource = new EventSource("/stream");
+        eventSource.onmessage = function(e) {
+            logElement.innerHTML += e.data + "\n";
+            // Auto-scroll to bottom:
+            logElement.scrollTop = logElement.scrollHeight;
+        };
+    </script>
+</body>
+</html>

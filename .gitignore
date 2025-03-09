@@ -1,0 +1,27 @@
+# Ignore Python virtual environment
+venv/
+*.pyc
+__pycache__/
+
+# Ignore ML models and datasets
+datasets/
+*.h5
+*.npy
+*.json
+
+# Ignore training logs and checkpoints
+*.log
+logs/
+checkpoints/
+*.ckpt
+
+# Ignore SSH keys (VERY IMPORTANT)
+ssh_host_key
+ssh_host_key.pub
+
+# Ignore system-specific files
+.DS_Store
+*.swp
+
+# Ignore GeoIP database (optional if you want to download it separately)
+GeoLite2-City.mmdb
