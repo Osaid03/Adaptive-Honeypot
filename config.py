@@ -1,5 +1,0 @@
-DATASET_PATH = "../datasets/sample_dataset.csv"
-PROCESSED_LOGS = "processed_logs.csv"
-PROCESSED_DATASET = "processed_dataset.csv"
-LSTM_MODEL_PATH = "lstm_attack_model.h5"
-RL_MODEL_PATH = "rl_model.pkl"
