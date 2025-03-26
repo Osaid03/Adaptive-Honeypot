@@ -1,39 +1,36 @@
-#!/usr/bin/env python3
-"""
-SSH Honeypot Server With In-House ML Command Classification and Admin Session Summary
-
-This server listens on an SSH port and interacts with connecting attacker clients.
-Each command from an attacker is processed via a trained LSTM model, Q‐table, and tokenizer,
-classifying it as BENIGN, SUSPICIOUS, or MALICIOUS. All commands (with their results)
-are globally recorded. Meanwhile, the defender (administrator) who is running the honeypot
-server can type "S" (followed by Enter) into the server console to obtain a summary of all
-attacker activity.
-Logs are written in a structured JSON format.
-"""
 import argparse
 import asyncio
 import asyncssh
-import configparser
-import logging
 import datetime
-import socket
+import json
+import logging
 import os
+import socket
 import sys
+import threading
 import traceback
 import uuid
-import json
 from base64 import b64encode
+from configparser import ConfigParser
+from operator import itemgetter
+from typing import Optional
+from asyncssh.misc import ConnectionLost
+from langchain_core.chat_history import (
+    BaseChatMessageHistory,
+    InMemoryChatMessageHistory,
+)
+from langchain_core.messages import HumanMessage, SystemMessage, trim_messages
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_openai import ChatOpenAI
 from ml_handler import analyze_command, classify_command
-import geoip2.database  # Import GeoIP2 correctly
+import geoip2.database
 
-# --- ML Imports & Model Loading ---
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
 
 
-def get_location(ip_address):  # Your new function
+def get_location(ip_address):
     try:
         geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
         response = geo_reader.city(ip_address)
@@ -41,7 +38,7 @@ def get_location(ip_address):  # Your new function
             "country": response.country.name,
             "city": response.city.name,
             "latitude": response.location.latitude,
-            "longitude": response.location.longitude
+            "longitude": response.location.longitude,
         }
         geo_reader.close()
         return location_data
@@ -50,57 +47,6 @@ def get_location(ip_address):  # Your new function
         return None
 
 
-# Define dataset directory
-DATASET_DIR = "datasets"
-
-def load_ml_models(config):
-    ml_config = config['ml']
-    lstm_model_file = os.path.join(DATASET_DIR, ml_config.get('lstm_model_file', 'lstm_attack_model.h5'))
-    q_table_file = os.path.join(DATASET_DIR, ml_config.get('q_table_file', 'q_table.npy'))
-    tokenizer_file = os.path.join(DATASET_DIR, ml_config.get('tokenizer_file', 'tokenizer.json'))
-    max_seq_length = ml_config.getint('max_sequence_length', 20)
-
-    if not os.path.exists(lstm_model_file):
-        raise FileNotFoundError(f"LSTM model file '{lstm_model_file}' not found!")
-    lstm_model = tf.keras.models.load_model(lstm_model_file)
-    print(f"LSTM model loaded from '{lstm_model_file}'")
-
-    if not os.path.exists(q_table_file):
-        raise FileNotFoundError(f"Q-table file '{q_table_file}' not found!")
-    Q_table = np.load(q_table_file)
-    print(f"Q-table loaded from '{q_table_file}'")
-
-    if not os.path.exists(tokenizer_file):
-        raise FileNotFoundError(f"Tokenizer file '{tokenizer_file}' not found!")
-    with open(tokenizer_file, 'r') as f:
-        tokenizer_data = json.load(f)
-        tokenizer_json_str = json.dumps(tokenizer_data)
-        tokenizer = tf.keras.preprocessing.text.tokenizer_from_json(tokenizer_json_str)
-    print(f"Tokenizer loaded from '{tokenizer_file}'")
-
-    return lstm_model, Q_table, tokenizer, max_seq_length
-
-# Load models when starting the server
-config = configparser.ConfigParser()
-config.read("config.ini")
-lstm_model, Q_table, tokenizer, max_seq_length = load_ml_models(config)
-
-
-
-def session_summary(command_log):
-    total = len(command_log)
-    if total == 0:
-        return "No commands issued."
-    malicious = sum(1 for cmd in command_log if cmd['classification'] == "MALICIOUS")
-    suspicious = sum(1 for cmd in command_log if cmd['classification'] == "SUSPICIOUS")
-    benign = sum(1 for cmd in command_log if cmd['classification'] == "BENIGN")
-    risk_score = (malicious + 0.5 * suspicious) / total * 100
-    summary_text = (f"Session Summary: {total} total commands. "
-                    f"Benign: {benign}, Suspicious: {suspicious}, Malicious: {malicious}. "
-                    f"Risk Score: {risk_score:.1f}%")
-    return summary_text
-
-# --- Logging Utilities ---
 class JSONFormatter(logging.Formatter):
     def __init__(self, sensor_name, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -109,162 +55,359 @@ class JSONFormatter(logging.Formatter):
     def format(self, record):
         log_record = {
             "timestamp": datetime.datetime.fromtimestamp(
-                record.created, datetime.timezone.utc).isoformat(sep="T", timespec="milliseconds"),
+                record.created, datetime.timezone.utc
+            ).isoformat(sep="T", timespec="milliseconds"),
             "level": record.levelname,
-            "task_name": getattr(record, 'task_name', '-'),
-            "src_ip": getattr(record, 'src_ip', '-'),
-            "src_port": getattr(record, 'src_port', '-'),
-            "dst_ip": getattr(record, 'dst_ip', '-'),
-            "dst_port": getattr(record, 'dst_port', '-'),
+            "task_name": record.task_name,
+            "src_ip": record.src_ip,
+            "src_port": record.src_port,
+            "dst_ip": record.dst_ip,
+            "dst_port": record.dst_port,
             "message": record.getMessage(),
             "sensor_name": self.sensor_name,
-            "sensor_protocol": "ssh"
+            "sensor_protocol": "ssh",
         }
+        if hasattr(record, "interactive"):
+            log_record["interactive"] = record.interactive
+
         for key, value in record.__dict__.items():
-            if key not in log_record and key not in ('args', 'msg'):
+            if key not in log_record and key != "args" and key != "msg":
                 log_record[key] = value
         return json.dumps(log_record)
 
-class ContextFilter(logging.Filter):
-    def filter(self, record):
-        task = asyncio.current_task()
-        record.task_name = task.get_name() if task else "-"
-        record.src_ip = getattr(thread_local, 'src_ip', '-')
-        record.src_port = getattr(thread_local, 'src_port', '-')
-        record.dst_ip = getattr(thread_local, 'dst_ip', '-')
-        record.dst_port = getattr(thread_local, 'dst_port', '-')
-        return True
 
-class ThreadLocal:
-    pass
-
-thread_local = ThreadLocal()
-
-# --- Rest of your server code ---
-
-if __name__ == "__main__":
-    config = configparser.ConfigParser()
-    config.read("config.ini")
-
-    # Ensure load_ml_models is called with the config argument
-    global_lstm_model, global_Q_table, global_tokenizer, global_max_seq_length = load_ml_models(config)
-
-    # Continue with your server setup and start handling connections
-
-
-    # Continue with your server setup and start handling connections
-
-
-def get_user_accounts(config: configparser.ConfigParser) -> dict:
-    if 'user_accounts' not in config or len(config.items('user_accounts')) == 0:
-        raise ValueError("No user accounts found in configuration file.")
-    return dict(config.items('user_accounts'))
-
-# Global list tracking all attacker commands across sessions.
-global_command_database = []
-
-# --- SSH Server for Authentication ---
 class MySSHServer(asyncssh.SSHServer):
-    def connection_made(self, conn):  # Make sure this is indented properly
-        peername = conn.get_extra_info('peername')
-        src_ip, src_port = (peername[:2] if peername else ('-', '-'))
-        sockname = conn.get_extra_info('sockname')
-        dst_ip, dst_port = (sockname[:2] if sockname else ('-', '-'))
+    def __init__(self):
+        super().__init__()
+        self.summary_generated = False
+
+    def connection_made(self, conn: asyncssh.SSHServerConnection) -> None:
+
+        peername = conn.get_extra_info("peername")
+        sockname = conn.get_extra_info("sockname")
+
+        if peername is not None:
+            src_ip, src_port = peername[:2]
+        else:
+            src_ip, src_port = "-", "-"
+
+        if sockname is not None:
+            dst_ip, dst_port = sockname[:2]
+        else:
+            dst_ip, dst_port = "-", "-"
 
         thread_local.src_ip = src_ip
         thread_local.src_port = src_port
         thread_local.dst_ip = dst_ip
         thread_local.dst_port = dst_port
 
-        # Get attacker's location
         location = get_location(src_ip)
 
-        # Log attack origin
-        logger.info(f"New Attack from {location} - IP: {src_ip}", extra={
-            "src_ip": src_ip,
-            "src_port": src_port,
-            "location": location,
-            "dst_ip": dst_ip,
-            "dst_port": dst_port
-        })
+        logger.info(
+            "SSH connection received",
+            extra={
+                "src_ip": src_ip,
+                "src_port": src_port,
+                "dst_ip": dst_ip,
+                "dst_port": dst_port,
+            },
+        )
+        print(f"🚨 New Attack from {location} (IP: {src_ip})")
 
-        print(f"🚨 New Attack from {location} (IP: {src_ip})")  # Print for monitoring
+    def connection_lost(self, exc: Optional[Exception]) -> None:
+        if exc:
+            logger.error("SSH connection error", extra={"error": str(exc)})
+            if not isinstance(exc, ConnectionLost):
+                traceback.print_exception(exc)
+        else:
+            logger.info("SSH connection closed")
 
+        if (
+            hasattr(self, "_process")
+            and hasattr(self, "_llm_config")
+            and hasattr(self, "_session")
+        ):
+            asyncio.create_task(
+                session_summary(self._process, self._llm_config,
+                                self._session, self)
+            )
 
+    def begin_auth(self, username: str) -> bool:
+        if accounts.get(username) != "":
+            logger.info("User attempting to authenticate",
+                        extra={"username": username})
+            return True
+        else:
+            logger.info(
+                "Authentication success", extra={"username": username, "password": ""}
+            )
+            return False
 
-    def password_auth_supported(self):
+    def password_auth_supported(self) -> bool:
         return True
 
-    def validate_password(self, username, password):
-        logger.info("Auth Attempt", extra={"username": username, "password": password})
-        return True
+    def host_based_auth_supported(self) -> bool:
+        return False
 
-# --- Process-Based Session Handler for Attackers ---
-async def handle_client(process):
-    # Create a unique session ID.
-    session_id = f"session-{uuid.uuid4()}"
-    logger.info("Session Start", extra={"session": session_id})
-    process.stdout.write("Welcome to XYZ Game Development Server!\n")
-    process.stdout.write("> ")
-    await process.stdout.drain()
+    def public_key_auth_supported(self) -> bool:
+        return False
 
-    command_log = []  # Record commands for this session
+    def kbdinit_auth_supported(self) -> bool:
+        return False
 
-    async for line in process.stdin:
-        command = line.strip()
-        if not command:
+    def validate_password(self, username: str, password: str) -> bool:
+        pw = accounts.get(username, "*")
+
+        if pw == "*" or (pw != "*" and password == pw):
+            logger.info(
+                "Authentication success",
+                extra={"username": username, "password": password},
+            )
+            return True
+        else:
+            logger.info(
+                "Authentication failed",
+                extra={"username": username, "password": password},
+            )
+            return False
+
+
+def choose_llm(llm_provider: Optional[str] = None, model_name: Optional[str] = None):
+    llm_provider_name = llm_provider or config["llm"].get(
+        "llm_provider", "openai")
+    llm_provider_name = llm_provider_name.lower()
+    model_name = model_name or config["llm"].get("model_name", "gpt-4o")
+
+    if llm_provider_name == "openai":
+        return ChatOpenAI(model=model_name)
+
+    else:
+        raise ValueError(
+            f"Invalid LLM provider {llm_provider_name}. Only 'openai' is supported."
+        )
+
+
+def session_summary(command_log):
+    total = len(command_log)
+    if total == 0:
+        return "No commands issued."
+
+    malicious = sum(
+        1 for cmd in command_log if cmd["classification"] == "MALICIOUS")
+    suspicious = sum(
+        1 for cmd in command_log if cmd["classification"] == "SUSPICIOUS")
+    benign = sum(1 for cmd in command_log if cmd["classification"] == "BENIGN")
+
+    risk_score = (malicious + 0.5 * suspicious) / total * 100
+    summary_text = (
+        f"Session Summary: {total} total commands. "
+        f"Benign: {benign}, Suspicious: {suspicious}, Malicious: {malicious}. "
+        f"Risk Score: {risk_score:.1f}%"
+    )
+    return summary_text
+
+
+def load_prompt():
+    try:
+        with open("prompt.txt", "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        logging.error("prompt.txt not found! Using default system prompt.")
+        return "Simulate a realistic Linux system."
+
+
+def session_summary(command_log):
+    total = len(command_log)
+    if total == 0:
+        return "No commands issued."
+    malicious = sum(
+        1 for cmd in command_log if cmd["classification"] == "MALICIOUS")
+    suspicious = sum(
+        1 for cmd in command_log if cmd["classification"] == "SUSPICIOUS")
+    benign = sum(1 for cmd in command_log if cmd["classification"] == "BENIGN")
+    risk_score = (malicious + 0.5 * suspicious) / total * 100
+    summary_text = (
+        f"Session Summary: {total} total commands. "
+        f"Benign: {benign}, Suspicious: {suspicious}, Malicious: {malicious}. "
+        f"Risk Score: {risk_score:.1f}%"
+    )
+    return summary_text
+
+
+def load_prompt():
+    try:
+        with open("prompt.txt", "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        logging.error("prompt.txt not found! Using default system prompt.")
+        return "Simulate a realistic Linux system."
+
+
+async def handle_client(
+    process: asyncssh.SSHServerProcess, server: MySSHServer
+) -> None:
+    task_uuid = f"session-{uuid.uuid4()}"
+    current_task = asyncio.current_task()
+    current_task.set_name(task_uuid)
+
+    llm_config = {"configurable": {"session_id": task_uuid}}
+    command_log = []
+    system_prompt = load_prompt()
+
+    try:
+        if process.command:
+            command = process.command.strip()
+
+            logger.info(
+                "User input",
+                extra={
+                    "details": b64encode(command.encode("utf-8")).decode("utf-8"),
+                    "interactive": False,
+                },
+            )
+
+            prediction = analyze_command(command)
+            classification = classify_command(prediction)
+
+            cmd_entry = {"command": command, "classification": classification}
+            command_log.append(cmd_entry)
+            global_command_database.append(cmd_entry)
+
+            logger.info(
+                "Command Classified",
+                extra={
+                    "command": command,
+                    "classification": classification,
+                    "prediction": (
+                        str(prediction.tolist()
+                            ) if prediction is not None else "None"
+                    ),
+                },
+            )
+
+            try:
+                llm = choose_llm()
+                ai_response = llm.invoke(
+                    [
+                        HumanMessage(
+                            content=f"{system_prompt}\n\nCommand: {command}\n\nGenerate a system-like response."
+                        )
+                    ]
+                )
+
+                if hasattr(ai_response, "content"):
+                    process.stdout.write(f"{ai_response.content}\n")
+                    logger.info("AI Response", extra={
+                                "details": ai_response.content})
+                else:
+                    logger.error("AI Response format incorrect.")
+                    process.stdout.write("Command executed successfully.\n")
+
+            except Exception as e:
+                logger.error(f"Error generating AI response: {str(e)}")
+                process.stdout.write("Command executed successfully.\n")
+
+            await session_summary(command_log)
+            process.exit(0)
+
+        else:
+
+            try:
+                llm = choose_llm()
+                ai_welcome = llm.invoke(
+                    [
+                        HumanMessage(
+                            content="Generate a realistic SSH welcome message following Linux system rules."
+                        )
+                    ]
+                )
+
+                if hasattr(ai_welcome, "content"):
+                    process.stdout.write(f"{ai_welcome.content}\n")
+                else:
+                    logger.error("AI Welcome message format incorrect.")
+                    process.stdout.write("Welcome to the system!\n")
+
+            except Exception as e:
+                logger.error(f"Error generating welcome message: {str(e)}")
+                process.stdout.write("Welcome to the system!\n")
+
             process.stdout.write("> ")
             await process.stdout.drain()
-            continue
 
-        # Log received command
-        logger.info("User Command Received", extra={"command": command})
+            async for line in process.stdin:
+                command = line.strip()
 
-        # ✅ ML Classification: Analyze and classify command
-        prediction = analyze_command(command)  # Get LSTM prediction
-        classification = classify_command(prediction)  # Determine command type
+                if not command:
+                    process.stdout.write("> ")
+                    await process.stdout.drain()
+                    continue
 
-        # ✅ Log classification result
-        cmd_entry = {"command": command, "classification": classification}
-        print("DEBUG: Recording:", command, "->", classification)
-        command_log.append(cmd_entry)
-        global_command_database.append(cmd_entry)
+                logger.info(
+                    "User input",
+                    extra={
+                        "details": b64encode(command.encode("utf-8")).decode("utf-8"),
+                        "interactive": True,
+                    },
+                )
 
-        logger.info("Command Classified", extra={
-            "command": command,
-            "classification": classification,
-            "prediction": str(prediction.tolist()) if prediction is not None else "None"
-        })
+                prediction = analyze_command(command)
+                classification = classify_command(prediction)
 
-        # ✅ Respond based on classification
-        if classification == "MALICIOUS":
-            process.stdout.write("⚠️ Security alert! Unauthorized actions detected.\n")
-        else:
-            process.stdout.write(f"Executing: {command}\n")
+                cmd_entry = {"command": command,
+                             "classification": classification}
+                command_log.append(cmd_entry)
+                global_command_database.append(cmd_entry)
 
-        # ✅ Exit if the attacker types "exit" or "quit"
-        if command.lower() in ["exit", "quit"]:
-            process.stdout.write("Goodbye!\n")
-            await process.stdout.drain()
-            break
+                logger.info(
+                    "Command Classified",
+                    extra={
+                        "command": command,
+                        "classification": classification,
+                        "prediction": (
+                            str(prediction.tolist())
+                            if prediction is not None
+                            else "None"
+                        ),
+                    },
+                )
 
-        process.stdout.write("> ")
-        await process.stdout.drain()
+                try:
+                    llm = choose_llm()
+                    ai_response = llm.invoke(
+                        [
+                            HumanMessage(
+                                content=f"{system_prompt}\n\nCommand: {command}\n\nGenerate a realistic response."
+                            )
+                        ]
+                    )
 
-    logger.info("Session End", extra={"session": session_id})
-    process.exit(0)
+                    if hasattr(ai_response, "content"):
+                        process.stdout.write(f"{ai_response.content}\n")
+                    else:
+                        logger.error("AI Response format incorrect.")
+                        process.stdout.write(
+                            "Command executed successfully.\n")
 
+                except Exception as e:
+                    logger.error(
+                        f"Error generating AI system response: {str(e)}")
+                    process.stdout.write("Command executed successfully.\n")
 
-# --- Administrator Monitor Task ---
+                process.stdout.write("> ")
+                await process.stdout.drain()
+
+    except asyncssh.BreakReceived:
+        pass
+
+    finally:
+        await session_summary(command_log)
+        process.exit(0)
+
 async def monitor_admin():
-    """
-    This task runs in the main event loop. It continuously reads input from the
-    defender (admin) via sys.stdin. If the admin types 'S' (or 's') and presses Enter,
-    a summary of all collected attacker commands (from global_command_database) is generated and printed.
-    """
     loop = asyncio.get_event_loop()
     while True:
-        # Use run_in_executor to call input() without blocking the event loop.
+
         admin_input = await loop.run_in_executor(None, sys.stdin.readline)
         if admin_input is None:
             continue
@@ -274,98 +417,292 @@ async def monitor_admin():
             print("\n=== DEFENDER SESSION SUMMARY ===")
             print(summary)
             print("================================\n")
-        # You may insert other admin commands as needed.
 
-# --- Start the SSH Server ---
-async def start_server(config: configparser.ConfigParser,
-                       tokenizer, lstm_model, Q_table, max_seq_length):
-    port = config['ssh'].getint("port", 8022)
-    host_priv_key = config['ssh'].get("host_priv_key", "ssh_host_key")
-    if not os.path.exists(host_priv_key):
-        os.system(f"ssh-keygen -f {host_priv_key} -N '' -t rsa -b 2048")
+async def start_server() -> None:
+    async def process_factory(process: asyncssh.SSHServerProcess) -> None:
+        server = process.get_server()
+        await handle_client(process, server)
+
     await asyncssh.listen(
-        host="0.0.0.0",
-        port=port,
+        port=config["ssh"].getint("port", 8022),
+        reuse_address=True,
+        reuse_port=True,
         server_factory=MySSHServer,
-        process_factory=handle_client,
-        server_host_keys=[host_priv_key],
-        server_version=config['ssh'].get("server_version_string", "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3")
+        server_host_keys=config["ssh"].get("host_priv_key", "ssh_host_key"),
+        process_factory=lambda process: handle_client(process, MySSHServer()),
+        server_version=config["ssh"].get(
+            "server_version_string", "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3"
+        ),
     )
-    logger.info("SSH Honeypot Server is running", extra={"port": port})
-    await asyncio.Event().wait()
+class ContextFilter(logging.Filter):
+    def filter(self, record):
 
-# --- MAIN ENTRY POINT ---
-def main():
-    try:
-        parser = argparse.ArgumentParser(description='Start the SSH honeypot server with admin session summary.')
-        parser.add_argument('-c', '--config', type=str, default=None, help='Path to configuration file')
-        parser.add_argument('-u', '--user-account', action='append', help='User account (username=password)')
-        args = parser.parse_args()
-
-        config = configparser.ConfigParser()
-        if args.config:
-            if not os.path.exists(args.config):
-                print(f"Error: The specified config file '{args.config}' does not exist.", file=sys.stderr)
-                sys.exit(1)
-            config.read(args.config)
+        task = asyncio.current_task()
+        if task:
+            task_name = task.get_name()
         else:
-            default_config = "config.ini"
-            if os.path.exists(default_config):
-                config.read(default_config)
+            task_name = thread_local.__dict__.get("session_id", "-")
+
+        record.src_ip = thread_local.__dict__.get("src_ip", "-")
+        record.src_port = thread_local.__dict__.get("src_port", "-")
+        record.dst_ip = thread_local.__dict__.get("dst_ip", "-")
+        record.dst_port = thread_local.__dict__.get("dst_port", "-")
+
+        record.task_name = task_name
+
+        return True
+
+
+def llm_get_session_history(session_id: str) -> BaseChatMessageHistory:
+    if session_id not in llm_sessions:
+        llm_sessions[session_id] = InMemoryChatMessageHistory()
+    return llm_sessions[session_id]
+
+
+def get_user_accounts() -> dict:
+    if (not "user_accounts" in config) or (len(config.items("user_accounts")) == 0):
+        raise ValueError("No user accounts found in configuration file.")
+
+    accounts = dict()
+
+    for k, v in config.items("user_accounts"):
+        accounts[k] = v
+
+    return accounts
+
+
+global_command_database = []
+
+
+def choose_llm(llm_provider: Optional[str] = None, model_name: Optional[str] = None):
+    llm_provider_name = llm_provider or config["llm"].get(
+        "llm_provider", "openai")
+    llm_provider_name = llm_provider_name.lower()
+    model_name = model_name or config["llm"].get("model_name", "gpt-3.5-turbo")
+
+    if llm_provider_name == "openai":
+        llm_model = ChatOpenAI(model=model_name)
+    else:
+        raise ValueError(f"Invalid LLM provider {llm_provider_name}.")
+
+    return llm_model
+
+
+def get_prompts(prompt: Optional[str], prompt_file: Optional[str]) -> dict:
+    system_prompt = config["llm"]["system_prompt"]
+    if prompt is not None:
+        if not prompt.strip():
+            print("Error: The prompt text cannot be empty.", file=sys.stderr)
+            sys.exit(1)
+        user_prompt = prompt
+    elif prompt_file:
+        if not os.path.exists(prompt_file):
+            print(
+                f"Error: The specified prompt file '{prompt_file}' does not exist.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        with open(prompt_file, "r") as f:
+            user_prompt = f.read()
+    elif os.path.exists("prompt.txt"):
+        with open("prompt.txt", "r") as f:
+            user_prompt = f.read()
+    else:
+        raise ValueError("Either prompt or prompt_file must be provided.")
+    return {"system_prompt": system_prompt, "user_prompt": user_prompt}
+
+
+try:
+
+    parser = argparse.ArgumentParser(
+        description="Start the SSH honeypot server.")
+    parser.add_argument(
+        "-c", "--config", type=str, default=None, help="Path to the configuration file"
+    )
+    parser.add_argument(
+        "-p", "--prompt", type=str, help="The entire text of the prompt"
+    )
+    parser.add_argument(
+        "-f",
+        "--prompt-file",
+        type=str,
+        default="prompt.txt",
+        help="Path to the prompt file",
+    )
+    parser.add_argument(
+        "-l", "--llm-provider", type=str, help="The LLM provider to use"
+    )
+    parser.add_argument("-m", "--model-name", type=str,
+                        help="The model name to use")
+    parser.add_argument(
+        "-t",
+        "--trimmer-max-tokens",
+        type=int,
+        help="The maximum number of tokens to send to the LLM backend in a single request",
+    )
+    parser.add_argument(
+        "-s", "--system-prompt", type=str, help="System prompt for the LLM"
+    )
+    parser.add_argument(
+        "-P", "--port", type=int, help="The port the SSH honeypot will listen on"
+    )
+    parser.add_argument(
+        "-k", "--host-priv-key", type=str, help="The host key to use for the SSH server"
+    )
+    parser.add_argument(
+        "-v",
+        "--server-version-string",
+        type=str,
+        help="The server version string to send to clients",
+    )
+    parser.add_argument(
+        "-L",
+        "--log-file",
+        type=str,
+        help="The name of the file you wish to write the honeypot log to",
+    )
+    parser.add_argument(
+        "-S",
+        "--sensor-name",
+        type=str,
+        help="The name of the sensor, used to identify this honeypot in the logs",
+    )
+    parser.add_argument(
+        "-u",
+        "--user-account",
+        action="append",
+        help="User account in the form username=password. Can be repeated.",
+    )
+    args = parser.parse_args()
+
+    config = ConfigParser()
+    if args.config is not None:
+
+        if not os.path.exists(args.config):
+            print(
+                f"Error: The specified config file '{args.config}' does not exist.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        config.read(args.config)
+    else:
+        default_config = "config.ini"
+        if os.path.exists(default_config):
+            config.read(default_config)
+        else:
+
+            config["honeypot"] = {
+                "log_file": "ssh_log.log",
+                "sensor_name": socket.gethostname(),
+            }
+            config["ssh"] = {
+                "port": "8022",
+                "host_priv_key": "ssh_host_key",
+                "server_version_string": "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3",
+            }
+            config["llm"] = {
+                "llm_provider": "openai",
+                "model_name": "gpt-3.5-turbo",
+                "trimmer_max_tokens": "64000",
+                "system_prompt": "",
+            }
+            config["user_accounts"] = {}
+
+    if args.llm_provider:
+        config["llm"]["llm_provider"] = args.llm_provider
+    if args.model_name:
+        config["llm"]["model_name"] = args.model_name
+    if args.trimmer_max_tokens:
+        config["llm"]["trimmer_max_tokens"] = str(args.trimmer_max_tokens)
+    if args.system_prompt:
+        config["llm"]["system_prompt"] = args.system_prompt
+    if args.port:
+        config["ssh"]["port"] = str(args.port)
+    if args.host_priv_key:
+        config["ssh"]["host_priv_key"] = args.host_priv_key
+    if args.server_version_string:
+        config["ssh"]["server_version_string"] = args.server_version_string
+    if args.log_file:
+        config["honeypot"]["log_file"] = args.log_file
+    if args.sensor_name:
+        config["honeypot"]["sensor_name"] = args.sensor_name
+
+    if args.user_account:
+        if "user_accounts" not in config:
+            config["user_accounts"] = {}
+        for account in args.user_account:
+            if "=" in account:
+                key, value = account.split("=", 1)
+                config["user_accounts"][key.strip()] = value.strip()
             else:
-                config['honeypot'] = {'log_file': 'ssh_log.log', 'sensor_name': socket.gethostname()}
-                config['ssh'] = {
-                    'port': '8022',
-                    'host_priv_key': 'ssh_host_key',
-                    'server_version_string': 'SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3'
-                }
-                config['ml'] = {
-                    'lstm_model_file': 'lstm_attack_model.h5',
-                    'q_table_file': 'q_table.npy',
-                    'tokenizer_file': 'tokenizer.json',
-                    'max_sequence_length': '20'
-                }
-                config['user_accounts'] = {'test': 'test'}
+                config["user_accounts"][account.strip()] = ""
 
-        if args.user_account:
-            if 'user_accounts' not in config:
-                config['user_accounts'] = {}
-            for account in args.user_account:
-                if '=' in account:
-                    key, value = account.split('=', 1)
-                    config['user_accounts'][key.strip()] = value.strip()
-                else:
-                    config['user_accounts'][account.strip()] = ''
+    accounts = get_user_accounts()
 
-        _ = get_user_accounts(config)
-    
-        # Set up logging in UTC with JSON formatting.
-        logging.Formatter.formatTime = lambda self, record, datefmt=None: datetime.datetime.fromtimestamp(
-            record.created, datetime.timezone.utc).isoformat(sep="T", timespec="milliseconds")
-        sensor_name = config['honeypot'].get('sensor_name', socket.gethostname())
-        global logger
-        logger = logging.getLogger(__name__)
-        logger.setLevel(logging.INFO)
-        log_file_handler = logging.FileHandler(config['honeypot'].get("log_file", "ssh_log.log"))
-        log_file_handler.setFormatter(JSONFormatter(sensor_name))
-        logger.addHandler(log_file_handler)
-        logger.addFilter(ContextFilter())
-    
-        # Load ML models.
-        global global_lstm_model, global_Q_table, global_tokenizer, global_max_seq_length
-        global_lstm_model, global_Q_table, global_tokenizer, global_max_seq_length = load_ml_models(config)
-    
-        # Start the SSH honeypot server and the admin monitor task.
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.create_task(start_server(config, global_tokenizer, global_lstm_model, global_Q_table, global_max_seq_length))
-        loop.create_task(monitor_admin())
-        loop.run_forever()
-    
-    except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
-        traceback.print_exc()
-        sys.exit(1)
+    logging.Formatter.formatTime = (
+        lambda self, record, datefmt=None: datetime.datetime.fromtimestamp(
+            record.created, datetime.timezone.utc
+        ).isoformat(sep="T", timespec="milliseconds")
+    )
 
-if __name__ == "__main__":
-    main()
+    sensor_name = config["honeypot"].get("sensor_name", socket.gethostname())
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+
+    log_file_handler = logging.FileHandler(
+        config["honeypot"].get("log_file", "ssh_log.log")
+    )
+    logger.addHandler(log_file_handler)
+
+    log_file_handler.setFormatter(JSONFormatter(sensor_name))
+
+    f = ContextFilter()
+    logger.addFilter(f)
+
+    prompts = get_prompts(args.prompt, args.prompt_file)
+    llm_system_prompt = prompts["system_prompt"]
+    llm_user_prompt = prompts["user_prompt"]
+
+    llm = choose_llm(config["llm"].get("llm_provider"),
+                     config["llm"].get("model_name"))
+
+    llm_sessions = dict()
+
+    llm_trimmer = trim_messages(
+        max_tokens=config["llm"].getint("trimmer_max_tokens", 64000),
+        strategy="last",
+        token_counter=llm,
+        include_system=True,
+        allow_partial=False,
+        start_on="human",
+    )
+
+    llm_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", llm_system_prompt),
+            ("system", llm_user_prompt),
+            MessagesPlaceholder(variable_name="messages"),
+        ]
+    )
+    llm_chain = (
+        RunnablePassthrough.assign(
+            messages=itemgetter("messages") | llm_trimmer)
+        | llm_prompt
+        | llm
+    )
+    with_message_history = RunnableWithMessageHistory(
+        llm_chain, llm_get_session_history, input_messages_key="messages"
+    )
+    thread_local = threading.local()
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(start_server())
+    loop.create_task(monitor_admin())
+    loop.run_forever()
+
+except Exception as e:
+    print(f"Error: {e}", file=sys.stderr)
+    traceback.print_exc()
+    sys.exit(1)
