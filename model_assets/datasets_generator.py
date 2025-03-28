@@ -6,7 +6,7 @@ import os
 import argparse
 
 # Set dataset directory
-DATASET_DIR = "datasets"
+DATASET_DIR = "model_assets"
 os.makedirs(DATASET_DIR, exist_ok=True)  # Ensure directory exists
 
 def random_ip():

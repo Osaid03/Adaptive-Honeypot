@@ -1,6 +1,7 @@
 venv/
+logs/
 *.pyc
 __pycache__/
-datasets/honeypot_logs.json
+model_assets/honeypot_logs.json
 honeypot_logs
-ssh_log.log
+venv/

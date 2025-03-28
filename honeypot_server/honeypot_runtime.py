@@ -1,6 +1,5 @@
 import argparse
 import asyncio
-import asyncssh
 import datetime
 import json
 import logging
@@ -14,7 +13,11 @@ from base64 import b64encode
 from configparser import ConfigParser
 from operator import itemgetter
 from typing import Optional
+
+import asyncssh
 from asyncssh.misc import ConnectionLost
+import geoip2.database
+
 from langchain_core.chat_history import (
     BaseChatMessageHistory,
     InMemoryChatMessageHistory,
@@ -24,9 +27,11 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_openai import ChatOpenAI
-from ml_handler import analyze_command, classify_command
-import geoip2.database
 
+from honeypot_server.command_classifier import analyze_command, classify_command
+from honeypot_server.logging_util import log_event
+
+global_command_database = []
 geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
 
 
@@ -128,14 +133,12 @@ class MySSHServer(asyncssh.SSHServer):
             and hasattr(self, "_session")
         ):
             asyncio.create_task(
-                session_summary(self._process, self._llm_config,
-                                self._session, self)
+                session_summary(self._process, self._llm_config, self._session, self)
             )
 
     def begin_auth(self, username: str) -> bool:
         if accounts.get(username) != "":
-            logger.info("User attempting to authenticate",
-                        extra={"username": username})
+            logger.info("User attempting to authenticate", extra={"username": username})
             return True
         else:
             logger.info(
@@ -172,30 +175,13 @@ class MySSHServer(asyncssh.SSHServer):
             return False
 
 
-def choose_llm(llm_provider: Optional[str] = None, model_name: Optional[str] = None):
-    llm_provider_name = llm_provider or config["llm"].get(
-        "llm_provider", "openai")
-    llm_provider_name = llm_provider_name.lower()
-    model_name = model_name or config["llm"].get("model_name", "gpt-4o")
-
-    if llm_provider_name == "openai":
-        return ChatOpenAI(model=model_name)
-
-    else:
-        raise ValueError(
-            f"Invalid LLM provider {llm_provider_name}. Only 'openai' is supported."
-        )
-
-
 def session_summary(command_log):
     total = len(command_log)
     if total == 0:
         return "No commands issued."
 
-    malicious = sum(
-        1 for cmd in command_log if cmd["classification"] == "MALICIOUS")
-    suspicious = sum(
-        1 for cmd in command_log if cmd["classification"] == "SUSPICIOUS")
+    malicious = sum(1 for cmd in command_log if cmd["classification"] == "MALICIOUS")
+    suspicious = sum(1 for cmd in command_log if cmd["classification"] == "SUSPICIOUS")
     benign = sum(1 for cmd in command_log if cmd["classification"] == "BENIGN")
 
     risk_score = (malicious + 0.5 * suspicious) / total * 100
@@ -209,37 +195,10 @@ def session_summary(command_log):
 
 def load_prompt():
     try:
-        with open("prompt.txt", "r") as file:
+        with open("config/prompt.txt", "r") as file:
             return file.read()
     except FileNotFoundError:
-        logging.error("prompt.txt not found! Using default system prompt.")
-        return "Simulate a realistic Linux system."
-
-
-def session_summary(command_log):
-    total = len(command_log)
-    if total == 0:
-        return "No commands issued."
-    malicious = sum(
-        1 for cmd in command_log if cmd["classification"] == "MALICIOUS")
-    suspicious = sum(
-        1 for cmd in command_log if cmd["classification"] == "SUSPICIOUS")
-    benign = sum(1 for cmd in command_log if cmd["classification"] == "BENIGN")
-    risk_score = (malicious + 0.5 * suspicious) / total * 100
-    summary_text = (
-        f"Session Summary: {total} total commands. "
-        f"Benign: {benign}, Suspicious: {suspicious}, Malicious: {malicious}. "
-        f"Risk Score: {risk_score:.1f}%"
-    )
-    return summary_text
-
-
-def load_prompt():
-    try:
-        with open("prompt.txt", "r") as file:
-            return file.read()
-    except FileNotFoundError:
-        logging.error("prompt.txt not found! Using default system prompt.")
+        logging.error("config/prompt.txt not found! Using default system prompt.")
         return "Simulate a realistic Linux system."
 
 
@@ -279,26 +238,27 @@ async def handle_client(
                     "command": command,
                     "classification": classification,
                     "prediction": (
-                        str(prediction.tolist()
-                            ) if prediction is not None else "None"
+                        str(prediction.tolist()) if prediction is not None else "None"
                     ),
                 },
             )
 
             try:
-                llm = choose_llm()
-                ai_response = llm.invoke(
-                    [
-                        HumanMessage(
-                            content=f"{system_prompt}\n\nCommand: {command}\n\nGenerate a system-like response."
-                        )
-                    ]
+                ai_response = await with_message_history.ainvoke(
+                    {
+                        "messages": [
+                            SystemMessage(content=system_prompt),
+                            HumanMessage(content=command),
+                        ],
+                        "username": process.get_extra_info("username"),
+                        "interactive": True,
+                    },
+                    config=llm_config,
                 )
 
                 if hasattr(ai_response, "content"):
                     process.stdout.write(f"{ai_response.content}\n")
-                    logger.info("AI Response", extra={
-                                "details": ai_response.content})
+                    logger.info("AI Response", extra={"details": ai_response.content})
                 else:
                     logger.error("AI Response format incorrect.")
                     process.stdout.write("Command executed successfully.\n")
@@ -313,13 +273,18 @@ async def handle_client(
         else:
 
             try:
-                llm = choose_llm()
-                ai_welcome = llm.invoke(
-                    [
-                        HumanMessage(
-                            content="Generate a realistic SSH welcome message following Linux system rules."
-                        )
-                    ]
+                ai_welcome = await with_message_history.ainvoke(
+                    {
+                        "messages": [
+                            SystemMessage(content=system_prompt),
+                            HumanMessage(
+                                content="Generate a realistic SSH welcome message following Linux system rules."
+                            ),
+                        ],
+                        "username": process.get_extra_info("username"),
+                        "interactive": True,
+                    },
+                    config=llm_config,
                 )
 
                 if hasattr(ai_welcome, "content"):
@@ -354,8 +319,7 @@ async def handle_client(
                 prediction = analyze_command(command)
                 classification = classify_command(prediction)
 
-                cmd_entry = {"command": command,
-                             "classification": classification}
+                cmd_entry = {"command": command, "classification": classification}
                 command_log.append(cmd_entry)
                 global_command_database.append(cmd_entry)
 
@@ -371,27 +335,31 @@ async def handle_client(
                         ),
                     },
                 )
+                log_event(
+                    "CommandClassified", command=command, classification=classification
+                )
 
                 try:
-                    llm = choose_llm()
-                    ai_response = llm.invoke(
-                        [
-                            HumanMessage(
-                                content=f"{system_prompt}\n\nCommand: {command}\n\nGenerate a realistic response."
-                            )
-                        ]
+                    ai_response = await with_message_history.ainvoke(
+                        {
+                            "messages": [
+                                SystemMessage(content=system_prompt),
+                                HumanMessage(content=command),
+                            ],
+                            "username": process.get_extra_info("username"),
+                            "interactive": True,
+                        },
+                        config=llm_config,
                     )
 
                     if hasattr(ai_response, "content"):
                         process.stdout.write(f"{ai_response.content}\n")
                     else:
                         logger.error("AI Response format incorrect.")
-                        process.stdout.write(
-                            "Command executed successfully.\n")
+                        process.stdout.write("Command executed successfully.\n")
 
                 except Exception as e:
-                    logger.error(
-                        f"Error generating AI system response: {str(e)}")
+                    logger.error(f"Error generating AI system response: {str(e)}")
                     process.stdout.write("Command executed successfully.\n")
 
                 process.stdout.write("> ")
@@ -403,6 +371,7 @@ async def handle_client(
     finally:
         await session_summary(command_log)
         process.exit(0)
+
 
 async def monitor_admin():
     loop = asyncio.get_event_loop()
@@ -417,6 +386,7 @@ async def monitor_admin():
             print("\n=== DEFENDER SESSION SUMMARY ===")
             print(summary)
             print("================================\n")
+
 
 async def start_server() -> None:
     async def process_factory(process: asyncssh.SSHServerProcess) -> None:
@@ -434,6 +404,8 @@ async def start_server() -> None:
             "server_version_string", "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3"
         ),
     )
+
+
 class ContextFilter(logging.Filter):
     def filter(self, record):
 
@@ -451,6 +423,9 @@ class ContextFilter(logging.Filter):
         record.task_name = task_name
 
         return True
+
+
+llm_sessions = dict()
 
 
 def llm_get_session_history(session_id: str) -> BaseChatMessageHistory:
@@ -471,12 +446,8 @@ def get_user_accounts() -> dict:
     return accounts
 
 
-global_command_database = []
-
-
 def choose_llm(llm_provider: Optional[str] = None, model_name: Optional[str] = None):
-    llm_provider_name = llm_provider or config["llm"].get(
-        "llm_provider", "openai")
+    llm_provider_name = llm_provider or config["llm"].get("llm_provider", "openai")
     llm_provider_name = llm_provider_name.lower()
     model_name = model_name or config["llm"].get("model_name", "gpt-3.5-turbo")
 
@@ -490,32 +461,21 @@ def choose_llm(llm_provider: Optional[str] = None, model_name: Optional[str] = N
 
 def get_prompts(prompt: Optional[str], prompt_file: Optional[str]) -> dict:
     system_prompt = config["llm"]["system_prompt"]
-    if prompt is not None:
-        if not prompt.strip():
-            print("Error: The prompt text cannot be empty.", file=sys.stderr)
-            sys.exit(1)
-        user_prompt = prompt
-    elif prompt_file:
-        if not os.path.exists(prompt_file):
-            print(
-                f"Error: The specified prompt file '{prompt_file}' does not exist.",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-        with open(prompt_file, "r") as f:
-            user_prompt = f.read()
-    elif os.path.exists("prompt.txt"):
-        with open("prompt.txt", "r") as f:
-            user_prompt = f.read()
-    else:
-        raise ValueError("Either prompt or prompt_file must be provided.")
+    prompt_path = "config/prompt.txt"
+
+    if not os.path.exists(prompt_path):
+        print("Error: 'config/prompt.txt' is missing.", file=sys.stderr)
+        sys.exit(1)
+
+    with open(prompt_path, "r") as f:
+        user_prompt = f.read()
+
     return {"system_prompt": system_prompt, "user_prompt": user_prompt}
 
 
 try:
 
-    parser = argparse.ArgumentParser(
-        description="Start the SSH honeypot server.")
+    parser = argparse.ArgumentParser(description="Start the SSH honeypot server.")
     parser.add_argument(
         "-c", "--config", type=str, default=None, help="Path to the configuration file"
     )
@@ -532,8 +492,7 @@ try:
     parser.add_argument(
         "-l", "--llm-provider", type=str, help="The LLM provider to use"
     )
-    parser.add_argument("-m", "--model-name", type=str,
-                        help="The model name to use")
+    parser.add_argument("-m", "--model-name", type=str, help="The model name to use")
     parser.add_argument(
         "-t",
         "--trimmer-max-tokens",
@@ -576,37 +535,20 @@ try:
     args = parser.parse_args()
 
     config = ConfigParser()
-    if args.config is not None:
 
-        if not os.path.exists(args.config):
-            print(
-                f"Error: The specified config file '{args.config}' does not exist.",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-        config.read(args.config)
-    else:
-        default_config = "config.ini"
-        if os.path.exists(default_config):
-            config.read(default_config)
-        else:
+    config_path = "config/config.ini"
 
-            config["honeypot"] = {
-                "log_file": "ssh_log.log",
-                "sensor_name": socket.gethostname(),
-            }
-            config["ssh"] = {
-                "port": "8022",
-                "host_priv_key": "ssh_host_key",
-                "server_version_string": "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3",
-            }
-            config["llm"] = {
-                "llm_provider": "openai",
-                "model_name": "gpt-3.5-turbo",
-                "trimmer_max_tokens": "64000",
-                "system_prompt": "",
-            }
-            config["user_accounts"] = {}
+    if args.config:
+        config_path = args.config
+
+    if not os.path.exists(config_path):
+        print(
+            f"❌ Error: The config file '{config_path}' does not exist.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    config.read(config_path)
 
     if args.llm_provider:
         config["llm"]["llm_provider"] = args.llm_provider
@@ -664,10 +606,7 @@ try:
     llm_system_prompt = prompts["system_prompt"]
     llm_user_prompt = prompts["user_prompt"]
 
-    llm = choose_llm(config["llm"].get("llm_provider"),
-                     config["llm"].get("model_name"))
-
-    llm_sessions = dict()
+    llm = choose_llm(config["llm"].get("llm_provider"), config["llm"].get("model_name"))
 
     llm_trimmer = trim_messages(
         max_tokens=config["llm"].getint("trimmer_max_tokens", 64000),
@@ -686,8 +625,7 @@ try:
         ]
     )
     llm_chain = (
-        RunnablePassthrough.assign(
-            messages=itemgetter("messages") | llm_trimmer)
+        RunnablePassthrough.assign(messages=itemgetter("messages") | llm_trimmer)
         | llm_prompt
         | llm
     )
