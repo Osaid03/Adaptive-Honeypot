@@ -2,3 +2,5 @@ venv/
 *.pyc
 __pycache__/
 datasets/honeypot_logs.json
+honeypot_logs
+ssh_log.log
