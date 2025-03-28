@@ -15,7 +15,7 @@ import os
 import json
 
 # Dataset paths
-DATASET_DIR = "datasets"
+DATASET_DIR = "model_assets"
 DATA_FILE = os.path.join(DATASET_DIR, "attack_data.csv")
 MODEL_FILE = os.path.join(DATASET_DIR, "lstm_attack_model.h5")
 TOKENIZER_FILE = os.path.join(DATASET_DIR, "tokenizer.json")

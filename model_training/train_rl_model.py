@@ -16,7 +16,7 @@ if gpus:
         print(e)
 
 # ✅ Define dataset directory and file paths
-DATASET_DIR = "datasets"
+DATASET_DIR = "model_assets"
 DATA_FILE = os.path.join(DATASET_DIR, "attack_data.csv")
 Q_TABLE_FILE = os.path.join(DATASET_DIR, "q_table.npy")
 MODEL_FILE = os.path.join(DATASET_DIR, "lstm_attack_model.h5")

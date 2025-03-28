@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # ✅ Define dataset directory & model files
-DATASET_DIR = "datasets"
+DATASET_DIR = "model_assets"
 LSTM_MODEL_FILE = os.path.join(DATASET_DIR, "lstm_attack_model.h5")
 Q_TABLE_FILE = os.path.join(DATASET_DIR, "q_table.npy")
 TOKENIZER_FILE = os.path.join(DATASET_DIR, "tokenizer.json")

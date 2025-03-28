@@ -1,6 +1,7 @@
 import json
 import datetime
 import logging
+import os
 
 DATASET_DIR = "datasets"
 LOG_FILE = os.path.join(DATASET_DIR, "ssh_honeypot_logs.json")
