@@ -1,24 +1,331 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Honeypot Real-Time Monitor</title>
+    <meta charset="UTF-8">
+    <title>🔥 Honeypot Real-Time Log Monitor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <style>
-      body { font-family: Arial, sans-serif; }
-      #log { white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; height: 500px; overflow-y: scroll; background: #f8f8f8; }
+        body {
+            background-color: #0d1117;
+            color: #00ff00;
+            font-family: monospace;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #f44336;
+        }
+
+        p {
+            text-align: center;
+            color: #ccc;
+            font-size: 1.1em;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            background-color: black;
+            color: #00ff00;
+            padding: 20px;
+            margin: 20px;
+            height: 80vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .benign {
+            color: #00ff00;
+        }
+
+        .suspicious {
+            color: #ffff00;
+        }
+
+        .malicious {
+            color: #ff3333;
+        }
     </style>
 </head>
+
+
 <body>
-    <h1>Honeypot Real-Time Log Monitor</h1>
-    <div id="log"></div>
-    <script>
-        const logElement = document.getElementById("log");
-        const eventSource = new EventSource("/stream");
-        eventSource.onmessage = function(e) {
-            logElement.innerHTML += e.data + "\n";
-            // Auto-scroll to bottom:
-            logElement.scrollTop = logElement.scrollHeight;
-        };
-    </script>
+    <h1>🚨 Honeypot Real-Time Log Monitor</h1>
+    <p style="text-align:center;">Monitoring suspicious SSH activities...</p>
+
+    <div style="display: flex; padding: 10px; gap: 20px; height: 85vh;">
+
+        <!-- 🎛 Controls (LEFT) -->
+        <div id="controlsPanel"
+            style="background: #1a1a1a; border: 1px solid #00ff00; padding: 16px; color: white; border-radius: 12px; width: 240px; box-shadow: 0 0 10px #0f0; height: 39%; display: flex; flex-direction: column; gap: 14px;">
+            <!-- Export Buttons -->
+            <button onclick="window.location.href='/export/csv'" style="width: 100%; padding: 8px; font-size: 13px;">📤
+                Export CSV</button>
+            <button onclick="window.location.href='/export/json'" style="width: 100%; padding: 8px; font-size: 13px;">📤
+                Export JSON</button>
+
+            <!-- Map Button -->
+            <button onclick="toggleMap()" style="width: 100%; padding: 8px; font-size: 13px;">🗺 Show Map</button>
+
+            <!-- Filters -->
+            <div style="font-size: 13px; line-height: 1.6;">
+                <label><input type="checkbox" id="filterMalicious"> Show <span
+                        style="color:#ff3333;">MALICIOUS</span></label><br>
+                <label><input type="checkbox" id="filterSuspicious"> Show <span
+                        style="color:#ffff00;">SUSPICIOUS</span></label>
+            </div>
+
+            <!-- Controls -->
+            <button onclick="togglePause()" style="width: 100%; padding: 8px; font-size: 13px;">⏸ Pause</button>
+            <button onclick="clearLogs()" style="width: 100%; padding: 8px; font-size: 13px;">🗑 Clear</button>
+
+            <!-- Auto Scroll -->
+            <label style="font-size: 13px;"><input type="checkbox" id="autoscrollToggle" checked> Auto-scroll</label>
+        </div>
+
+
+        <!-- 📄 Log Output (CENTER) -->
+        <pre id="logWindow"
+            style="flex: 1; background: black; color: #00ff00; padding: 20px; overflow-y: auto; border-radius: 8px; box-shadow: 0 0 10px #00ff00; font-size: 18px;">
+        🔄 Connecting to live log stream...
+        </pre>
+
+        <!-- 📋 Summary + 📊 Commands (RIGHT) -->
+        <div style="display: flex; flex-direction: column; justify-content: space-between; width: 260px; height: 100%;">
+
+            <div id="summaryBox"
+                style="flex: 1; background: #1a1a1a; border: 1px solid #00ff00; padding: 10px; color: white; border-radius: 8px; margin-bottom: 10px;">
+                <strong>📊 Session Summary</strong>
+                <div id="summaryContent">Waiting for summary...</div>
+            </div>
+
+            <div id="freqBox"
+                style="flex: 1; display: flex; flex-direction: column; background: #111; color: #0f0; font-family: monospace; border: 1px solid #0f0; border-radius: 8px; padding: 10px; box-sizing: border-box;">
+                <h3 style="color: #0ff; margin: 0 0 10px 0;">📊 Top Commands</h3>
+                <pre id="freqContent" style="flex: 1; margin: 0; overflow-y: auto;">Waiting for data...</pre>
+            </div>
+
+
+        </div>
+
+        <style>
+            #mapOverlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 100vw;
+                z-index: 999;
+                background: #000000ee;
+            }
+
+            #map {
+                height: 100%;
+                width: 100%;
+            }
+
+            #closeMapBtn {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                z-index: 1000;
+                font-size: 18px;
+                background: #ff3333;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 8px 12px;
+                cursor: pointer;
+            }
+
+            #summaryBox {
+                background: #111111;
+                border: 2px solid #00ffcc;
+                box-shadow: 0 0 15px #00ffcc;
+            }
+
+            .log-container div {
+                margin-bottom: 8px;
+                white-space: pre-wrap;
+            }
+
+            .benign {
+                color: #00ff00;
+            }
+
+            .suspicious {
+                color: #ffff00;
+            }
+
+            .malicious {
+                color: #ff5555;
+            }
+        </style>
+
+
+        <script>
+            const logElement = document.getElementById('logWindow');
+            const summaryBox = document.getElementById('summaryContent');
+            let isPaused = false;
+            let mapInitialized = false;
+            let map;
+            const allLogs = []; // 🧠 Store all incoming logs here
+
+            function toggleMap() {
+                const mapOverlay = document.getElementById('mapOverlay');
+
+                const isHidden = mapOverlay.style.display === 'none';
+                mapOverlay.style.display = isHidden ? 'block' : 'none';
+
+                if (isHidden && !mapInitialized) {
+                    setTimeout(() => {
+                        map = L.map('map').setView([20, 0], 2);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                        mapInitialized = true;
+                    }, 100);
+                }
+
+                // Force Leaflet to redraw correctly once visible
+                if (!isHidden && mapInitialized) {
+                    setTimeout(() => map.invalidateSize(), 300);
+                }
+            }
+
+
+            function togglePause() {
+                isPaused = !isPaused;
+                alert(isPaused ? "Paused log stream." : "Resumed log stream.");
+            }
+
+            function clearLogs() {
+                logElement.innerHTML = '';
+                allLogs.length = 0;
+            }
+
+            function applyFiltersAndRender() {
+                const showMalicious = document.getElementById("filterMalicious").checked;
+                const showSuspicious = document.getElementById("filterSuspicious").checked;
+
+                logElement.innerHTML = ''; // Clear log area
+
+                allLogs.forEach(log => {
+                    const isMalicious = log.includes("MALICIOUS");
+                    const isSuspicious = log.includes("SUSPICIOUS");
+
+                    // If any filter is checked, show only matching types
+                    if (showMalicious || showSuspicious) {
+                        if (!(
+                            (showMalicious && isMalicious) ||
+                            (showSuspicious && isSuspicious)
+                        )) {
+                            return;
+                        }
+                    }
+
+
+                    const logDiv = document.createElement("div");
+                    logDiv.textContent = log;
+
+                    if (isMalicious) logDiv.className = "malicious";
+                    else if (isSuspicious) logDiv.className = "suspicious";
+                    else logDiv.className = "benign";
+
+                    logElement.appendChild(logDiv);
+                });
+
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+
+            // Event listener to re-filter logs when checkboxes change
+            window.onload = () => {
+                document.getElementById("filterMalicious").checked = false;
+                document.getElementById("filterSuspicious").checked = false;
+
+                document.getElementById("filterMalicious").addEventListener("change", applyFiltersAndRender);
+                document.getElementById("filterSuspicious").addEventListener("change", applyFiltersAndRender);
+            };
+
+            const evtSource = new EventSource("/stream");
+            evtSource.onmessage = function (event) {
+                if (event.data.includes("Session Summary:")) {
+                    const summary = event.data.replace("Session Summary: ", "");
+                    const parts = summary.split(/, |\. /);
+
+                    const html = `
+        <div style="line-height: 1.6; font-size: 14px;">
+            📄 <strong>Total Commands:</strong> ${parts[0].split(" ")[0]}<br>
+            ✅ <strong>Benign:</strong> ${parts[1].split(": ")[1]}<br>
+            ⚠️ <strong>Suspicious:</strong> ${parts[2].split(": ")[1]}<br>
+            ❌ <strong>Malicious:</strong> ${parts[3].split(": ")[1]}<br>
+            🔥 <strong>Risk Score:</strong> ${parts[4].split(": ")[1]}
+        </div>
+    `;
+                    summaryBox.innerHTML = html;
+                    return;
+                }
+
+
+
+                if (isPaused) return;
+
+                allLogs.push(event.data); // 🧠 Store all logs
+                if (event.data.includes("💻 Command:")) {
+                    const match = event.data.match(/💻 Command: (.*)/);
+                    if (match) {
+                        const cmd = match[1].trim();
+                        commandStats[cmd] = (commandStats[cmd] || 0) + 1;
+                        renderCommandStats(); // 📊 update panel live
+                    }
+                }
+
+                applyFiltersAndRender(); // ✅ Re-render based on filters
+
+                // Optional: Add map marker
+                const lines = event.data.split("\n");
+                const ipLine = lines[0];
+                const match = ipLine.match(/IP: (.*?) \((.*?)\)/);
+                if (match && match[2] !== "Unknown" && match[2] !== "Localhost") {
+                    const ip = match[1];
+                    fetch(`/geoip/${ip}`).then(res => res.json()).then(geo => {
+                        if (geo && map) {
+                            L.marker([geo.latitude, geo.longitude])
+                                .addTo(map)
+                                .bindPopup(`${ip}<br>${geo.city || ''}, ${geo.country || ''}`)
+                                .openPopup();
+                        }
+                    });
+                }
+            };
+
+            function toggleFreq() {
+                const box = document.getElementById("freqBox");
+                box.style.display = box.style.display === "none" ? "block" : "none";
+                renderCommandStats();
+            }
+            const commandStats = {}; // 🧠 Store all command frequencies
+
+            function renderCommandStats() {
+                const sorted = Object.entries(commandStats)
+                    .sort((a, b) => b[1] - a[1]) // sort by count
+                    .slice(0, 5) // top 5
+                    .map(([cmd, count]) => `${cmd}: ${count}`)
+                    .join("\n");
+
+                document.getElementById("freqContent").textContent = sorted || "No commands yet.";
+            }
+        </script>
+
+        <!-- 🌍 Fullscreen Map Overlay -->
+        <div id="mapOverlay">
+            <button id="closeMapBtn" onclick="toggleMap()">Close Map</button>
+            <div id="map"></div>
+        </div>
+
 </body>
 </html>

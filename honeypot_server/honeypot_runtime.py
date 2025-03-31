@@ -17,7 +17,6 @@ from typing import Optional
 import asyncssh
 from asyncssh.misc import ConnectionLost
 import geoip2.database
-
 from langchain_core.chat_history import (
     BaseChatMessageHistory,
     InMemoryChatMessageHistory,
@@ -33,7 +32,6 @@ from honeypot_server.logging_util import log_event
 
 global_command_database = []
 geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
-
 
 def get_location(ip_address):
     try:
@@ -132,9 +130,8 @@ class MySSHServer(asyncssh.SSHServer):
             and hasattr(self, "_llm_config")
             and hasattr(self, "_session")
         ):
-            asyncio.create_task(
-                session_summary(self._process, self._llm_config, self._session, self)
-            )
+            summary = session_summary(global_command_database)
+            logger.info(summary)
 
     def begin_auth(self, username: str) -> bool:
         if accounts.get(username) != "":
@@ -231,7 +228,6 @@ async def handle_client(
             cmd_entry = {"command": command, "classification": classification}
             command_log.append(cmd_entry)
             global_command_database.append(cmd_entry)
-
             logger.info(
                 "Command Classified",
                 extra={
@@ -322,7 +318,9 @@ async def handle_client(
                 cmd_entry = {"command": command, "classification": classification}
                 command_log.append(cmd_entry)
                 global_command_database.append(cmd_entry)
-
+                # ✅ Immediately update session summary after the command
+                summary_text = session_summary(command_log)
+                logger.info("Session Summary", extra={"summary": summary_text})
                 logger.info(
                     "Command Classified",
                     extra={
@@ -369,24 +367,12 @@ async def handle_client(
         pass
 
     finally:
-        await session_summary(command_log)
+        summary_text = session_summary(command_log)
+        print(f"📊 Generated session summary:\n{summary_text}")
+
+        logger.info("Session Summary", extra={"summary": summary_text})
+
         process.exit(0)
-
-
-async def monitor_admin():
-    loop = asyncio.get_event_loop()
-    while True:
-
-        admin_input = await loop.run_in_executor(None, sys.stdin.readline)
-        if admin_input is None:
-            continue
-        admin_input = admin_input.strip()
-        if admin_input.upper() == "S":
-            summary = session_summary(global_command_database)
-            print("\n=== DEFENDER SESSION SUMMARY ===")
-            print(summary)
-            print("================================\n")
-
 
 async def start_server() -> None:
     async def process_factory(process: asyncssh.SSHServerProcess) -> None:
@@ -637,7 +623,6 @@ try:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop.run_until_complete(start_server())
-    loop.create_task(monitor_admin())
     loop.run_forever()
 
 except Exception as e:
