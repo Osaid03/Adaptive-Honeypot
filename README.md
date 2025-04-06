@@ -119,35 +119,6 @@ Tech Stack
 - LangChain + OpenAI (LLM simulation)
 - Docker
 
-Project Structure
------------------
-
-```
-.
-├── honeypot_server/
-│   ├── honeypot_runtime.py
-│   ├── command_classifier.py
-│   ├── logging_util.py
-│   └── ...
-├── templates/
-│   └── index.html
-├── static/
-│   └── ...
-├── model_assets/
-│   ├── lstm_attack_model.h5
-│   ├── tokenizer.json
-│   └── q_table.npy
-├── app.py
-├── Dockerfile
-├── config/
-│   ├── config.ini
-│   └── prompt.txt
-├── logs/
-│   └── ssh_log.log
-├── .env
-└── requirements.txt
-```
-
 Security Notes
 --------------
 
@@ -158,7 +129,7 @@ Security Notes
 Author
 ------
 
-Made by **Osaid Qattan**   
+Made by **Osaid Qattan**  
 Graduation Project: *Advanced AI-Powered Intrusion Detection System for Dynamic Threat Protection*
 
 License
