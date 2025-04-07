@@ -5,3 +5,15 @@ __pycache__/
 model_assets/honeypot_logs.json
 honeypot_logs
 venv/
+*.pid
+*.sock
+.env
+*.env
+*.bak
+*.swp
+*.DS_Store
+.ipynb_checkpoints/
+dist/
+build/
+*.egg-info/
+.env
