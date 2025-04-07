@@ -17,6 +17,7 @@ from typing import Optional
 import asyncssh
 from asyncssh.misc import ConnectionLost
 import geoip2.database
+
 from langchain_core.chat_history import (
     BaseChatMessageHistory,
     InMemoryChatMessageHistory,
@@ -32,6 +33,13 @@ from honeypot_server.logging_util import log_event
 
 global_command_database = []
 geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
+
+def detect_anomaly(command, tokenizer, known_vocab):
+    tokens = command.split()
+    unknown_tokens = [word for word in tokens if word not in known_vocab]
+    if len(unknown_tokens) > 3:  # Threshold
+        return True
+    return False
 
 def get_location(ip_address):
     try:
@@ -222,8 +230,11 @@ async def handle_client(
                 },
             )
 
-            prediction = analyze_command(command)
+            prediction, is_anomaly = analyze_command(command)
             classification = classify_command(prediction)
+
+            if is_anomaly:
+                classification = "ANOMALOUS"
 
             cmd_entry = {"command": command, "classification": classification}
             command_log.append(cmd_entry)
@@ -312,8 +323,11 @@ async def handle_client(
                     },
                 )
 
-                prediction = analyze_command(command)
+                prediction, is_anomaly = analyze_command(command)
                 classification = classify_command(prediction)
+
+                if is_anomaly:
+                    classification = "ANOMALOUS"
 
                 cmd_entry = {"command": command, "classification": classification}
                 command_log.append(cmd_entry)

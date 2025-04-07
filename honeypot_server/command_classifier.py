@@ -39,6 +39,9 @@ def analyze_command(command):
         return None
 
     sequences = tokenizer.texts_to_sequences([command])
+    
+    is_anomaly = any(token == 1 for token in sequences[0])  
+    
     if not sequences or not sequences[0]:  
         print(f"⚠️ Warning: Unrecognized command '{command}'")
         return None  
@@ -49,7 +52,7 @@ def analyze_command(command):
     # ✅ Debugging Output
     print(f"DEBUG: Softmax Probabilities for '{command}': {prediction}")
 
-    return prediction
+    return prediction, is_anomaly
 
 def classify_command(prediction):
     """

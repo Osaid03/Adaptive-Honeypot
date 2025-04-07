@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 # Define dataset directory
-DATASET_DIR = "datasets"
+DATASET_DIR = "model_assets"
 LOG_FILE = os.path.join(DATASET_DIR, "honeypot_logs.json")
 OUTPUT_CSV = os.path.join(DATASET_DIR, "attack_data.csv")
 
