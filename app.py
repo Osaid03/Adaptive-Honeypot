@@ -5,7 +5,7 @@ import csv
 import os
 import sys
 from io import StringIO
-
+import geoip2.database
 app = Flask(__name__)
 
 @app.route('/export/csv')
@@ -92,8 +92,13 @@ def generate_log_stream():
                     message = data.get("message", "")
                     timestamp = data.get("timestamp", "N/A")
                     src_ip = data.get("src_ip", "N/A")
-                    location_str = "Localhost" if src_ip in ("127.0.0.1", "::1") else data.get("location", "Unknown")
-
+                    location_data = data.get("location", "Unknown")
+                    if location_data == "Unknown":
+                        loc = get_location(src_ip)
+                        if loc:
+                            city = loc.get("city") or ""
+                            country = loc.get("country") or ""
+                            location_data = f"{city}, {country}".strip(", ")
                     formatted_lines = []
 
                     if message == "Command Classified":
@@ -101,7 +106,7 @@ def generate_log_stream():
                         classification = data.get("classification", "N/A")
 
                         formatted_lines = [
-                            f"[{timestamp}] 🌍 IP: {src_ip} ({location_str})",
+                            f"[{timestamp}] 🌍 IP: {src_ip} ({location_data})",
                             f"💻 Command: {command}",
                             f"⚠️ Classification: {classification}",
                             "-" * 60,
@@ -109,26 +114,26 @@ def generate_log_stream():
 
                     elif message == "SSH connection received":
                         formatted_lines = [
-                            f"[{timestamp}] 🔌 New SSH connection from {src_ip} ({location_str})",
+                            f"[{timestamp}] 🔌 New SSH connection from {src_ip} ({location_data})",
                             "-" * 60,
                         ]
 
                     elif message == "User attempting to authenticate":
                         username = data.get("username", "N/A")
                         formatted_lines = [
-                            f"[{timestamp}] 🧪 Auth attempt for user: {username} from {src_ip} ({location_str})",
+                            f"[{timestamp}] 🧪 Auth attempt for user: {username} from {src_ip} ({location_data})",
                         ]
 
                     elif message == "Authentication success":
                         username = data.get("username", "N/A")
                         formatted_lines = [
-                            f"[{timestamp}] ✅ Authentication success for user: {username} from {src_ip} ({location_str})",
+                            f"[{timestamp}] ✅ Authentication success for user: {username} from {src_ip} ({location_data})",
                         ]
 
                     elif message == "Authentication failed":
                         username = data.get("username", "N/A")
                         formatted_lines = [
-                            f"[{timestamp}] ❌ Authentication failed for user: {username} from {src_ip} ({location_str})",
+                            f"[{timestamp}] ❌ Authentication failed for user: {username} from {src_ip} ({location_data})",
                         ]
                     
                     elif message == "Session Summary":
@@ -158,7 +163,21 @@ def stream():
 def index():
     return render_template("index.html")
 
-
+def get_location(ip_address):
+    try:
+        geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
+        response = geo_reader.city(ip_address)
+        location_data = {
+            "country": response.country.name,
+            "city": response.city.name,
+            "latitude": response.location.latitude,
+            "longitude": response.location.longitude,
+        }
+        geo_reader.close()
+        return location_data
+    except Exception as e:
+        print(f"GeoIP lookup failed: {e}")
+        return None
 
 @app.route('/export/csv')
 def export_csv():
