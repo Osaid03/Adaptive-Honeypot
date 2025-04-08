@@ -235,6 +235,8 @@ async def handle_client(
 
             if is_anomaly:
                 classification = "ANOMALOUS"
+                with open("logs/anomalous_commands.csv", "a") as f:
+                    f.write(f"{command}\n")
 
             cmd_entry = {"command": command, "classification": classification}
             command_log.append(cmd_entry)
@@ -328,6 +330,8 @@ async def handle_client(
 
                 if is_anomaly:
                     classification = "ANOMALOUS"
+                    with open("logs/anomalous_commands.csv", "a") as f:
+                        f.write(f"{command}\n")
 
                 cmd_entry = {"command": command, "classification": classification}
                 command_log.append(cmd_entry)

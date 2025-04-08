@@ -1,4 +1,4 @@
-# honeypot_server/ml_handler.py
+# honeypot_server/command_classifier.py
 import os
 import json
 import numpy as np
@@ -60,7 +60,7 @@ def classify_command(prediction):
     ✅ Returns one of: "BENIGN", "SUSPICIOUS", or "MALICIOUS".
     """
     if prediction is None:
-        return "UNKNOWN"
+        return "ANOMALOUS"
 
     outcomes = ["BENIGN", "SUSPICIOUS", "MALICIOUS"]
     idx = int(np.argmax(prediction))  # ✅ Pick the class with the highest probability
