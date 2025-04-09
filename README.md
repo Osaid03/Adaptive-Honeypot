@@ -98,10 +98,10 @@ How to Run (Manual)
     pip install -r requirements.txt
     ```
 
-3. Create a `.env` file with your OpenAI key:
+3. Set your OpenAI key:
 
-    ```env
-    OPENAI_API_KEY=your_openai_key_here
+    ```bash
+    export OPENAI_API_KEY=your_openai_key_here
     ```
 
 4. Run the SSH honeypot:
