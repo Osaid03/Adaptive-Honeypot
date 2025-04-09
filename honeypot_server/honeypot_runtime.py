@@ -4,6 +4,7 @@ import datetime
 import json
 import logging
 import os
+from dotenv import load_dotenv
 import socket
 import sys
 import threading
@@ -34,12 +35,6 @@ from honeypot_server.logging_util import log_event
 global_command_database = []
 geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
 
-def detect_anomaly(command, tokenizer, known_vocab):
-    tokens = command.split()
-    unknown_tokens = [word for word in tokens if word not in known_vocab]
-    if len(unknown_tokens) > 3:  # Threshold
-        return True
-    return False
 
 def get_location(ip_address):
     try:

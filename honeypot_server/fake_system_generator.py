@@ -3,9 +3,9 @@ import json
 import re
 import ast
 from openai import OpenAI
+from dotenv import load_dotenv
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-MAX_FILENAME_LENGTH = 100
+load_dotenv()
 
 def fix_json_structure(response):
     try:
