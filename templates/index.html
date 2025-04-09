@@ -170,7 +170,8 @@
 
 
         <script>
-            let markerPlacedIPs = new Set(); 
+            let cachedMarkers = [];
+            let markerPlacedIPs = new Set();
             const logElement = document.getElementById('logWindow');
             const summaryBox = document.getElementById('summaryContent');
             let isPaused = false;
@@ -180,29 +181,43 @@
 
             function toggleMap() {
                 const mapOverlay = document.getElementById('mapOverlay');
-                const isHidden = mapOverlay.style.display === 'none';
+                const isHidden = mapOverlay.style.display === 'none' || mapOverlay.style.display === '';
 
+                // ✅ Show map if hidden
                 if (isHidden) {
-                    mapOverlay.style.display = 'block';
+                    mapOverlay.style.display = 'block'; // ✅ <--- YOU MISSED THIS LINE
 
-                    // Wait a bit to ensure container is visible before initializing or resizing
-                    setTimeout(() => {
-                        if (!mapInitialized) {
+                    if (!mapInitialized) {
+                        setTimeout(() => {
                             map = L.map('map').setView([20, 0], 2);
                             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                                 attribution:
                                     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             }).addTo(map);
                             mapInitialized = true;
-                        } else {
-                            map.invalidateSize(); // Re-render on re-open
-                        }
-                    }, 300);
 
+                            // ✅ Plot cached markers
+                            cachedMarkers.forEach(ip => {
+                                fetch(`/geoip/${ip}`).then(res => res.json()).then(geo => {
+                                    if (geo) {
+                                        L.marker([geo.latitude, geo.longitude])
+                                            .addTo(map)
+                                            .bindPopup(`${ip}<br>${geo.city || ''}, ${geo.country || ''}`);
+                                    }
+                                });
+                            });
+
+                            cachedMarkers = [];
+                        }, 100);
+                    } else {
+                        setTimeout(() => map.invalidateSize(), 300); // redraw on re-open
+                    }
                 } else {
+                    // ✅ Hide map
                     mapOverlay.style.display = 'none';
                 }
             }
+
 
 
             function togglePause() {
@@ -260,40 +275,61 @@
 
             const evtSource = new EventSource("/stream");
             evtSource.onmessage = function (event) {
+                // ✅ Handle Authentication Events and Cache IP
+                if (event.data.includes("Authentication success")) {
+                    const match = event.data.match(/from ([0-9.]+) \((.*?)\)/);
+                    if (match) {
+                        const ip = match[1];
+                        if (mapInitialized && map) {
+                            fetch(`/geoip/${ip}`).then(res => res.json()).then(geo => {
+                                if (geo) {
+                                    L.marker([geo.latitude, geo.longitude])
+                                        .addTo(map)
+                                        .bindPopup(`${ip}<br>${geo.city || ''}, ${geo.country || ''}`)
+                                        .openPopup();
+                                }
+                            });
+                        } else {
+                            cachedMarkers.push(ip); // 💾 Save for later
+                        }
+                    }
+                }
+
+                // ✅ Session Summary Update
                 if (event.data.includes("Session Summary:")) {
                     const summary = event.data.replace("Session Summary: ", "");
                     const parts = summary.split(/, |\. /);
 
                     const html = `
-        <div style="line-height: 1.6; font-size: 14px;">
-            📄 <strong>Total Commands:</strong> ${parts[0].split(" ")[0]}<br>
-            ✅ <strong>Benign:</strong> ${parts[1].split(": ")[1]}<br>
-            ⚠️ <strong>Suspicious:</strong> ${parts[2].split(": ")[1]}<br>
-            ❌ <strong>Malicious:</strong> ${parts[3].split(": ")[1]}<br>
-            🔥 <strong>Risk Score:</strong> ${parts[4].split(": ")[1]}
-        </div>
-    `;
+            <div style="line-height: 1.6; font-size: 14px;">
+                📄 <strong>Total Commands:</strong> ${parts[0].split(" ")[0]}<br>
+                ✅ <strong>Benign:</strong> ${parts[1].split(": ")[1]}<br>
+                ⚠️ <strong>Suspicious:</strong> ${parts[2].split(": ")[1]}<br>
+                ❌ <strong>Malicious:</strong> ${parts[3].split(": ")[1]}<br>
+                🔥 <strong>Risk Score:</strong> ${parts[4].split(": ")[1]}
+            </div>
+        `;
                     summaryBox.innerHTML = html;
                     return;
                 }
 
-
-
+                // ✅ Skip if paused
                 if (isPaused) return;
 
-                allLogs.push(event.data); // 🧠 Store all logs
+                // ✅ Parse commands and stats
+                allLogs.push(event.data);
                 if (event.data.includes("💻 Command:")) {
                     const match = event.data.match(/💻 Command: (.*)/);
                     if (match) {
                         const cmd = match[1].trim();
                         commandStats[cmd] = (commandStats[cmd] || 0) + 1;
-                        renderCommandStats(); // 📊 update panel live
+                        renderCommandStats();
                     }
                 }
 
-                applyFiltersAndRender(); // ✅ Re-render based on filters
+                applyFiltersAndRender();
 
-                // Optional: Add map marker
+                // ✅ Add Map Marker for Commands
                 const lines = event.data.split("\n");
                 const ipLine = lines[0];
                 const match = ipLine.match(/IP: (.*?) \((.*?)\)/);
@@ -310,6 +346,7 @@
                     });
                 }
             };
+
 
             function toggleFreq() {
                 const box = document.getElementById("freqBox");
@@ -336,4 +373,5 @@
         </div>
 
 </body>
+
 </html>
