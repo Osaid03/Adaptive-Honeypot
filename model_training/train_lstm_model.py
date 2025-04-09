@@ -41,8 +41,11 @@ X = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 label_mapping = {"BENIGN": 0, "SUSPICIOUS": 1, "MALICIOUS": 2}
 y = df["label"].map(label_mapping).values
 
-# Class weighting for imbalance handling
-class_weight = {0: 1.0, 1: 2.0, 2: 3.0}
+class_weight = {
+    0: 2.5,  # BENIGN
+    1: 2.0,  # SUSPICIOUS
+    2: 1.0   # MALICIOUS (was over-dominating)
+}
 
 # Cross-validation setup
 skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
@@ -74,9 +77,35 @@ for fold, (train_index, val_index) in enumerate(skf.split(X, y), 1):
 
     early_stopping = EarlyStopping(monitor='val_loss', patience=2, restore_best_weights=True)
     
-    model.fit(X_train, y_train, epochs=10, batch_size=64, validation_data=(X_val, y_val),
-              class_weight=class_weight, callbacks=[early_stopping, lr_scheduler])
+    history = model.fit(
+        X_train, y_train,
+        epochs=10,
+        batch_size=64,
+        validation_data=(X_val, y_val),
+        class_weight=class_weight,
+        callbacks=[early_stopping, lr_scheduler]
+    )
+    # Plot training history (optional, can be skipped for other folds)
+    plt.figure(figsize=(12, 5))
+    plt.subplot(1, 2, 1)
+    plt.plot(history.history['loss'], label='Train Loss')
+    plt.plot(history.history['val_loss'], label='Val Loss')
+    plt.title("Loss Over Epochs")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.legend()
 
+    plt.subplot(1, 2, 2)
+    plt.plot(history.history['accuracy'], label='Train Accuracy')
+    plt.plot(history.history['val_accuracy'], label='Val Accuracy')
+    plt.title("Accuracy Over Epochs")
+    plt.xlabel("Epoch")
+    plt.ylabel("Accuracy")
+    plt.legend()
+
+    plt.tight_layout()
+    plt.savefig(f"model_assets/train_history_fold_{fold}.png")
+    plt.close()
     loss, accuracy = model.evaluate(X_val, y_val)
     print(f"Validation Accuracy (fold {fold}): {accuracy:.2f}")
 

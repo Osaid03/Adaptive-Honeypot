@@ -1,4 +1,4 @@
-# honeypot_server/ml_handler.py
+# honeypot_server/command_classifier.py
 import os
 import json
 import numpy as np
@@ -32,24 +32,43 @@ with open(TOKENIZER_FILE, 'r') as f:
 
 def analyze_command(command):
     """
-    ✅ Analyzes a single SSH command using the LSTM model.
-    ✅ Returns the raw softmax prediction probabilities.
+    ✅ Analyze a command using the LSTM model.
+    ✅ Classify and detect anomaly based on tokenization behavior.
+    Returns:
+        prediction: Softmax probability output from LSTM
+        is_anomaly: Boolean indicating anomaly (True = unknown command pattern)
     """
     if not command:
-        return None
+        return None, False
 
+    # 🔹 Tokenize
     sequences = tokenizer.texts_to_sequences([command])
-    if not sequences or not sequences[0]:  
-        print(f"⚠️ Warning: Unrecognized command '{command}'")
-        return None  
 
-    padded_sequence = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
+    # 🔹 Check if sequence is empty or mostly unknown
+    if not sequences or not sequences[0]:
+        print(f"⚠️ Warning: Empty or unrecognized command: '{command}'")
+        return None, True  # Treat fully unrecognized as anomaly
+
+    token_ids = sequences[0]
+    num_tokens = len(token_ids)
+    num_unknown = token_ids.count(1)  # 1 = 'OOV' token in Keras by default
+
+    # 🔎 If more than half tokens are unknown or total unknown > threshold
+    is_anomaly = (num_unknown / num_tokens) > 0.5 or num_unknown > 3
+
+    # 🔹 Pad
+    padded_sequence = pad_sequences([token_ids], maxlen=MAX_SEQUENCE_LENGTH)
+
+    # 🔹 Predict
     prediction = lstm_model.predict(padded_sequence)
-    
-    # ✅ Debugging Output
-    print(f"DEBUG: Softmax Probabilities for '{command}': {prediction}")
 
-    return prediction
+    # 🔎 Debug Info
+    print(f"🧠 LSTM Prediction: {prediction}")
+    print(f"🔍 Command: {command}")
+    print(f"📦 Tokens: {token_ids}")
+    print(f"❓ Unknown Tokens: {num_unknown}/{num_tokens} → Anomaly: {is_anomaly}")
+
+    return prediction, is_anomaly
 
 def classify_command(prediction):
     """
@@ -57,7 +76,7 @@ def classify_command(prediction):
     ✅ Returns one of: "BENIGN", "SUSPICIOUS", or "MALICIOUS".
     """
     if prediction is None:
-        return "UNKNOWN"
+        return "ANOMALOUS"
 
     outcomes = ["BENIGN", "SUSPICIOUS", "MALICIOUS"]
     idx = int(np.argmax(prediction))  # ✅ Pick the class with the highest probability

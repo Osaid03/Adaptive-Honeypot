@@ -93,6 +93,7 @@ Pygments==2.19.1
 pylint==3.3.6
 pyparsing==3.2.1
 python-dateutil==2.9.0.post0
+python-dotenv==1.1.0
 python-version==0.0.2
 pytz==2025.1
 PyYAML==6.0.2

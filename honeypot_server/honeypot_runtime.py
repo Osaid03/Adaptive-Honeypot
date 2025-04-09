@@ -4,6 +4,7 @@ import datetime
 import json
 import logging
 import os
+from dotenv import load_dotenv
 import socket
 import sys
 import threading
@@ -17,6 +18,7 @@ from typing import Optional
 import asyncssh
 from asyncssh.misc import ConnectionLost
 import geoip2.database
+
 from langchain_core.chat_history import (
     BaseChatMessageHistory,
     InMemoryChatMessageHistory,
@@ -32,6 +34,7 @@ from honeypot_server.logging_util import log_event
 
 global_command_database = []
 geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
+
 
 def get_location(ip_address):
     try:
@@ -222,8 +225,13 @@ async def handle_client(
                 },
             )
 
-            prediction = analyze_command(command)
+            prediction, is_anomaly = analyze_command(command)
             classification = classify_command(prediction)
+
+            if is_anomaly:
+                classification = "ANOMALOUS"
+                with open("logs/anomalous_commands.csv", "a") as f:
+                    f.write(f"{command}\n")
 
             cmd_entry = {"command": command, "classification": classification}
             command_log.append(cmd_entry)
@@ -312,8 +320,13 @@ async def handle_client(
                     },
                 )
 
-                prediction = analyze_command(command)
+                prediction, is_anomaly = analyze_command(command)
                 classification = classify_command(prediction)
+
+                if is_anomaly:
+                    classification = "ANOMALOUS"
+                    with open("logs/anomalous_commands.csv", "a") as f:
+                        f.write(f"{command}\n")
 
                 cmd_entry = {"command": command, "classification": classification}
                 command_log.append(cmd_entry)

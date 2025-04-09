@@ -126,8 +126,8 @@
             }
 
             #map {
-                height: 100%;
-                width: 100%;
+                height: 100vh;
+                width: 100vw;
             }
 
             #closeMapBtn {
@@ -170,6 +170,7 @@
 
 
         <script>
+            let markerPlacedIPs = new Set(); 
             const logElement = document.getElementById('logWindow');
             const summaryBox = document.getElementById('summaryContent');
             let isPaused = false;
@@ -179,21 +180,27 @@
 
             function toggleMap() {
                 const mapOverlay = document.getElementById('mapOverlay');
-
                 const isHidden = mapOverlay.style.display === 'none';
-                mapOverlay.style.display = isHidden ? 'block' : 'none';
 
-                if (isHidden && !mapInitialized) {
+                if (isHidden) {
+                    mapOverlay.style.display = 'block';
+
+                    // Wait a bit to ensure container is visible before initializing or resizing
                     setTimeout(() => {
-                        map = L.map('map').setView([20, 0], 2);
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-                        mapInitialized = true;
-                    }, 100);
-                }
+                        if (!mapInitialized) {
+                            map = L.map('map').setView([20, 0], 2);
+                            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                                attribution:
+                                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
+                            mapInitialized = true;
+                        } else {
+                            map.invalidateSize(); // Re-render on re-open
+                        }
+                    }, 300);
 
-                // Force Leaflet to redraw correctly once visible
-                if (!isHidden && mapInitialized) {
-                    setTimeout(() => map.invalidateSize(), 300);
+                } else {
+                    mapOverlay.style.display = 'none';
                 }
             }
 
@@ -298,6 +305,7 @@
                                 .addTo(map)
                                 .bindPopup(`${ip}<br>${geo.city || ''}, ${geo.country || ''}`)
                                 .openPopup();
+                            map.setView([geo.latitude, geo.longitude], 6);
                         }
                     });
                 }
