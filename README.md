@@ -23,6 +23,41 @@ Features
 ✅ Dockerized for easy deployment  
 ✅ Configurable via `config/config.ini`  
 
+Dataset Generation & Model Training
+-----------------------------------
+
+To retrain or update the detection models, follow this pipeline:
+
+1. **Generate synthetic command dataset:**
+
+    ```bash
+    python3 model_assets/datasets_generator.py
+    ```
+
+2. **Parse logs into training format:**
+
+    ```bash
+    python3 data_processing/parse_logs.py
+    ```
+
+3. **Train the LSTM classification model:**
+
+    ```bash
+    python3 model_training/train_lstm_model.py
+    ```
+
+4. **Train the RL-based adaptive defense model:**
+
+    ```bash
+    python3 model_training/train_rl_model.py
+    ```
+
+5. **Evaluate the LSTM model's performance (precision, recall, F1):**
+
+    ```bash
+    python3 model_training/evaluate_lstm_model.py
+    ```
+
 How to Run (Docker)
 -------------------
 
@@ -63,10 +98,10 @@ How to Run (Manual)
     pip install -r requirements.txt
     ```
 
-3. Set your OpenAI key:
+3. Create a `.env` file with your OpenAI key:
 
-    ```bash
-    export OPENAI_API_KEY=your_openai_key_here
+    ```env
+    OPENAI_API_KEY=your_openai_key_here
     ```
 
 4. Run the SSH honeypot:
