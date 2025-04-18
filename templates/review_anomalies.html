@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anomaly Review Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --panel-bg: #21262d;
+            --accent-color: #58a6ff;
+            --success-color: #3fb950;
+            --warning-color: #d29922;
+            --danger-color: #f85149;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --border-color: #30363d;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 2rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .back-btn {
+            background-color: var(--panel-bg);
+            color: var(--text-primary);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .back-btn:hover {
+            background-color: var(--border-color);
+        }
+        
+        .panel {
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .panel-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stats {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .auto-refresh {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .refresh-btn {
+            background-color: var(--panel-bg);
+            color: var(--text-primary);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .refresh-btn:hover {
+            background-color: var(--border-color);
+        }
+        
+        .batch-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .batch-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .batch-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .benign-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .suspicious-btn {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .malicious-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 10px;
+            background-color: var(--panel-bg);
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .anomaly-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 15px 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .anomaly-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .command {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: var(--panel-bg);
+            padding: 5px 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        select {
+            width: 100%;
+            padding: 8px 10px;
+            background-color: var(--panel-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .save-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .integrate-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .retrain-btn {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .no-anomalies {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .no-anomalies i {
+            font-size: 3rem;
+            color: var(--accent-color);
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            background-color: var(--success-color);
+        }
+        
+        .toast.error {
+            background-color: var(--danger-color);
+        }
+        
+        .toast.info {
+            background-color: var(--accent-color);
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .batch-actions {
+                flex-direction: column;
+            }
+            
+            .table-header, .anomaly-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .action-btns {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><i class="fas fa-search"></i> Anomaly Review Interface</h1>
+            <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+        
+        <div class="panel">
+            <h2 class="panel-title"><i class="fas fa-chart-bar"></i> Statistics</h2>
+            <div class="stats">
+                <strong>Total anomalies to review: {{ anomalies|length }}</strong>
+            </div>
+            <div class="auto-refresh">
+                <div>
+                    <input type="checkbox" id="auto-refresh" checked>
+                    <label for="auto-refresh">Auto-refresh for new anomalies</label>
+                </div>
+                <button id="refresh-btn" class="refresh-btn"><i class="fas fa-sync-alt"></i> Refresh Now</button>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2 class="panel-title"><i class="fas fa-layer-group"></i> Batch Actions</h2>
+            <div class="batch-actions">
+                <button id="set-benign" class="batch-btn benign-btn">Set All as BENIGN</button>
+                <button id="set-suspicious" class="batch-btn suspicious-btn">Set All as SUSPICIOUS</button>
+                <button id="set-malicious" class="batch-btn malicious-btn">Set All as MALICIOUS</button>
+            </div>
+        </div>
+        
+        <form id="anomaly-form" method="POST" action="/label">
+            {% if anomalies %}
+                <div class="table-header">
+                    <div>Command</div>
+                    <div>Label</div>
+                </div>
+                
+                {% for command in anomalies %}
+                <div class="anomaly-item">
+                    <div class="command">{{ command }}</div>
+                    <div>
+                        <input type="hidden" name="command" value="{{ command }}">
+                        <select name="label" class="label-select">
+                            <option value="" selected>Select label</option>
+                            <option value="BENIGN">BENIGN</option>
+                            <option value="SUSPICIOUS">SUSPICIOUS</option>
+                            <option value="MALICIOUS">MALICIOUS</option>
+                        </select>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="action-btns">
+                    <button type="button" id="save-btn" class="action-btn save-btn">
+                        <i class="fas fa-save"></i> Save Labels
+                    </button>
+                    <button type="button" id="integrate-btn" class="action-btn integrate-btn">
+                        <i class="fas fa-database"></i> Integrate Labeled Data
+                    </button>
+                    <button type="button" id="retrain-btn" class="action-btn retrain-btn">
+                        <i class="fas fa-sync"></i> Retrain Model
+                    </button>
+                </div>
+            {% else %}
+                <div class="no-anomalies">
+                    <i class="fas fa-info-circle"></i>
+                    <p>No anomalies to review at this time.</p>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+    
+    <div id="toast" class="toast">
+        <i id="toast-icon" class="fas fa-info-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const form = document.getElementById('anomaly-form');
+        const saveBtn = document.getElementById('save-btn');
+        const integrateBtn = document.getElementById('integrate-btn');
+        const retrainBtn = document.getElementById('retrain-btn');
+        const setBenignBtn = document.getElementById('set-benign');
+        const setSuspiciousBtn = document.getElementById('set-suspicious');
+        const setMaliciousBtn = document.getElementById('set-malicious');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const autoRefreshCheckbox = document.getElementById('auto-refresh');
+        const labelSelects = document.querySelectorAll('.label-select');
+        const toast = document.getElementById('toast');
+        const toastIcon = document.getElementById('toast-icon');
+        const toastMessage = document.getElementById('toast-message');
+        
+        // Store original button HTML
+        const saveBtnOriginalHTML = saveBtn ? saveBtn.innerHTML : '';
+        const integrateBtnOriginalHTML = integrateBtn ? integrateBtn.innerHTML : '';
+        const retrainBtnOriginalHTML = retrainBtn ? retrainBtn.innerHTML : '';
+        
+        // Auto-refresh timer
+        let refreshTimer;
+        
+        // Initialize
+        function init() {
+            // Set up auto-refresh
+            if (autoRefreshCheckbox.checked) {
+                startAutoRefresh();
+            }
+            
+            // Event listeners
+            autoRefreshCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    startAutoRefresh();
+                } else {
+                    stopAutoRefresh();
+                }
+            });
+            
+            refreshBtn.addEventListener('click', refreshAnomalies);
+            
+            if (saveBtn) {
+                saveBtn.addEventListener('click', saveLabels);
+            }
+            
+            if (integrateBtn) {
+                integrateBtn.addEventListener('click', integrateData);
+            }
+            
+            if (retrainBtn) {
+                retrainBtn.addEventListener('click', retrainModel);
+            }
+            
+            if (setBenignBtn) {
+                setBenignBtn.addEventListener('click', function() {
+                    setAllLabels('BENIGN');
+                });
+            }
+            
+            if (setSuspiciousBtn) {
+                setSuspiciousBtn.addEventListener('click', function() {
+                    setAllLabels('SUSPICIOUS');
+                });
+            }
+            
+            if (setMaliciousBtn) {
+                setMaliciousBtn.addEventListener('click', function() {
+                    setAllLabels('MALICIOUS');
+                });
+            }
+        }
+        
+        // Start auto-refresh
+        function startAutoRefresh() {
+            refreshTimer = setInterval(refreshAnomalies, 30000); // Check every 30 seconds
+        }
+        
+        // Stop auto-refresh
+        function stopAutoRefresh() {
+            clearInterval(refreshTimer);
+        }
+        
+        // Refresh anomalies
+        function refreshAnomalies() {
+            fetch('/api/anomalies')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.anomalies.length > 0 && document.querySelector('.no-anomalies')) {
+                        // Reload the page if we have new anomalies
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error refreshing anomalies:', error);
+                    showToast('Error refreshing anomalies', 'error');
+                });
+        }
+        
+        // Set all labels to the same value
+        function setAllLabels(label) {
+            labelSelects.forEach(select => {
+                select.value = label;
+            });
+            
+            showToast(`Set all labels to ${label}`, 'info');
+        }
+        
+        // Save labels via AJAX
+        function saveLabels() {
+            // Disable button and show loading
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<div class="spinner"></div> Saving...';
+            
+            // Make sure other buttons remain enabled
+            if (integrateBtn) integrateBtn.disabled = false;
+            if (retrainBtn) retrainBtn.disabled = false;
+            
+            // Collect form data
+            const commands = [];
+            const labels = [];
+            
+            labelSelects.forEach(select => {
+                if (select.value) {
+                    commands.push(select.parentNode.querySelector('input[name="command"]').value);
+                    labels.push(select.value);
+                }
+            });
+            
+            if (commands.length === 0) {
+                showToast('Please select at least one label', 'error');
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = saveBtnOriginalHTML || '<i class="fas fa-save"></i> Save Labels';
+                return;
+            }
+            
+            // Send AJAX request
+            fetch('/api/label', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    commands: commands,
+                    labels: labels
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(`Successfully labeled ${commands.length} commands`, 'success');
+                    
+                    // Re-enable button and restore original HTML
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = saveBtnOriginalHTML || '<i class="fas fa-save"></i> Save Labels';
+                } else {
+                    showToast(data.message || 'Error saving labels', 'error');
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = saveBtnOriginalHTML || '<i class="fas fa-save"></i> Save Labels';
+                }
+            })
+            .catch(error => {
+                console.error('Error saving labels:', error);
+                showToast('Error saving labels', 'error');
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = saveBtnOriginalHTML || '<i class="fas fa-save"></i> Save Labels';
+            });
+        }
+        
+        // Integrate labeled data
+        function integrateData() {
+            // Disable button and show loading
+            integrateBtn.disabled = true;
+            integrateBtn.innerHTML = '<div class="spinner"></div> Integrating...';
+            
+            // Make sure other buttons remain enabled
+            if (saveBtn) saveBtn.disabled = false;
+            if (retrainBtn) retrainBtn.disabled = false;
+            
+            // Send AJAX request
+            fetch('/api/integrate', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                } else {
+                    showToast(data.message || 'Error integrating data', 'error');
+                }
+                
+                // Re-enable button and restore original HTML
+                integrateBtn.disabled = false;
+                integrateBtn.innerHTML = integrateBtnOriginalHTML || '<i class="fas fa-database"></i> Integrate Labeled Data';
+            })
+            .catch(error => {
+                console.error('Error integrating data:', error);
+                showToast('Error integrating data', 'error');
+                integrateBtn.disabled = false;
+                integrateBtn.innerHTML = integrateBtnOriginalHTML || '<i class="fas fa-database"></i> Integrate Labeled Data';
+            });
+        }
+        
+        // Retrain model
+        function retrainModel() {
+            // Disable button and show loading
+            retrainBtn.disabled = true;
+            retrainBtn.innerHTML = '<div class="spinner"></div> Retraining...';
+            
+            // Make sure other buttons remain enabled
+            if (saveBtn) saveBtn.disabled = false;
+            if (integrateBtn) integrateBtn.disabled = false;
+            
+            // Send AJAX request
+            fetch('/api/retrain', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                } else {
+                    showToast(data.message || 'Error retraining model', 'error');
+                }
+                
+                // Re-enable button and restore original HTML
+                retrainBtn.disabled = false;
+                retrainBtn.innerHTML = retrainBtnOriginalHTML || '<i class="fas fa-sync"></i> Retrain Model';
+            })
+            .catch(error => {
+                console.error('Error retraining model:', error);
+                showToast('Error retraining model', 'error');
+                retrainBtn.disabled = false;
+                retrainBtn.innerHTML = retrainBtnOriginalHTML || '<i class="fas fa-sync"></i> Retrain Model';
+            });
+        }
+        
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            // Set message
+            toastMessage.textContent = message;
+            
+            // Set type
+            toast.className = 'toast';
+            toast.classList.add(type);
+            
+            // Set icon
+            if (type === 'success') {
+                toastIcon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                toastIcon.className = 'fas fa-times-circle';
+            } else {
+                toastIcon.className = 'fas fa-info-circle';
+            }
+            
+            // Show toast
+            setTimeout(() => {
+                toast.classList.add('show');
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 5000);
+            }, 100);
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

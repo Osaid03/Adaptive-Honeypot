@@ -1,377 +1,1704 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>🔥 Honeypot Real-Time Log Monitor</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive Honeypot Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            background-color: #0d1117;
-            color: #00ff00;
-            font-family: monospace;
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --panel-bg: #21262d;
+            --accent-color: #58a6ff;
+            --success-color: #3fb950;
+            --warning-color: #d29922;
+            --danger-color: #f85149;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --border-color: #30363d;
+            --shadow-color: rgba(0, 255, 0, 0.2);
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
-        h1 {
-            text-align: center;
-            padding: 20px;
-            color: #f44336;
+        
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow: hidden; /* Prevent double scrollbars */
         }
-
-        p {
-            text-align: center;
-            color: #ccc;
-            font-size: 1.1em;
+        
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr 350px;
+            grid-template-rows: auto 1fr;
+            grid-template-areas:
+                "header header header"
+                "sidebar main rightpanel";
+            height: 100vh;
+            overflow: hidden;
         }
-
-        pre {
-            white-space: pre-wrap;
-            background-color: black;
-            color: #00ff00;
+        
+        /* Header */
+        .header {
+            grid-area: header;
+            background-color: var(--secondary-bg);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            color: var(--danger-color);
+        }
+        
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--panel-bg);
+        }
+        
+        .nav-link.active {
+            background-color: var(--panel-bg);
+            color: var(--accent-color);
+        }
+        
+        #connection-status {
+            background-color: var(--panel-bg);
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background-color: var(--secondary-bg);
             padding: 20px;
-            margin: 20px;
-            height: 80vh;
+            border-right: 1px solid var(--border-color);
             overflow-y: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #00ff00;
         }
-
-        .benign {
-            color: #00ff00;
+        
+        .sidebar-section {
+            margin-bottom: 25px;
         }
-
-        .suspicious {
-            color: #ffff00;
+        
+        .sidebar-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: var(--panel-bg);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .filter-option input {
+            margin-right: 10px;
+        }
+        
+        .filter-option label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
         .malicious {
-            color: #ff3333;
+            color: var(--danger-color);
+        }
+        
+        .suspicious {
+            color: var(--warning-color);
+        }
+        
+        .benign {
+            color: var(--success-color);
+        }
+        
+        .anomalous {
+            color: var(--accent-color);
+        }
+        
+        /* Main Content */
+        .main {
+            grid-area: main;
+            padding: 20px;
+            overflow-y: auto; /* Allow scrolling in main content area */
+            position: relative;
+        }
+        
+        .log-container {
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+            padding: 15px;
+            height: calc(100vh - 130px);
+            overflow-y: auto;
+            box-shadow: 0 0 10px var(--shadow-color);
+            position: relative;
+        }
+        
+        /* Only show scrollbar when needed */
+        .log-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .log-container::-webkit-scrollbar-track {
+            background: var(--secondary-bg);
+        }
+        
+        .log-container::-webkit-scrollbar-thumb {
+            background-color: var(--panel-bg);
+            border-radius: 4px;
+        }
+        
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .log-title {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .log-content {
+            font-family: 'Consolas', 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            min-height: calc(100% - 50px); /* Ensure content area takes up space */
+        }
+        
+        /* Right Panel */
+        .right-panel {
+            grid-area: rightpanel;
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+        }
+        
+        .panel-section {
+            background-color: var(--panel-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .panel-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            background-color: var(--secondary-bg);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-top: 15px;
+        }
+        
+        .top-commands {
+            margin-top: 10px;
+        }
+        
+        .command-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .command-item:last-child {
+            border-bottom: none;
+        }
+        
+        .command-text {
+            font-family: 'Consolas', 'Courier New', monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 200px;
+        }
+        
+        .command-count {
+            background-color: var(--panel-bg);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        
+        /* Map Container */
+        #map-container {
+            height: 300px;
+            width: 100%;
+            background-color: var(--panel-bg);
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Enhanced Map Styling */
+        .world-map {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .map-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            background-color: var(--success-color);
+        }
+        
+        .toast.error {
+            background-color: var(--danger-color);
+        }
+        
+        .toast.info {
+            background-color: var(--accent-color);
+        }
+        
+        /* Session Summary */
+        .session-summary {
+            background-color: var(--panel-bg);
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .session-summary i {
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+        
+        /* IP List Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-content {
+            background-color: var(--secondary-bg);
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .modal-title {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+        
+        .close {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--text-primary);
+        }
+        
+        .ip-list {
+            list-style: none;
+        }
+        
+        .ip-item {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ip-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Map Modal - Enhanced for larger, zoomable map */
+        #map-modal .modal-content {
+            width: 95%;
+            max-width: 1600px;
+            height: 90vh;
+            max-height: 900px;
+            margin: 2vh auto;
+        }
+        
+        #map-modal-content {
+            height: calc(90vh - 80px);
+            position: relative;
+            overflow: hidden;
+            background-color: var(--panel-bg);
+            border-radius: 8px;
+        }
+        
+        .map-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+            background-color: rgba(33, 38, 45, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .map-control-btn {
+            width: 45px;
+            height: 45px;
+            background-color: var(--panel-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+        
+        .map-control-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .map-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(33, 38, 45, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 350px;
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+        
+        .map-info h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        
+        .map-info p {
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+        
+        .map-info strong {
+            color: var(--accent-color);
+        }
+        
+        /* Map Legend Styling */
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(33, 38, 45, 0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            background-color: red;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 200px 1fr 300px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 200px 1fr;
+                grid-template-areas:
+                    "header header"
+                    "sidebar main";
+            }
+            
+            .right-panel {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "main";
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .header {
+                padding: 10px;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .nav {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 5px 8px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
-
-
 <body>
-    <h1>🚨 Honeypot Real-Time Log Monitor</h1>
-    <p style="text-align:center;">Monitoring suspicious SSH activities...</p>
-
-    <div style="display: flex; padding: 10px; gap: 20px; height: 85vh;">
-
-        <!-- 🎛 Controls (LEFT) -->
-        <div id="controlsPanel"
-            style="background: #1a1a1a; border: 1px solid #00ff00; padding: 16px; color: white; border-radius: 12px; width: 240px; box-shadow: 0 0 10px #0f0; height: 39%; display: flex; flex-direction: column; gap: 14px;">
-            <!-- Export Buttons -->
-            <button onclick="window.location.href='/export/csv'" style="width: 100%; padding: 8px; font-size: 13px;">📤
-                Export CSV</button>
-            <button onclick="window.location.href='/export/json'" style="width: 100%; padding: 8px; font-size: 13px;">📤
-                Export JSON</button>
-
-            <!-- Map Button -->
-            <button onclick="toggleMap()" style="width: 100%; padding: 8px; font-size: 13px;">🗺 Show Map</button>
-
-            <!-- Filters -->
-            <div style="font-size: 13px; line-height: 1.6;">
-                <label><input type="checkbox" id="filterMalicious"> Show <span
-                        style="color:#ff3333;">MALICIOUS</span></label><br>
-                <label><input type="checkbox" id="filterSuspicious"> Show <span
-                        style="color:#ffff00;">SUSPICIOUS</span></label>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-bug"></i>
+                <span>Adaptive Honeypot</span>
             </div>
-
-            <!-- Controls -->
-            <button onclick="togglePause()" style="width: 100%; padding: 8px; font-size: 13px;">⏸ Pause</button>
-            <button onclick="clearLogs()" style="width: 100%; padding: 8px; font-size: 13px;">🗑 Clear</button>
-
-            <!-- Auto Scroll -->
-            <label style="font-size: 13px;"><input type="checkbox" id="autoscrollToggle" checked> Auto-scroll</label>
+            <nav class="nav">
+                <a href="/" class="nav-link active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="/anomalies" class="nav-link">
+                    <i class="fas fa-search"></i> Review Anomalies
+                </a>
+                <a href="https://github.com/Osaid03/Adaptive-Honeypot" target="_blank" class="nav-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <div id="connection-status">
+                    <i class="fas fa-circle" style="color: var(--success-color);"></i> Connected
+                </div>
+            </nav>
+        </header>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title"><i class="fas fa-file-export"></i> Export</h3>
+                <a href="/export/csv" class="btn">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </a>
+                <a href="/export/json" class="btn">
+                    <i class="fas fa-file-code"></i> Export JSON
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title"><i class="fas fa-filter"></i> Filters</h3>
+                <div class="filter-option">
+                    <input type="checkbox" id="show-malicious" checked>
+                    <label for="show-malicious">
+                        <i class="fas fa-skull-crossbones malicious"></i> Malicious
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="show-suspicious" checked>
+                    <label for="show-suspicious">
+                        <i class="fas fa-exclamation-triangle suspicious"></i> Suspicious
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="show-benign" checked>
+                    <label for="show-benign">
+                        <i class="fas fa-check-circle benign"></i> Benign
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="show-anomalous" checked>
+                    <label for="show-anomalous">
+                        <i class="fas fa-question-circle anomalous"></i> Anomalous
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="show-connections" checked>
+                    <label for="show-connections">
+                        <i class="fas fa-plug"></i> Connections
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="show-auth" checked>
+                    <label for="show-auth">
+                        <i class="fas fa-key"></i> Authentication
+                    </label>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title"><i class="fas fa-cog"></i> Controls</h3>
+                <button id="show-map-btn" class="btn">
+                    <i class="fas fa-map-marked-alt"></i> Show Attack Map
+                </button>
+                <button id="show-ips-btn" class="btn">
+                    <i class="fas fa-globe"></i> View Unique IPs
+                </button>
+                <button id="pause-btn" class="btn">
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+                <button id="clear-btn" class="btn">
+                    <i class="fas fa-trash"></i> Clear
+                </button>
+                <div class="filter-option">
+                    <input type="checkbox" id="auto-scroll" checked>
+                    <label for="auto-scroll">Auto-scroll</label>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main">
+            <div id="session-summary" class="session-summary">
+                <i class="fas fa-chart-pie"></i>
+                <span>Waiting for data...</span>
+            </div>
+            
+            <div class="log-container">
+                <div class="log-header">
+                    <h2 class="log-title">
+                        <i class="fas fa-terminal"></i> Real-Time Log Monitor
+                    </h2>
+                </div>
+                <div id="log-content" class="log-content"></div>
+            </div>
+        </main>
+        
+        <!-- Right Panel -->
+        <aside class="right-panel">
+            <div class="panel-section">
+                <h3 class="panel-title">
+                    <i class="fas fa-chart-pie"></i> Session Summary
+                </h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div id="total-connections" class="stat-value">0</div>
+                        <div class="stat-label">Connections</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="total-commands" class="stat-value">0</div>
+                        <div class="stat-label">Commands</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="unique-ips" class="stat-value">0</div>
+                        <div class="stat-label">Unique IPs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="auth-attempts" class="stat-value">0</div>
+                        <div class="stat-label">Auth Attempts</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3 class="panel-title">
+                    <i class="fas fa-chart-bar"></i> Classification Distribution
+                </h3>
+                <div class="chart-container">
+                    <canvas id="classification-chart"></canvas>
+                </div>
+            </div>
+            
+            <div class="panel-section">
+                <h3 class="panel-title">
+                    <i class="fas fa-terminal"></i> Top Commands
+                </h3>
+                <div id="top-commands" class="top-commands">
+                    <div class="command-item">
+                        <span class="command-text">Waiting for data...</span>
+                        <span class="command-count">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="map-container"></div>
+        </aside>
+    </div>
+    
+    <!-- IP List Modal -->
+    <div id="ip-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-globe"></i> Unique IP Addresses</h2>
+                <span class="close">&times;</span>
+            </div>
+            <ul id="ip-list" class="ip-list">
+                <li class="ip-item">No IP addresses recorded yet</li>
+            </ul>
         </div>
-
-
-        <!-- 📄 Log Output (CENTER) -->
-        <pre id="logWindow"
-            style="flex: 1; background: black; color: #00ff00; padding: 20px; overflow-y: auto; border-radius: 8px; box-shadow: 0 0 10px #00ff00; font-size: 18px;">
-        🔄 Connecting to live log stream...
-        </pre>
-
-        <!-- 📋 Summary + 📊 Commands (RIGHT) -->
-        <div style="display: flex; flex-direction: column; justify-content: space-between; width: 260px; height: 100%;">
-
-            <div id="summaryBox"
-                style="flex: 1; background: #1a1a1a; border: 1px solid #00ff00; padding: 10px; color: white; border-radius: 8px; margin-bottom: 10px;">
-                <strong>📊 Session Summary</strong>
-                <div id="summaryContent">Waiting for summary...</div>
+    </div>
+    
+    <!-- Enhanced Map Modal with Zoom and Country Info -->
+    <div id="map-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-map-marked-alt"></i> Attack Origin Map</h2>
+                <span class="close map-close">&times;</span>
             </div>
-
-            <div id="freqBox"
-                style="flex: 1; display: flex; flex-direction: column; background: #111; color: #0f0; font-family: monospace; border: 1px solid #0f0; border-radius: 8px; padding: 10px; box-sizing: border-box;">
-                <h3 style="color: #0ff; margin: 0 0 10px 0;">📊 Top Commands</h3>
-                <pre id="freqContent" style="flex: 1; margin: 0; overflow-y: auto;">Waiting for data...</pre>
+            <div id="map-modal-content">
+                <div id="map-info" class="map-info" style="display: none;">
+                    <h3>Location Information</h3>
+                    <div id="location-details">Click on a marker to see details</div>
+                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" 
+                     class="world-map" id="world-map" alt="World Map">
+                <!-- Attack dots will be added here dynamically -->
+                <div id="map-legend" class="map-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot"></div>
+                        <span>Attack Origin</span>
+                    </div>
+                </div>
+                <div class="map-controls">
+                    <button class="map-control-btn" id="zoom-in"><i class="fas fa-plus"></i></button>
+                    <button class="map-control-btn" id="zoom-out"><i class="fas fa-minus"></i></button>
+                    <button class="map-control-btn" id="reset-map"><i class="fas fa-sync-alt"></i></button>
+                </div>
             </div>
-
-
         </div>
-
-        <style>
-            #mapOverlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                width: 100vw;
-                z-index: 999;
-                background: #000000ee;
-            }
-
-            #map {
-                height: 100vh;
-                width: 100vw;
-            }
-
-            #closeMapBtn {
-                position: absolute;
-                top: 15px;
-                right: 20px;
-                z-index: 1000;
-                font-size: 18px;
-                background: #ff3333;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                padding: 8px 12px;
-                cursor: pointer;
-            }
-
-            #summaryBox {
-                background: #111111;
-                border: 2px solid #00ffcc;
-                box-shadow: 0 0 15px #00ffcc;
-            }
-
-            .log-container div {
-                margin-bottom: 8px;
-                white-space: pre-wrap;
-            }
-
-            .benign {
-                color: #00ff00;
-            }
-
-            .suspicious {
-                color: #ffff00;
-            }
-
-            .malicious {
-                color: #ff5555;
-            }
-        </style>
-
-
-        <script>
-            let cachedMarkers = [];
-            let markerPlacedIPs = new Set();
-            const logElement = document.getElementById('logWindow');
-            const summaryBox = document.getElementById('summaryContent');
-            let isPaused = false;
-            let mapInitialized = false;
-            let map;
-            const allLogs = []; // 🧠 Store all incoming logs here
-
-            function toggleMap() {
-                const mapOverlay = document.getElementById('mapOverlay');
-                const isHidden = mapOverlay.style.display === 'none' || mapOverlay.style.display === '';
-
-                // ✅ Show map if hidden
-                if (isHidden) {
-                    mapOverlay.style.display = 'block'; // ✅ <--- YOU MISSED THIS LINE
-
-                    if (!mapInitialized) {
-                        setTimeout(() => {
-                            map = L.map('map').setView([20, 0], 2);
-                            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                                attribution:
-                                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            }).addTo(map);
-                            mapInitialized = true;
-
-                            // ✅ Plot cached markers
-                            cachedMarkers.forEach(ip => {
-                                fetch(`/geoip/${ip}`).then(res => res.json()).then(geo => {
-                                    if (geo) {
-                                        L.marker([geo.latitude, geo.longitude])
-                                            .addTo(map)
-                                            .bindPopup(`${ip}<br>${geo.city || ''}, ${geo.country || ''}`);
-                                    }
-                                });
-                            });
-
-                            cachedMarkers = [];
-                        }, 100);
-                    } else {
-                        setTimeout(() => map.invalidateSize(), 300); // redraw on re-open
-                    }
-                } else {
-                    // ✅ Hide map
-                    mapOverlay.style.display = 'none';
-                }
-            }
-
-
-
-            function togglePause() {
-                isPaused = !isPaused;
-                alert(isPaused ? "Paused log stream." : "Resumed log stream.");
-            }
-
-            function clearLogs() {
-                logElement.innerHTML = '';
-                allLogs.length = 0;
-            }
-
-            function applyFiltersAndRender() {
-                const showMalicious = document.getElementById("filterMalicious").checked;
-                const showSuspicious = document.getElementById("filterSuspicious").checked;
-
-                logElement.innerHTML = ''; // Clear log area
-
-                allLogs.forEach(log => {
-                    const isMalicious = log.includes("MALICIOUS");
-                    const isSuspicious = log.includes("SUSPICIOUS");
-
-                    // If any filter is checked, show only matching types
-                    if (showMalicious || showSuspicious) {
-                        if (!(
-                            (showMalicious && isMalicious) ||
-                            (showSuspicious && isSuspicious)
-                        )) {
-                            return;
+    </div>
+    
+    <div id="toast" class="toast">
+        <i id="toast-icon" class="fas fa-info-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+    
+    <script>
+        // Initialize variables
+        let isPaused = false;
+        let autoScroll = true;
+        let eventSource;
+        let commandStats = {
+            MALICIOUS: 0,
+            SUSPICIOUS: 0,
+            BENIGN: 0,
+            ANOMALOUS: 0
+        };
+        let sessionStats = {
+            connections: 0,
+            commands: 0,
+            uniqueIps: new Set(),
+            authAttempts: 0
+        };
+        let commandFrequency = {};
+        let logLines = []; // Store all log lines for filtering
+        let attackLocations = []; // Store attack locations for map
+        let lastConnectionMessage = 0; // Timestamp of last connection message
+        let connectionMessageThrottle = 30000; // Only show connection message every 30 seconds
+        
+        // DOM elements
+        const logContent = document.getElementById('log-content');
+        const pauseBtn = document.getElementById('pause-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const autoScrollCheckbox = document.getElementById('auto-scroll');
+        const showMapBtn = document.getElementById('show-map-btn');
+        const showIpsBtn = document.getElementById('show-ips-btn');
+        const mapContainer = document.getElementById('map-container');
+        const sessionSummary = document.getElementById('session-summary');
+        const ipModal = document.getElementById('ip-modal');
+        const ipList = document.getElementById('ip-list');
+        const closeModal = document.querySelector('.close');
+        const mainContainer = document.querySelector('.main');
+        const mapModal = document.getElementById('map-modal');
+        const mapModalContent = document.getElementById('map-modal-content');
+        const mapClose = document.querySelector('.map-close');
+        const worldMap = document.getElementById('world-map');
+        const zoomIn = document.getElementById('zoom-in');
+        const zoomOut = document.getElementById('zoom-out');
+        const resetMap = document.getElementById('reset-map');
+        const mapInfo = document.getElementById('map-info');
+        const locationDetails = document.getElementById('location-details');
+        
+        // Filter checkboxes
+        const showMalicious = document.getElementById('show-malicious');
+        const showSuspicious = document.getElementById('show-suspicious');
+        const showBenign = document.getElementById('show-benign');
+        const showAnomalous = document.getElementById('show-anomalous');
+        const showConnections = document.getElementById('show-connections');
+        const showAuth = document.getElementById('show-auth');
+        
+        // Map zoom variables
+        let mapScale = 1;
+        let mapTranslateX = 0;
+        let mapTranslateY = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        
+        // Initialize Chart.js
+        const ctx = document.getElementById('classification-chart').getContext('2d');
+        const classificationChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Malicious', 'Suspicious', 'Benign', 'Anomalous'],
+                datasets: [{
+                    data: [0, 0, 0, 0],
+                    backgroundColor: [
+                        '#f85149',  // Danger
+                        '#d29922',  // Warning
+                        '#3fb950',  // Success
+                        '#58a6ff'   // Accent
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#c9d1d9'
                         }
                     }
+                }
+            }
+        });
+        
+        // Country data for map
+        const countryData = {
+            "US": { name: "United States", region: "North America" },
+            "CN": { name: "China", region: "Asia" },
+            "RU": { name: "Russia", region: "Europe/Asia" },
+            "GB": { name: "United Kingdom", region: "Europe" },
+            "DE": { name: "Germany", region: "Europe" },
+            "FR": { name: "France", region: "Europe" },
+            "JP": { name: "Japan", region: "Asia" },
+            "BR": { name: "Brazil", region: "South America" },
+            "IN": { name: "India", region: "Asia" },
+            "CA": { name: "Canada", region: "North America" }
+            // Add more countries as needed
+        };
+        
+        // Add Attack Location to Map
+        function addAttackLocation(latitude, longitude, country = "Unknown", city = "Unknown") {
+            // Check if we already have this location
+            const existingLocation = attackLocations.find(loc => 
+                Math.abs(loc.lat - latitude) < 0.1 && Math.abs(loc.lng - longitude) < 0.1
+            );
+            
+            if (existingLocation) {
+                existingLocation.count++;
+                return;
+            }
+            
+            attackLocations.push({
+                lat: latitude,
+                lng: longitude,
+                count: 1,
+                country: country,
+                city: city
+            });
+            
+            // Update map if it's open
+            updateAttackMap();
+        }
 
-
-                    const logDiv = document.createElement("div");
-                    logDiv.textContent = log;
-
-                    if (isMalicious) logDiv.className = "malicious";
-                    else if (isSuspicious) logDiv.className = "suspicious";
-                    else logDiv.className = "benign";
-
-                    logElement.appendChild(logDiv);
+        // Update Attack Map
+        function updateAttackMap() {
+            // Clear existing dots
+            const existingDots = mapModalContent.querySelectorAll('.map-dot');
+            existingDots.forEach(dot => dot.remove());
+            
+            // Add dots for each attack location
+            attackLocations.forEach(location => {
+                const dot = document.createElement('div');
+                dot.className = 'map-dot';
+                
+                // Convert lat/lng to x/y coordinates (simple equirectangular projection)
+                // Map coordinates: x: 0-100%, y: 0-100%
+                const x = ((location.lng + 180) / 360) * 100;
+                const y = ((90 - location.lat) / 180) * 100;
+                
+                dot.style.left = `${x}%`;
+                dot.style.top = `${y}%`;
+                
+                // Scale dot size based on count
+                const size = 8 + Math.min(location.count, 10);
+                dot.style.width = `${size}px`;
+                dot.style.height = `${size}px`;
+                
+                // Add location data
+                dot.dataset.lat = location.lat;
+                dot.dataset.lng = location.lng;
+                dot.dataset.country = location.country;
+                dot.dataset.city = location.city;
+                dot.dataset.count = location.count;
+                
+                // Add click event to show location info
+                dot.addEventListener('click', function() {
+                    showLocationInfo(location);
                 });
-
-                logElement.scrollTop = logElement.scrollHeight;
-            }
-
-            // Event listener to re-filter logs when checkboxes change
-            window.onload = () => {
-                document.getElementById("filterMalicious").checked = false;
-                document.getElementById("filterSuspicious").checked = false;
-
-                document.getElementById("filterMalicious").addEventListener("change", applyFiltersAndRender);
-                document.getElementById("filterSuspicious").addEventListener("change", applyFiltersAndRender);
-            };
-
-            const evtSource = new EventSource("/stream");
-            evtSource.onmessage = function (event) {
-                // ✅ Handle Authentication Events and Cache IP
-                if (event.data.includes("Authentication success")) {
-                    const match = event.data.match(/from ([0-9.]+) \((.*?)\)/);
-                    if (match) {
-                        const ip = match[1];
-                        if (mapInitialized && map) {
-                            fetch(`/geoip/${ip}`).then(res => res.json()).then(geo => {
-                                if (geo) {
-                                    L.marker([geo.latitude, geo.longitude])
-                                        .addTo(map)
-                                        .bindPopup(`${ip}<br>${geo.city || ''}, ${geo.country || ''}`)
-                                        .openPopup();
-                                }
-                            });
-                        } else {
-                            cachedMarkers.push(ip); // 💾 Save for later
-                        }
+                
+                mapModalContent.appendChild(dot);
+            });
+        }
+        
+        // Show location info when clicking on a map dot
+        function showLocationInfo(location) {
+            mapInfo.style.display = 'block';
+            
+            // Get country info
+            const countryCode = location.country;
+            const countryInfo = countryData[countryCode] || { name: location.country || "Unknown", region: "Unknown" };
+            
+            locationDetails.innerHTML = `
+                <p><strong>Country:</strong> ${countryInfo.name}</p>
+                <p><strong>City:</strong> ${location.city || "Unknown"}</p>
+                <p><strong>Region:</strong> ${countryInfo.region}</p>
+                <p><strong>Coordinates:</strong> ${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}</p>
+                <p><strong>Attack Count:</strong> ${location.count}</p>
+            `;
+        }
+        
+        // Map zoom and pan functions
+        function applyMapTransform() {
+            worldMap.style.transform = `scale(${mapScale}) translate(${mapTranslateX}px, ${mapTranslateY}px)`;
+            
+            // Update dot positions
+            const dots = mapModalContent.querySelectorAll('.map-dot');
+            dots.forEach(dot => {
+                const x = parseFloat(dot.style.left);
+                const y = parseFloat(dot.style.top);
+                // This is a simplified approach - for a complete solution, you'd need to transform the dots properly
+                dot.style.transform = `scale(${1/mapScale})`;
+            });
+        }
+        
+        // Initialize map controls
+        function initMapControls() {
+            // Zoom in
+            zoomIn.addEventListener('click', function() {
+                mapScale = Math.min(mapScale * 1.2, 5);
+                applyMapTransform();
+            });
+            
+            // Zoom out
+            zoomOut.addEventListener('click', function() {
+                mapScale = Math.max(mapScale / 1.2, 1);
+                if (mapScale === 1) {
+                    mapTranslateX = 0;
+                    mapTranslateY = 0;
+                }
+                applyMapTransform();
+            });
+            
+            // Reset map
+            resetMap.addEventListener('click', function() {
+                mapScale = 1;
+                mapTranslateX = 0;
+                mapTranslateY = 0;
+                applyMapTransform();
+                mapInfo.style.display = 'none';
+            });
+            
+            // Map dragging
+            mapModalContent.addEventListener('mousedown', function(e) {
+                if (e.target === worldMap && mapScale > 1) {
+                    isDragging = true;
+                    dragStartX = e.clientX - mapTranslateX;
+                    dragStartY = e.clientY - mapTranslateY;
+                    mapModalContent.style.cursor = 'grabbing';
+                }
+            });
+            
+            mapModalContent.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    mapTranslateX = e.clientX - dragStartX;
+                    mapTranslateY = e.clientY - dragStartY;
+                    applyMapTransform();
+                }
+            });
+            
+            mapModalContent.addEventListener('mouseup', function() {
+                isDragging = false;
+                mapModalContent.style.cursor = 'default';
+            });
+            
+            mapModalContent.addEventListener('mouseleave', function() {
+                isDragging = false;
+                mapModalContent.style.cursor = 'default';
+            });
+            
+            // Mouse wheel zoom
+            mapModalContent.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                if (e.deltaY < 0) {
+                    // Zoom in
+                    mapScale = Math.min(mapScale * 1.1, 5);
+                } else {
+                    // Zoom out
+                    mapScale = Math.max(mapScale / 1.1, 1);
+                    if (mapScale === 1) {
+                        mapTranslateX = 0;
+                        mapTranslateY = 0;
                     }
                 }
-
-                // ✅ Session Summary Update
-                if (event.data.includes("Session Summary:")) {
-                    const summary = event.data.replace("Session Summary: ", "");
-                    const parts = summary.split(/, |\. /);
-
-                    const html = `
-            <div style="line-height: 1.6; font-size: 14px;">
-                📄 <strong>Total Commands:</strong> ${parts[0].split(" ")[0]}<br>
-                ✅ <strong>Benign:</strong> ${parts[1].split(": ")[1]}<br>
-                ⚠️ <strong>Suspicious:</strong> ${parts[2].split(": ")[1]}<br>
-                ❌ <strong>Malicious:</strong> ${parts[3].split(": ")[1]}<br>
-                🔥 <strong>Risk Score:</strong> ${parts[4].split(": ")[1]}
-            </div>
-        `;
-                    summaryBox.innerHTML = html;
-                    return;
-                }
-
-                // ✅ Skip if paused
-                if (isPaused) return;
-
-                // ✅ Parse commands and stats
-                allLogs.push(event.data);
-                if (event.data.includes("💻 Command:")) {
-                    const match = event.data.match(/💻 Command: (.*)/);
-                    if (match) {
-                        const cmd = match[1].trim();
-                        commandStats[cmd] = (commandStats[cmd] || 0) + 1;
-                        renderCommandStats();
+                applyMapTransform();
+            });
+        }
+        
+        // Load data from localStorage if available
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('honeypotDashboardData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    
+                    // Restore command stats
+                    if (data.commandStats) {
+                        commandStats = data.commandStats;
                     }
-                }
-
-                applyFiltersAndRender();
-
-                // ✅ Add Map Marker for Commands
-                const lines = event.data.split("\n");
-                const ipLine = lines[0];
-                const match = ipLine.match(/IP: (.*?) \((.*?)\)/);
-                if (match && match[2] !== "Unknown" && match[2] !== "Localhost") {
-                    const ip = match[1];
-                    fetch(`/geoip/${ip}`).then(res => res.json()).then(geo => {
-                        if (geo && map) {
-                            L.marker([geo.latitude, geo.longitude])
-                                .addTo(map)
-                                .bindPopup(`${ip}<br>${geo.city || ''}, ${geo.country || ''}`)
-                                .openPopup();
-                            map.setView([geo.latitude, geo.longitude], 6);
+                    
+                    // Restore session stats
+                    if (data.sessionStats) {
+                        sessionStats = {
+                            ...data.sessionStats,
+                            uniqueIps: new Set(data.sessionStats.uniqueIps)
+                        };
+                    }
+                    
+                    // Restore command frequency
+                    if (data.commandFrequency) {
+                        commandFrequency = data.commandFrequency;
+                    }
+                    
+                    // Restore log lines
+                    if (data.logLines) {
+                        logLines = data.logLines;
+                        
+                        // Recreate DOM elements for log lines
+                        logContent.innerHTML = '';
+                        for (const logLine of logLines) {
+                            const logElement = document.createElement('div');
+                            logElement.textContent = logLine.text;
+                            logElement.dataset.type = logLine.type;
+                            if (logLine.classification) {
+                                logElement.dataset.classification = logLine.classification;
+                            }
+                            
+                            // Apply styling based on content
+                            if (logLine.classification === 'MALICIOUS') {
+                                logElement.style.color = 'var(--danger-color)';
+                                logElement.style.fontWeight = 'bold';
+                            } else if (logLine.classification === 'SUSPICIOUS') {
+                                logElement.style.color = 'var(--warning-color)';
+                                logElement.style.fontWeight = 'bold';
+                            } else if (logLine.classification === 'BENIGN') {
+                                logElement.style.color = 'var(--success-color)';
+                            } else if (logLine.classification === 'ANOMALOUS') {
+                                logElement.style.color = 'var(--accent-color)';
+                                logElement.style.fontWeight = 'bold';
+                            } else if (logLine.text.includes('Authentication failed')) {
+                                logElement.style.color = 'var(--danger-color)';
+                            } else if (logLine.text.includes('Authentication success')) {
+                                logElement.style.color = 'var(--success-color)';
+                            }
+                            
+                            // Store reference to DOM element
+                            logLine.element = logElement;
+                            
+                            // Check if this line should be visible based on current filters
+                            if (shouldShowLogLine(logLine)) {
+                                logContent.appendChild(logElement);
+                            }
                         }
-                    });
+                    }
+                    
+                    // Update UI
+                    updateChart();
+                    updateStats();
+                    updateTopCommands();
+                    updateSessionSummary();
+                    
+                    console.log('Data loaded from localStorage');
+                }
+            } catch (error) {
+                console.error('Error loading data from localStorage:', error);
+            }
+        }
+        
+        // Save data to localStorage
+        function saveToLocalStorage() {
+            try {
+                const dataToSave = {
+                    commandStats,
+                    sessionStats: {
+                        ...sessionStats,
+                        uniqueIps: Array.from(sessionStats.uniqueIps)
+                    },
+                    commandFrequency,
+                    logLines: logLines.map(line => ({
+                        text: line.text,
+                        type: line.type,
+                        classification: line.classification
+                    }))
+                };
+                
+                localStorage.setItem('honeypotDashboardData', JSON.stringify(dataToSave));
+                console.log('Data saved to localStorage');
+            } catch (error) {
+                console.error('Error saving data to localStorage:', error);
+            }
+        }
+        
+        // Clear data from localStorage when closing the page
+        function clearLocalStorageOnUnload() {
+            localStorage.removeItem('honeypotDashboardData');
+            console.log('Data cleared from localStorage');
+        }
+        
+        // Check if log line should be shown based on filters
+        function shouldShowLogLine(logLine) {
+            if (logLine.classification === 'MALICIOUS' && !showMalicious.checked) {
+                return false;
+            }
+            if (logLine.classification === 'SUSPICIOUS' && !showSuspicious.checked) {
+                return false;
+            }
+            if (logLine.classification === 'BENIGN' && !showBenign.checked) {
+                return false;
+            }
+            if (logLine.classification === 'ANOMALOUS' && !showAnomalous.checked) {
+                return false;
+            }
+            if (logLine.type === 'connection' && !showConnections.checked) {
+                return false;
+            }
+            if (logLine.type === 'auth' && !showAuth.checked) {
+                return false;
+            }
+            return true;
+        }
+        
+        // Apply filters to log lines
+        function applyFilters() {
+            logContent.innerHTML = '';
+            
+            for (const logLine of logLines) {
+                if (shouldShowLogLine(logLine)) {
+                    logContent.appendChild(logLine.element);
+                }
+            }
+            
+            if (autoScroll) {
+                logContent.scrollTop = logContent.scrollHeight;
+            }
+        }
+        
+        // Update chart with current stats
+        function updateChart() {
+            classificationChart.data.datasets[0].data = [
+                commandStats.MALICIOUS,
+                commandStats.SUSPICIOUS,
+                commandStats.BENIGN,
+                commandStats.ANOMALOUS
+            ];
+            classificationChart.update();
+        }
+        
+        // Update stats in right panel
+        function updateStats() {
+            document.getElementById('total-connections').textContent = sessionStats.connections;
+            document.getElementById('total-commands').textContent = sessionStats.commands;
+            document.getElementById('unique-ips').textContent = sessionStats.uniqueIps.size;
+            document.getElementById('auth-attempts').textContent = sessionStats.authAttempts;
+        }
+        
+        // Update top commands list
+        function updateTopCommands() {
+            const topCommandsContainer = document.getElementById('top-commands');
+            topCommandsContainer.innerHTML = '';
+            
+            // Convert to array and sort by frequency
+            const sortedCommands = Object.entries(commandFrequency)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 5);
+            
+            if (sortedCommands.length === 0) {
+                topCommandsContainer.innerHTML = `
+                    <div class="command-item">
+                        <span class="command-text">Waiting for data...</span>
+                        <span class="command-count">-</span>
+                    </div>
+                `;
+                return;
+            }
+            
+            for (const [command, data] of sortedCommands) {
+                const item = document.createElement('div');
+                item.className = 'command-item';
+                
+                const commandText = document.createElement('span');
+                commandText.className = 'command-text';
+                commandText.textContent = command;
+                
+                const commandCount = document.createElement('span');
+                commandCount.className = 'command-count';
+                commandCount.textContent = data.count;
+                
+                // Add color based on classification
+                if (data.classification === 'MALICIOUS') {
+                    commandCount.style.backgroundColor = 'var(--danger-color)';
+                } else if (data.classification === 'SUSPICIOUS') {
+                    commandCount.style.backgroundColor = 'var(--warning-color)';
+                } else if (data.classification === 'BENIGN') {
+                    commandCount.style.backgroundColor = 'var(--success-color)';
+                } else if (data.classification === 'ANOMALOUS') {
+                    commandCount.style.backgroundColor = 'var(--accent-color)';
+                }
+                
+                item.appendChild(commandText);
+                item.appendChild(commandCount);
+                topCommandsContainer.appendChild(item);
+            }
+        }
+        
+        // Update session summary
+        function updateSessionSummary() {
+            const totalCommands = commandStats.MALICIOUS + commandStats.SUSPICIOUS + 
+                                 commandStats.BENIGN + commandStats.ANOMALOUS;
+            
+            const riskScore = totalCommands > 0 ? 
+                Math.round(((commandStats.SUSPICIOUS * 0.5 + commandStats.MALICIOUS) / totalCommands) * 100) : 0;
+            
+            sessionSummary.innerHTML = `
+                <i class="fas fa-chart-pie"></i>
+                <span>Session Summary: ${totalCommands} total commands. 
+                Benign: ${commandStats.BENIGN}, 
+                Suspicious: ${commandStats.SUSPICIOUS}, 
+                Malicious: ${commandStats.MALICIOUS}, 
+                Anomalous: ${commandStats.ANOMALOUS}. 
+                Risk Score: ${riskScore}%</span>
+            `;
+        }
+        
+        // Update IP list in modal
+        function updateIPList() {
+            ipList.innerHTML = '';
+            
+            if (sessionStats.uniqueIps.size === 0) {
+                ipList.innerHTML = '<li class="ip-item">No IP addresses recorded yet</li>';
+                return;
+            }
+            
+            for (const ip of sessionStats.uniqueIps) {
+                const item = document.createElement('li');
+                item.className = 'ip-item';
+                
+                const ipText = document.createElement('span');
+                ipText.textContent = ip;
+                
+                const commandCount = document.createElement('span');
+                commandCount.className = 'command-count';
+                commandCount.textContent = '0'; // You would need to track commands per IP
+                
+                item.appendChild(ipText);
+                item.appendChild(commandCount);
+                ipList.appendChild(item);
+            }
+        }
+        
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toast-icon');
+            const toastMessage = document.getElementById('toast-message');
+            
+            // Set icon based on type
+            if (type === 'success') {
+                toastIcon.className = 'fas fa-check-circle';
+                toast.className = 'toast success show';
+            } else if (type === 'error') {
+                toastIcon.className = 'fas fa-exclamation-circle';
+                toast.className = 'toast error show';
+            } else {
+                toastIcon.className = 'fas fa-info-circle';
+                toast.className = 'toast info show';
+            }
+            
+            toastMessage.textContent = message;
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+        
+        // Process log message
+        function processLogMessage(message) {
+            if (isPaused) return;
+            
+            // Skip duplicate connection messages
+            if (message.includes('Connected to log stream')) {
+                const now = Date.now();
+                if (now - lastConnectionMessage < connectionMessageThrottle) {
+                    return; // Skip this message
+                }
+                lastConnectionMessage = now;
+            }
+            
+            // Create log element
+            const logElement = document.createElement('div');
+            logElement.textContent = message;
+            
+            // Determine log type and classification
+            let logType = 'command';
+            let classification = null;
+            
+            if (message.includes('New SSH connection')) {
+                logType = 'connection';
+                sessionStats.connections++;
+                
+                // Extract IP address
+                const ipMatch = message.match(/from (\d+\.\d+\.\d+\.\d+)/);
+                if (ipMatch) {
+                    sessionStats.uniqueIps.add(ipMatch[1]);
+                }
+            } else if (message.includes('Auth attempt') || message.includes('Authentication')) {
+                logType = 'auth';
+                sessionStats.authAttempts++;
+            } else if (message.includes('Classification:')) {
+                // Extract command and classification
+                const commandMatch = message.match(/Command: (.+)/);
+                const classMatch = message.match(/Classification: (\w+)/);
+                
+                if (commandMatch && classMatch) {
+                    const command = commandMatch[1].trim();
+                    classification = classMatch[1].trim();
+                    
+                    // Update command stats
+                    commandStats[classification]++;
+                    
+                    // Update command frequency
+                    if (!commandFrequency[command]) {
+                        commandFrequency[command] = {
+                            count: 0,
+                            classification: classification
+                        };
+                    }
+                    commandFrequency[command].count++;
+                    
+                    sessionStats.commands++;
+                }
+            }
+            
+            // Apply styling based on content
+            if (classification === 'MALICIOUS') {
+                logElement.style.color = 'var(--danger-color)';
+                logElement.style.fontWeight = 'bold';
+            } else if (classification === 'SUSPICIOUS') {
+                logElement.style.color = 'var(--warning-color)';
+                logElement.style.fontWeight = 'bold';
+            } else if (classification === 'BENIGN') {
+                logElement.style.color = 'var(--success-color)';
+            } else if (classification === 'ANOMALOUS') {
+                logElement.style.color = 'var(--accent-color)';
+                logElement.style.fontWeight = 'bold';
+            } else if (message.includes('Authentication failed')) {
+                logElement.style.color = 'var(--danger-color)';
+            } else if (message.includes('Authentication success')) {
+                logElement.style.color = 'var(--success-color)';
+            }
+            
+            // Store log line data
+            const logLine = {
+                text: message,
+                type: logType,
+                classification: classification,
+                element: logElement
+            };
+            
+            logLines.push(logLine);
+            
+            // Check if this line should be visible based on current filters
+            if (shouldShowLogLine(logLine)) {
+                logContent.appendChild(logElement);
+                
+                // Auto-scroll if enabled
+                if (autoScroll) {
+                    logContent.scrollTop = logContent.scrollHeight;
+                }
+            }
+            
+            // Update UI
+            updateChart();
+            updateStats();
+            updateTopCommands();
+            updateSessionSummary();
+            
+            // Save data to localStorage
+            saveToLocalStorage();
+        }
+        
+        // Connect to event source
+        function connectEventSource() {
+            if (eventSource) {
+                eventSource.close();
+            }
+            
+            eventSource = new EventSource('/stream');
+            
+            eventSource.onopen = function() {
+                const connectionStatus = document.getElementById('connection-status');
+                connectionStatus.innerHTML = '<i class="fas fa-circle" style="color: var(--success-color);"></i> Connected';
+                showToast('Connected to log stream', 'success');
+            };
+            
+            eventSource.onerror = function() {
+                const connectionStatus = document.getElementById('connection-status');
+                connectionStatus.innerHTML = '<i class="fas fa-circle" style="color: var(--danger-color);"></i> Disconnected';
+                showToast('Connection lost. Reconnecting...', 'error');
+                
+                // Try to reconnect after a delay
+                setTimeout(connectEventSource, 5000);
+            };
+            
+            eventSource.onmessage = function(event) {
+                processLogMessage(event.data);
+                
+                // Check for IP and location data for map
+                const ipMatch = event.data.match(/IP: (\d+\.\d+\.\d+\.\d+)/);
+                if (ipMatch) {
+                    const ip = ipMatch[1];
+                    
+                    // Fetch geo coordinates for this IP
+                    fetch(`/geoip/${ip}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.latitude && data.longitude) {
+                                addAttackLocation(data.latitude, data.longitude, data.country_code, data.city);
+                            }
+                        })
+                        .catch(error => console.error('Error fetching location:', error));
                 }
             };
-
-
-            function toggleFreq() {
-                const box = document.getElementById("freqBox");
-                box.style.display = box.style.display === "none" ? "block" : "none";
-                renderCommandStats();
-            }
-            const commandStats = {}; // 🧠 Store all command frequencies
-
-            function renderCommandStats() {
-                const sorted = Object.entries(commandStats)
-                    .sort((a, b) => b[1] - a[1]) // sort by count
-                    .slice(0, 5) // top 5
-                    .map(([cmd, count]) => `${cmd}: ${count}`)
-                    .join("\n");
-
-                document.getElementById("freqContent").textContent = sorted || "No commands yet.";
-            }
-        </script>
-
-        <!-- 🌍 Fullscreen Map Overlay -->
-        <div id="mapOverlay">
-            <button id="closeMapBtn" onclick="toggleMap()">Close Map</button>
-            <div id="map"></div>
-        </div>
-
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize map controls
+            initMapControls();
+            
+            // Load data from localStorage
+            loadFromLocalStorage();
+            
+            // Connect to event source
+            connectEventSource();
+            
+            // Set up pause button
+            pauseBtn.addEventListener('click', function() {
+                isPaused = !isPaused;
+                
+                if (isPaused) {
+                    pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
+                    showToast('Log stream paused', 'info');
+                } else {
+                    pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    showToast('Log stream resumed', 'info');
+                }
+            });
+            
+            // Set up clear button
+            clearBtn.addEventListener('click', function() {
+                logContent.innerHTML = '';
+                logLines = [];
+                commandStats = {
+                    MALICIOUS: 0,
+                    SUSPICIOUS: 0,
+                    BENIGN: 0,
+                    ANOMALOUS: 0
+                };
+                commandFrequency = {};
+                
+                // Keep connection stats
+                sessionStats.commands = 0;
+                
+                // Update UI
+                updateChart();
+                updateStats();
+                updateTopCommands();
+                updateSessionSummary();
+                
+                // Save to localStorage
+                saveToLocalStorage();
+                
+                showToast('Logs cleared', 'info');
+            });
+            
+            // Set up auto-scroll checkbox
+            autoScrollCheckbox.addEventListener('change', function() {
+                autoScroll = this.checked;
+                
+                if (autoScroll) {
+                    logContent.scrollTop = logContent.scrollHeight;
+                }
+            });
+            
+            // Ensure auto-scroll is activated by default
+            autoScroll = true;
+            autoScrollCheckbox.checked = true;
+            
+            // Set up filter checkboxes
+            showMalicious.addEventListener('change', applyFilters);
+            showSuspicious.addEventListener('change', applyFilters);
+            showBenign.addEventListener('change', applyFilters);
+            showAnomalous.addEventListener('change', applyFilters);
+            showConnections.addEventListener('change', applyFilters);
+            showAuth.addEventListener('change', applyFilters);
+            
+            // Set up show map button
+            showMapBtn.addEventListener('click', function() {
+                updateAttackMap();
+                mapModal.style.display = 'block';
+            });
+            
+            // Set up show IPs button
+            showIpsBtn.addEventListener('click', function() {
+                updateIPList();
+                ipModal.style.display = 'block';
+            });
+            
+            // Set up modal close buttons
+            closeModal.addEventListener('click', function() {
+                ipModal.style.display = 'none';
+            });
+            
+            mapClose.addEventListener('click', function() {
+                mapModal.style.display = 'none';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === ipModal) {
+                    ipModal.style.display = 'none';
+                }
+                if (event.target === mapModal) {
+                    mapModal.style.display = 'none';
+                }
+            });
+            
+            // Clear data before unloading page
+            window.addEventListener('beforeunload', clearLocalStorageOnUnload);
+        });
+    </script>
 </body>
-
 </html>

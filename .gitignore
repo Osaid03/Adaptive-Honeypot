@@ -17,3 +17,9 @@ dist/
 build/
 *.egg-info/
 .env
+model_versions/
+model_assets/models/plots/
+**/anomalous_commands_backup*
+*.png
+
+
