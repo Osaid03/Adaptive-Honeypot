@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,21 +21,22 @@
             --border-color: #30363d;
             --shadow-color: rgba(0, 255, 0, 0.2);
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         body {
             background-color: var(--primary-bg);
             color: var(--text-primary);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            overflow: hidden; /* Prevent double scrollbars */
+            overflow: hidden;
+            /* Prevent double scrollbars */
         }
-        
+
         .container {
             display: grid;
             grid-template-columns: 250px 1fr 350px;
@@ -45,7 +47,7 @@
             height: 100vh;
             overflow: hidden;
         }
-        
+
         /* Header */
         .header {
             grid-area: header;
@@ -56,7 +58,7 @@
             align-items: center;
             border-bottom: 1px solid var(--border-color);
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
@@ -65,16 +67,16 @@
             font-size: 1.5rem;
             font-weight: bold;
         }
-        
+
         .logo i {
             color: var(--danger-color);
         }
-        
+
         .nav {
             display: flex;
             gap: 20px;
         }
-        
+
         .nav-link {
             color: var(--text-primary);
             text-decoration: none;
@@ -85,16 +87,16 @@
             align-items: center;
             gap: 5px;
         }
-        
+
         .nav-link:hover {
             background-color: var(--panel-bg);
         }
-        
+
         .nav-link.active {
             background-color: var(--panel-bg);
             color: var(--accent-color);
         }
-        
+
         #connection-status {
             background-color: var(--panel-bg);
             padding: 5px 10px;
@@ -103,7 +105,7 @@
             align-items: center;
             gap: 5px;
         }
-        
+
         /* Sidebar */
         .sidebar {
             grid-area: sidebar;
@@ -112,11 +114,11 @@
             border-right: 1px solid var(--border-color);
             overflow-y: auto;
         }
-        
+
         .sidebar-section {
             margin-bottom: 25px;
         }
-        
+
         .sidebar-title {
             font-size: 1.1rem;
             margin-bottom: 15px;
@@ -125,7 +127,7 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn {
             display: block;
             width: 100%;
@@ -144,72 +146,73 @@
             justify-content: center;
             gap: 8px;
         }
-        
+
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
         .btn-primary {
             background-color: var(--accent-color);
             color: white;
         }
-        
+
         .btn-success {
             background-color: var(--success-color);
             color: white;
         }
-        
+
         .btn-warning {
             background-color: var(--warning-color);
             color: white;
         }
-        
+
         .btn-danger {
             background-color: var(--danger-color);
             color: white;
         }
-        
+
         .filter-option {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .filter-option input {
             margin-right: 10px;
         }
-        
+
         .filter-option label {
             display: flex;
             align-items: center;
             gap: 5px;
         }
-        
+
         .malicious {
             color: var(--danger-color);
         }
-        
+
         .suspicious {
             color: var(--warning-color);
         }
-        
+
         .benign {
             color: var(--success-color);
         }
-        
+
         .anomalous {
             color: var(--accent-color);
         }
-        
+
         /* Main Content */
         .main {
             grid-area: main;
             padding: 20px;
-            overflow-y: auto; /* Allow scrolling in main content area */
+            overflow-y: auto;
+            /* Allow scrolling in main content area */
             position: relative;
         }
-        
+
         .log-container {
             background-color: var(--secondary-bg);
             border-radius: 8px;
@@ -219,21 +222,21 @@
             box-shadow: 0 0 10px var(--shadow-color);
             position: relative;
         }
-        
+
         /* Only show scrollbar when needed */
         .log-container::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .log-container::-webkit-scrollbar-track {
             background: var(--secondary-bg);
         }
-        
+
         .log-container::-webkit-scrollbar-thumb {
             background-color: var(--panel-bg);
             border-radius: 4px;
         }
-        
+
         .log-header {
             display: flex;
             justify-content: space-between;
@@ -242,7 +245,7 @@
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border-color);
         }
-        
+
         .log-title {
             font-size: 1.2rem;
             color: var(--accent-color);
@@ -250,14 +253,15 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .log-content {
             font-family: 'Consolas', 'Courier New', monospace;
             white-space: pre-wrap;
             line-height: 1.5;
-            min-height: calc(100% - 50px); /* Ensure content area takes up space */
+            min-height: calc(100% - 50px);
+            /* Ensure content area takes up space */
         }
-        
+
         /* Right Panel */
         .right-panel {
             grid-area: rightpanel;
@@ -266,7 +270,7 @@
             border-left: 1px solid var(--border-color);
             overflow-y: auto;
         }
-        
+
         .panel-section {
             background-color: var(--panel-bg);
             border-radius: 8px;
@@ -274,7 +278,7 @@
             margin-bottom: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         .panel-title {
             font-size: 1.1rem;
             margin-bottom: 15px;
@@ -283,53 +287,53 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 15px;
         }
-        
+
         .stat-item {
             background-color: var(--secondary-bg);
             padding: 10px;
             border-radius: 5px;
             text-align: center;
         }
-        
+
         .stat-value {
             font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 5px;
         }
-        
+
         .stat-label {
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
-        
+
         .chart-container {
             position: relative;
             height: 200px;
             margin-top: 15px;
         }
-        
+
         .top-commands {
             margin-top: 10px;
         }
-        
+
         .command-item {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
             border-bottom: 1px solid var(--border-color);
         }
-        
+
         .command-item:last-child {
             border-bottom: none;
         }
-        
+
         .command-text {
             font-family: 'Consolas', 'Courier New', monospace;
             overflow: hidden;
@@ -337,56 +341,78 @@
             white-space: nowrap;
             max-width: 200px;
         }
-        
+
         .command-count {
             background-color: var(--panel-bg);
             padding: 2px 8px;
             border-radius: 10px;
             font-size: 0.8rem;
         }
-        
-        /* Map Container */
-        #map-container {
-            height: 300px;
-            width: 100%;
-            background-color: var(--panel-bg);
-            border-radius: 8px;
-            margin-top: 15px;
+
+        /* Modal Styles */
+        .modal {
             display: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Enhanced Map Styling */
-        .world-map {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.7);
         }
-        
-        .map-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background-color: red;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.7);
-            animation: pulse 1.5s infinite;
+
+        .modal-content {
+            background-color: var(--secondary-bg);
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
-            }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
-        
+
+        .modal-title {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .close {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--text-primary);
+        }
+
+        .ip-list {
+            list-style: none;
+        }
+
+        .ip-item {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ip-item:last-child {
+            border-bottom: none;
+        }
+
         /* Toast Notifications */
         .toast {
             position: fixed;
@@ -404,23 +430,23 @@
             transform: translateX(120%);
             transition: transform 0.3s ease-out;
         }
-        
+
         .toast.show {
             transform: translateX(0);
         }
-        
+
         .toast.success {
             background-color: var(--success-color);
         }
-        
+
         .toast.error {
             background-color: var(--danger-color);
         }
-        
+
         .toast.info {
             background-color: var(--accent-color);
         }
-        
+
         /* Session Summary */
         .session-summary {
             background-color: var(--panel-bg);
@@ -435,194 +461,31 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        
+
         .session-summary i {
             color: var(--accent-color);
             flex-shrink: 0;
         }
-        
-        /* IP List Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
+
+        /* Map Container */
+        #map-container {
+            height: 300px;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        
-        .modal-content {
-            background-color: var(--secondary-bg);
-            margin: 10% auto;
-            padding: 20px;
+            background-color: var(--panel-bg);
             border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .modal-title {
-            font-size: 1.2rem;
-            color: var(--accent-color);
-        }
-        
-        .close {
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .close:hover {
-            color: var(--text-primary);
-        }
-        
-        .ip-list {
-            list-style: none;
-        }
-        
-        .ip-item {
-            padding: 10px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .ip-item:last-child {
-            border-bottom: none;
-        }
-        
-        /* Map Modal - Enhanced for larger, zoomable map */
-        #map-modal .modal-content {
-            width: 95%;
-            max-width: 1600px;
-            height: 90vh;
-            max-height: 900px;
-            margin: 2vh auto;
-        }
-        
-        #map-modal-content {
-            height: calc(90vh - 80px);
+            margin-top: 15px;
+            display: none;
             position: relative;
             overflow: hidden;
-            background-color: var(--panel-bg);
-            border-radius: 8px;
         }
-        
-        .map-controls {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-            background-color: rgba(33, 38, 45, 0.7);
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .map-control-btn {
-            width: 45px;
-            height: 45px;
-            background-color: var(--panel-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.2s ease;
-        }
-        
-        .map-control-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .map-info {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: rgba(33, 38, 45, 0.9);
-            padding: 15px;
-            border-radius: 8px;
-            max-width: 350px;
-            z-index: 10;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-        
-        .map-info h3 {
-            margin-top: 0;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-        }
-        
-        .map-info p {
-            margin: 8px 0;
-            font-size: 0.95rem;
-        }
-        
-        .map-info strong {
-            color: var(--accent-color);
-        }
-        
-        /* Map Legend Styling */
-        .map-legend {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background-color: rgba(33, 38, 45, 0.9);
-            padding: 10px 15px;
-            border-radius: 8px;
-            z-index: 10;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            background-color: red;
-            border-radius: 50%;
-            box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.7);
-            animation: pulse 1.5s infinite;
-        }
-        
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 200px 1fr 300px;
             }
         }
-        
+
         @media (max-width: 992px) {
             .container {
                 grid-template-columns: 200px 1fr;
@@ -630,12 +493,12 @@
                     "header header"
                     "sidebar main";
             }
-            
+
             .right-panel {
                 display: none;
             }
         }
-        
+
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -643,23 +506,23 @@
                     "header"
                     "main";
             }
-            
+
             .sidebar {
                 display: none;
             }
-            
+
             .header {
                 padding: 10px;
             }
-            
+
             .logo {
                 font-size: 1.2rem;
             }
-            
+
             .nav {
                 gap: 10px;
             }
-            
+
             .nav-link {
                 padding: 5px 8px;
                 font-size: 0.9rem;
@@ -667,6 +530,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
@@ -679,6 +543,9 @@
                 <a href="/" class="nav-link active">
                     <i class="fas fa-tachometer-alt"></i> Dashboard
                 </a>
+                <a href="/map" class="nav-link">
+                    <i class="fas fa-map-marked-alt"></i> Attack Map
+                </a>
                 <a href="/anomalies" class="nav-link">
                     <i class="fas fa-search"></i> Review Anomalies
                 </a>
@@ -690,7 +557,7 @@
                 </div>
             </nav>
         </header>
-        
+
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-section">
@@ -702,7 +569,7 @@
                     <i class="fas fa-file-code"></i> Export JSON
                 </a>
             </div>
-            
+
             <div class="sidebar-section">
                 <h3 class="sidebar-title"><i class="fas fa-filter"></i> Filters</h3>
                 <div class="filter-option">
@@ -742,12 +609,12 @@
                     </label>
                 </div>
             </div>
-            
+
             <div class="sidebar-section">
                 <h3 class="sidebar-title"><i class="fas fa-cog"></i> Controls</h3>
-                <button id="show-map-btn" class="btn">
-                    <i class="fas fa-map-marked-alt"></i> Show Attack Map
-                </button>
+                <a href="/map" class="btn btn-primary">
+                    <i class="fas fa-map-marked-alt"></i> View Attack Map
+                </a>
                 <button id="show-ips-btn" class="btn">
                     <i class="fas fa-globe"></i> View Unique IPs
                 </button>
@@ -763,14 +630,14 @@
                 </div>
             </div>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main">
             <div id="session-summary" class="session-summary">
                 <i class="fas fa-chart-pie"></i>
                 <span>Waiting for data...</span>
             </div>
-            
+
             <div class="log-container">
                 <div class="log-header">
                     <h2 class="log-title">
@@ -780,7 +647,7 @@
                 <div id="log-content" class="log-content"></div>
             </div>
         </main>
-        
+
         <!-- Right Panel -->
         <aside class="right-panel">
             <div class="panel-section">
@@ -806,7 +673,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="panel-section">
                 <h3 class="panel-title">
                     <i class="fas fa-chart-bar"></i> Classification Distribution
@@ -815,7 +682,7 @@
                     <canvas id="classification-chart"></canvas>
                 </div>
             </div>
-            
+
             <div class="panel-section">
                 <h3 class="panel-title">
                     <i class="fas fa-terminal"></i> Top Commands
@@ -827,11 +694,21 @@
                     </div>
                 </div>
             </div>
-            
-            <div id="map-container"></div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">
+                    <i class="fas fa-map-marked-alt"></i> Attack Map
+                </h3>
+                <a href="/map" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> Open Full Map
+                </a>
+                <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                    View the interactive attack origin map with detailed statistics and visualizations.
+                </p>
+            </div>
         </aside>
     </div>
-    
+
     <!-- IP List Modal -->
     <div id="ip-modal" class="modal">
         <div class="modal-content">
@@ -844,42 +721,12 @@
             </ul>
         </div>
     </div>
-    
-    <!-- Enhanced Map Modal with Zoom and Country Info -->
-    <div id="map-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title"><i class="fas fa-map-marked-alt"></i> Attack Origin Map</h2>
-                <span class="close map-close">&times;</span>
-            </div>
-            <div id="map-modal-content">
-                <div id="map-info" class="map-info" style="display: none;">
-                    <h3>Location Information</h3>
-                    <div id="location-details">Click on a marker to see details</div>
-                </div>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" 
-                     class="world-map" id="world-map" alt="World Map">
-                <!-- Attack dots will be added here dynamically -->
-                <div id="map-legend" class="map-legend">
-                    <div class="legend-item">
-                        <div class="legend-dot"></div>
-                        <span>Attack Origin</span>
-                    </div>
-                </div>
-                <div class="map-controls">
-                    <button class="map-control-btn" id="zoom-in"><i class="fas fa-plus"></i></button>
-                    <button class="map-control-btn" id="zoom-out"><i class="fas fa-minus"></i></button>
-                    <button class="map-control-btn" id="reset-map"><i class="fas fa-sync-alt"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+
     <div id="toast" class="toast">
         <i id="toast-icon" class="fas fa-info-circle"></i>
         <span id="toast-message"></span>
     </div>
-    
+
     <script>
         // Initialize variables
         let isPaused = false;
@@ -900,32 +747,19 @@
         let commandFrequency = {};
         let logLines = []; // Store all log lines for filtering
         let attackLocations = []; // Store attack locations for map
-        let lastConnectionMessage = 0; // Timestamp of last connection message
-        let connectionMessageThrottle = 30000; // Only show connection message every 30 seconds
-        
+
         // DOM elements
         const logContent = document.getElementById('log-content');
         const pauseBtn = document.getElementById('pause-btn');
         const clearBtn = document.getElementById('clear-btn');
         const autoScrollCheckbox = document.getElementById('auto-scroll');
-        const showMapBtn = document.getElementById('show-map-btn');
         const showIpsBtn = document.getElementById('show-ips-btn');
-        const mapContainer = document.getElementById('map-container');
         const sessionSummary = document.getElementById('session-summary');
         const ipModal = document.getElementById('ip-modal');
         const ipList = document.getElementById('ip-list');
         const closeModal = document.querySelector('.close');
         const mainContainer = document.querySelector('.main');
-        const mapModal = document.getElementById('map-modal');
-        const mapModalContent = document.getElementById('map-modal-content');
-        const mapClose = document.querySelector('.map-close');
-        const worldMap = document.getElementById('world-map');
-        const zoomIn = document.getElementById('zoom-in');
-        const zoomOut = document.getElementById('zoom-out');
-        const resetMap = document.getElementById('reset-map');
-        const mapInfo = document.getElementById('map-info');
-        const locationDetails = document.getElementById('location-details');
-        
+
         // Filter checkboxes
         const showMalicious = document.getElementById('show-malicious');
         const showSuspicious = document.getElementById('show-suspicious');
@@ -933,15 +767,7 @@
         const showAnomalous = document.getElementById('show-anomalous');
         const showConnections = document.getElementById('show-connections');
         const showAuth = document.getElementById('show-auth');
-        
-        // Map zoom variables
-        let mapScale = 1;
-        let mapTranslateX = 0;
-        let mapTranslateY = 0;
-        let isDragging = false;
-        let dragStartX = 0;
-        let dragStartY = 0;
-        
+
         // Initialize Chart.js
         const ctx = document.getElementById('classification-chart').getContext('2d');
         const classificationChart = new Chart(ctx, {
@@ -972,34 +798,27 @@
                 }
             }
         });
-        
-        // Country data for map
-        const countryData = {
-            "US": { name: "United States", region: "North America" },
-            "CN": { name: "China", region: "Asia" },
-            "RU": { name: "Russia", region: "Europe/Asia" },
-            "GB": { name: "United Kingdom", region: "Europe" },
-            "DE": { name: "Germany", region: "Europe" },
-            "FR": { name: "France", region: "Europe" },
-            "JP": { name: "Japan", region: "Asia" },
-            "BR": { name: "Brazil", region: "South America" },
-            "IN": { name: "India", region: "Asia" },
-            "CA": { name: "Canada", region: "North America" }
-            // Add more countries as needed
-        };
-        
+
         // Add Attack Location to Map
         function addAttackLocation(latitude, longitude, country = "Unknown", city = "Unknown") {
+            // Validate coordinates
+            if (!latitude || !longitude || isNaN(latitude) || isNaN(longitude) ||
+                latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+                console.error("Invalid coordinates:", latitude, longitude);
+                return;
+            }
+
             // Check if we already have this location
-            const existingLocation = attackLocations.find(loc => 
+            const existingLocation = attackLocations.find(loc =>
                 Math.abs(loc.lat - latitude) < 0.1 && Math.abs(loc.lng - longitude) < 0.1
             );
-            
+
             if (existingLocation) {
                 existingLocation.count++;
                 return;
             }
-            
+
+            // Add new location
             attackLocations.push({
                 lat: latitude,
                 lng: longitude,
@@ -1007,167 +826,23 @@
                 country: country,
                 city: city
             });
-            
-            // Update map if it's open
-            updateAttackMap();
+
+            // Save to localStorage
+            saveToLocalStorage();
         }
 
-        // Update Attack Map
-        function updateAttackMap() {
-            // Clear existing dots
-            const existingDots = mapModalContent.querySelectorAll('.map-dot');
-            existingDots.forEach(dot => dot.remove());
-            
-            // Add dots for each attack location
-            attackLocations.forEach(location => {
-                const dot = document.createElement('div');
-                dot.className = 'map-dot';
-                
-                // Convert lat/lng to x/y coordinates (simple equirectangular projection)
-                // Map coordinates: x: 0-100%, y: 0-100%
-                const x = ((location.lng + 180) / 360) * 100;
-                const y = ((90 - location.lat) / 180) * 100;
-                
-                dot.style.left = `${x}%`;
-                dot.style.top = `${y}%`;
-                
-                // Scale dot size based on count
-                const size = 8 + Math.min(location.count, 10);
-                dot.style.width = `${size}px`;
-                dot.style.height = `${size}px`;
-                
-                // Add location data
-                dot.dataset.lat = location.lat;
-                dot.dataset.lng = location.lng;
-                dot.dataset.country = location.country;
-                dot.dataset.city = location.city;
-                dot.dataset.count = location.count;
-                
-                // Add click event to show location info
-                dot.addEventListener('click', function() {
-                    showLocationInfo(location);
-                });
-                
-                mapModalContent.appendChild(dot);
-            });
-        }
-        
-        // Show location info when clicking on a map dot
-        function showLocationInfo(location) {
-            mapInfo.style.display = 'block';
-            
-            // Get country info
-            const countryCode = location.country;
-            const countryInfo = countryData[countryCode] || { name: location.country || "Unknown", region: "Unknown" };
-            
-            locationDetails.innerHTML = `
-                <p><strong>Country:</strong> ${countryInfo.name}</p>
-                <p><strong>City:</strong> ${location.city || "Unknown"}</p>
-                <p><strong>Region:</strong> ${countryInfo.region}</p>
-                <p><strong>Coordinates:</strong> ${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}</p>
-                <p><strong>Attack Count:</strong> ${location.count}</p>
-            `;
-        }
-        
-        // Map zoom and pan functions
-        function applyMapTransform() {
-            worldMap.style.transform = `scale(${mapScale}) translate(${mapTranslateX}px, ${mapTranslateY}px)`;
-            
-            // Update dot positions
-            const dots = mapModalContent.querySelectorAll('.map-dot');
-            dots.forEach(dot => {
-                const x = parseFloat(dot.style.left);
-                const y = parseFloat(dot.style.top);
-                // This is a simplified approach - for a complete solution, you'd need to transform the dots properly
-                dot.style.transform = `scale(${1/mapScale})`;
-            });
-        }
-        
-        // Initialize map controls
-        function initMapControls() {
-            // Zoom in
-            zoomIn.addEventListener('click', function() {
-                mapScale = Math.min(mapScale * 1.2, 5);
-                applyMapTransform();
-            });
-            
-            // Zoom out
-            zoomOut.addEventListener('click', function() {
-                mapScale = Math.max(mapScale / 1.2, 1);
-                if (mapScale === 1) {
-                    mapTranslateX = 0;
-                    mapTranslateY = 0;
-                }
-                applyMapTransform();
-            });
-            
-            // Reset map
-            resetMap.addEventListener('click', function() {
-                mapScale = 1;
-                mapTranslateX = 0;
-                mapTranslateY = 0;
-                applyMapTransform();
-                mapInfo.style.display = 'none';
-            });
-            
-            // Map dragging
-            mapModalContent.addEventListener('mousedown', function(e) {
-                if (e.target === worldMap && mapScale > 1) {
-                    isDragging = true;
-                    dragStartX = e.clientX - mapTranslateX;
-                    dragStartY = e.clientY - mapTranslateY;
-                    mapModalContent.style.cursor = 'grabbing';
-                }
-            });
-            
-            mapModalContent.addEventListener('mousemove', function(e) {
-                if (isDragging) {
-                    mapTranslateX = e.clientX - dragStartX;
-                    mapTranslateY = e.clientY - dragStartY;
-                    applyMapTransform();
-                }
-            });
-            
-            mapModalContent.addEventListener('mouseup', function() {
-                isDragging = false;
-                mapModalContent.style.cursor = 'default';
-            });
-            
-            mapModalContent.addEventListener('mouseleave', function() {
-                isDragging = false;
-                mapModalContent.style.cursor = 'default';
-            });
-            
-            // Mouse wheel zoom
-            mapModalContent.addEventListener('wheel', function(e) {
-                e.preventDefault();
-                if (e.deltaY < 0) {
-                    // Zoom in
-                    mapScale = Math.min(mapScale * 1.1, 5);
-                } else {
-                    // Zoom out
-                    mapScale = Math.max(mapScale / 1.1, 1);
-                    if (mapScale === 1) {
-                        mapTranslateX = 0;
-                        mapTranslateY = 0;
-                    }
-                }
-                applyMapTransform();
-            });
-        }
-        
         // Load data from localStorage if available
         function loadFromLocalStorage() {
             try {
                 const savedData = localStorage.getItem('honeypotDashboardData');
                 if (savedData) {
                     const data = JSON.parse(savedData);
-                    
+
                     // Restore command stats
                     if (data.commandStats) {
                         commandStats = data.commandStats;
                     }
-                    
+
                     // Restore session stats
                     if (data.sessionStats) {
                         sessionStats = {
@@ -1175,16 +850,21 @@
                             uniqueIps: new Set(data.sessionStats.uniqueIps)
                         };
                     }
-                    
+
                     // Restore command frequency
                     if (data.commandFrequency) {
                         commandFrequency = data.commandFrequency;
                     }
-                    
+
+                    // Restore attack locations
+                    if (data.attackLocations) {
+                        attackLocations = data.attackLocations;
+                    }
+
                     // Restore log lines
                     if (data.logLines) {
                         logLines = data.logLines;
-                        
+
                         // Recreate DOM elements for log lines
                         logContent.innerHTML = '';
                         for (const logLine of logLines) {
@@ -1194,7 +874,7 @@
                             if (logLine.classification) {
                                 logElement.dataset.classification = logLine.classification;
                             }
-                            
+
                             // Apply styling based on content
                             if (logLine.classification === 'MALICIOUS') {
                                 logElement.style.color = 'var(--danger-color)';
@@ -1212,30 +892,30 @@
                             } else if (logLine.text.includes('Authentication success')) {
                                 logElement.style.color = 'var(--success-color)';
                             }
-                            
+
                             // Store reference to DOM element
                             logLine.element = logElement;
-                            
+
                             // Check if this line should be visible based on current filters
                             if (shouldShowLogLine(logLine)) {
                                 logContent.appendChild(logElement);
                             }
                         }
                     }
-                    
+
                     // Update UI
                     updateChart();
                     updateStats();
                     updateTopCommands();
                     updateSessionSummary();
-                    
+
                     console.log('Data loaded from localStorage');
                 }
             } catch (error) {
                 console.error('Error loading data from localStorage:', error);
             }
         }
-        
+
         // Save data to localStorage
         function saveToLocalStorage() {
             try {
@@ -1246,65 +926,263 @@
                         uniqueIps: Array.from(sessionStats.uniqueIps)
                     },
                     commandFrequency,
+                    attackLocations, // Save attack locations
                     logLines: logLines.map(line => ({
                         text: line.text,
                         type: line.type,
                         classification: line.classification
                     }))
                 };
-                
+
                 localStorage.setItem('honeypotDashboardData', JSON.stringify(dataToSave));
                 console.log('Data saved to localStorage');
             } catch (error) {
                 console.error('Error saving data to localStorage:', error);
             }
         }
-        
+
         // Clear data from localStorage when closing the page
         function clearLocalStorageOnUnload() {
             localStorage.removeItem('honeypotDashboardData');
             console.log('Data cleared from localStorage');
         }
-        
-        // Check if log line should be shown based on filters
+
+        // Connect to SSE stream
+        function connectToStream() {
+            // If we already have an event source, close it
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            eventSource = new EventSource('/stream');
+
+            eventSource.onopen = function () {
+                showToast('Connected to log stream', 'success');
+                document.getElementById('connection-status').innerHTML =
+                    '<i class="fas fa-circle" style="color: var(--success-color);"></i> Connected';
+            };
+
+            eventSource.onerror = function () {
+                document.getElementById('connection-status').innerHTML =
+                    '<i class="fas fa-circle" style="color: var(--danger-color);"></i> Disconnected';
+                showToast('Connection lost. Reconnecting...', 'error');
+
+                // Try to reconnect after 5 seconds
+                setTimeout(function () {
+                    if (eventSource.readyState === EventSource.CLOSED) {
+                        connectToStream();
+                    }
+                }, 5000);
+            };
+
+            eventSource.onmessage = function (event) {
+                if (isPaused) return;
+
+                const lines = event.data.split('\n');
+
+                // Check if this is a command classification message
+                if (lines.length >= 3 && lines[1].includes('Command:') && lines[2].includes('Classification:')) {
+                    // Extract IP address
+                    const ipMatch = lines[0].match(/IP: ([0-9.]+)/);
+                    if (ipMatch && ipMatch[1]) {
+                        const ip = ipMatch[1];
+                        sessionStats.uniqueIps.add(ip);
+                        updateStats();
+
+                        // Always use GeoIP lookup for accurate coordinates
+                        fetch(`/geoip/${ip}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.latitude && data.longitude) {
+                                    addAttackLocation(data.latitude, data.longitude, data.country, data.city);
+                                }
+                            })
+                            .catch(error => console.error('Error fetching location:', error));
+                    }
+
+                    // Extract command
+                    const commandMatch = lines[1].match(/Command: (.+)/);
+                    if (commandMatch && commandMatch[1]) {
+                        const command = commandMatch[1];
+                        sessionStats.commands++;
+
+                        // Update command frequency
+                        if (commandFrequency[command]) {
+                            commandFrequency[command]++;
+                        } else {
+                            commandFrequency[command] = 1;
+                        }
+
+                        updateTopCommands();
+                        updateStats();
+                    }
+
+                    // Extract classification
+                    const classMatch = lines[2].match(/Classification: (.+)/);
+                    if (classMatch && classMatch[1]) {
+                        const classification = classMatch[1];
+
+                        // Update classification stats
+                        if (commandStats.hasOwnProperty(classification)) {
+                            commandStats[classification]++;
+                        }
+
+                        updateChart();
+                        updateSessionSummary();
+                    }
+                }
+
+                // Update connection stats
+                if (lines[0].includes('New SSH connection')) {
+                    sessionStats.connections++;
+                    updateStats();
+
+                    // Extract IP address for connection events too
+                    const ipMatch = lines[0].match(/from ([0-9.]+)/);
+                    if (ipMatch && ipMatch[1]) {
+                        const ip = ipMatch[1];
+
+                        // Use GeoIP lookup for connection events
+                        fetch(`/geoip/${ip}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.latitude && data.longitude) {
+                                    addAttackLocation(data.latitude, data.longitude, data.country, data.city);
+                                }
+                            })
+                            .catch(error => console.error('Error fetching location:', error));
+                    }
+                }
+
+                // Update auth attempt stats
+                if (lines[0].includes('Auth attempt')) {
+                    sessionStats.authAttempts++;
+                    updateStats();
+                }
+
+                // Store log lines with metadata for filtering
+                for (const line of lines) {
+                    if (line.trim() === '') continue;
+
+                    let type = 'other';
+                    let classification = null;
+
+                    if (line.includes('MALICIOUS')) {
+                        type = 'command';
+                        classification = 'MALICIOUS';
+                    } else if (line.includes('SUSPICIOUS')) {
+                        type = 'command';
+                        classification = 'SUSPICIOUS';
+                    } else if (line.includes('BENIGN')) {
+                        type = 'command';
+                        classification = 'BENIGN';
+                    } else if (line.includes('ANOMALOUS')) {
+                        type = 'command';
+                        classification = 'ANOMALOUS';
+                    } else if (line.includes('New SSH connection')) {
+                        type = 'connection';
+                    } else if (line.includes('Auth attempt') ||
+                        line.includes('Authentication success') ||
+                        line.includes('Authentication failed')) {
+                        type = 'auth';
+                    }
+
+                    // Create and append log line element
+                    const logElement = document.createElement('div');
+                    logElement.textContent = line;
+                    logElement.dataset.type = type;
+                    if (classification) {
+                        logElement.dataset.classification = classification;
+                    }
+
+                    // Apply styling based on content
+                    if (classification === 'MALICIOUS') {
+                        logElement.style.color = 'var(--danger-color)';
+                        logElement.style.fontWeight = 'bold';
+                    } else if (classification === 'SUSPICIOUS') {
+                        logElement.style.color = 'var(--warning-color)';
+                        logElement.style.fontWeight = 'bold';
+                    } else if (classification === 'BENIGN') {
+                        logElement.style.color = 'var(--success-color)';
+                    } else if (classification === 'ANOMALOUS') {
+                        logElement.style.color = 'var(--accent-color)';
+                        logElement.style.fontWeight = 'bold';
+                    } else if (line.includes('Authentication failed')) {
+                        logElement.style.color = 'var(--danger-color)';
+                    } else if (line.includes('Authentication success')) {
+                        logElement.style.color = 'var(--success-color)';
+                    }
+
+                    // Store log line with metadata
+                    logLines.push({
+                        text: line,
+                        type: type,
+                        classification: classification,
+                        element: logElement
+                    });
+
+                    // Check if this line should be visible based on current filters
+                    if (shouldShowLogLine(logLines[logLines.length - 1])) {
+                        logContent.appendChild(logElement);
+                    }
+                }
+
+                // Auto-scroll to bottom
+                if (autoScroll) {
+                    logContent.scrollTop = logContent.scrollHeight;
+                }
+
+                // Save data to localStorage
+                saveToLocalStorage();
+            };
+        }
+
+        // Check if a log line should be visible based on current filters
         function shouldShowLogLine(logLine) {
-            if (logLine.classification === 'MALICIOUS' && !showMalicious.checked) {
+            if (logLine.type === 'command') {
+                if (logLine.classification === 'MALICIOUS' && !showMalicious.checked) {
+                    return false;
+                }
+                if (logLine.classification === 'SUSPICIOUS' && !showSuspicious.checked) {
+                    return false;
+                }
+                if (logLine.classification === 'BENIGN' && !showBenign.checked) {
+                    return false;
+                }
+                if (logLine.classification === 'ANOMALOUS' && !showAnomalous.checked) {
+                    return false;
+                }
+            } else if (logLine.type === 'connection' && !showConnections.checked) {
+                return false;
+            } else if (logLine.type === 'auth' && !showAuth.checked) {
                 return false;
             }
-            if (logLine.classification === 'SUSPICIOUS' && !showSuspicious.checked) {
-                return false;
-            }
-            if (logLine.classification === 'BENIGN' && !showBenign.checked) {
-                return false;
-            }
-            if (logLine.classification === 'ANOMALOUS' && !showAnomalous.checked) {
-                return false;
-            }
-            if (logLine.type === 'connection' && !showConnections.checked) {
-                return false;
-            }
-            if (logLine.type === 'auth' && !showAuth.checked) {
-                return false;
-            }
+
             return true;
         }
-        
-        // Apply filters to log lines
+
+        // Apply filters to all log lines
         function applyFilters() {
+            // Clear log content
             logContent.innerHTML = '';
-            
+
+            // Re-add only the log lines that match current filters
             for (const logLine of logLines) {
                 if (shouldShowLogLine(logLine)) {
-                    logContent.appendChild(logLine.element);
+                    // Clone the element to avoid reference issues
+                    if (logLine.element) {
+                        logContent.appendChild(logLine.element.cloneNode(true));
+                    }
                 }
             }
-            
+
+            // Auto-scroll to bottom if enabled
             if (autoScroll) {
                 logContent.scrollTop = logContent.scrollHeight;
             }
         }
-        
-        // Update chart with current stats
+
+        // Update classification chart
         function updateChart() {
             classificationChart.data.datasets[0].data = [
                 commandStats.MALICIOUS,
@@ -1314,72 +1192,21 @@
             ];
             classificationChart.update();
         }
-        
-        // Update stats in right panel
+
+        // Update session statistics
         function updateStats() {
             document.getElementById('total-connections').textContent = sessionStats.connections;
             document.getElementById('total-commands').textContent = sessionStats.commands;
             document.getElementById('unique-ips').textContent = sessionStats.uniqueIps.size;
             document.getElementById('auth-attempts').textContent = sessionStats.authAttempts;
         }
-        
-        // Update top commands list
-        function updateTopCommands() {
-            const topCommandsContainer = document.getElementById('top-commands');
-            topCommandsContainer.innerHTML = '';
-            
-            // Convert to array and sort by frequency
-            const sortedCommands = Object.entries(commandFrequency)
-                .sort((a, b) => b[1].count - a[1].count)
-                .slice(0, 5);
-            
-            if (sortedCommands.length === 0) {
-                topCommandsContainer.innerHTML = `
-                    <div class="command-item">
-                        <span class="command-text">Waiting for data...</span>
-                        <span class="command-count">-</span>
-                    </div>
-                `;
-                return;
-            }
-            
-            for (const [command, data] of sortedCommands) {
-                const item = document.createElement('div');
-                item.className = 'command-item';
-                
-                const commandText = document.createElement('span');
-                commandText.className = 'command-text';
-                commandText.textContent = command;
-                
-                const commandCount = document.createElement('span');
-                commandCount.className = 'command-count';
-                commandCount.textContent = data.count;
-                
-                // Add color based on classification
-                if (data.classification === 'MALICIOUS') {
-                    commandCount.style.backgroundColor = 'var(--danger-color)';
-                } else if (data.classification === 'SUSPICIOUS') {
-                    commandCount.style.backgroundColor = 'var(--warning-color)';
-                } else if (data.classification === 'BENIGN') {
-                    commandCount.style.backgroundColor = 'var(--success-color)';
-                } else if (data.classification === 'ANOMALOUS') {
-                    commandCount.style.backgroundColor = 'var(--accent-color)';
-                }
-                
-                item.appendChild(commandText);
-                item.appendChild(commandCount);
-                topCommandsContainer.appendChild(item);
-            }
-        }
-        
+
         // Update session summary
         function updateSessionSummary() {
-            const totalCommands = commandStats.MALICIOUS + commandStats.SUSPICIOUS + 
-                                 commandStats.BENIGN + commandStats.ANOMALOUS;
-            
-            const riskScore = totalCommands > 0 ? 
-                Math.round(((commandStats.SUSPICIOUS * 0.5 + commandStats.MALICIOUS) / totalCommands) * 100) : 0;
-            
+            const totalCommands = commandStats.MALICIOUS + commandStats.SUSPICIOUS + commandStats.BENIGN + commandStats.ANOMALOUS;
+            const riskScore = totalCommands > 0 ?
+                Math.round((commandStats.MALICIOUS + commandStats.SUSPICIOUS * 0.5) / totalCommands * 100) : 0;
+
             sessionSummary.innerHTML = `
                 <i class="fas fa-chart-pie"></i>
                 <span>Session Summary: ${totalCommands} total commands. 
@@ -1390,224 +1217,184 @@
                 Risk Score: ${riskScore}%</span>
             `;
         }
-        
-        // Update IP list in modal
-        function updateIPList() {
-            ipList.innerHTML = '';
-            
-            if (sessionStats.uniqueIps.size === 0) {
-                ipList.innerHTML = '<li class="ip-item">No IP addresses recorded yet</li>';
+
+        // Update top commands list
+        function updateTopCommands() {
+            const topCommandsElement = document.getElementById('top-commands');
+            topCommandsElement.innerHTML = '';
+
+            // Sort commands by frequency
+            const sortedCommands = Object.entries(commandFrequency)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            if (sortedCommands.length === 0) {
+                const item = document.createElement('div');
+                item.className = 'command-item';
+                item.innerHTML = `
+                    <span class="command-text">Waiting for data...</span>
+                    <span class="command-count">-</span>
+                `;
+                topCommandsElement.appendChild(item);
                 return;
             }
-            
-            for (const ip of sessionStats.uniqueIps) {
-                const item = document.createElement('li');
-                item.className = 'ip-item';
-                
-                const ipText = document.createElement('span');
-                ipText.textContent = ip;
-                
-                const commandCount = document.createElement('span');
-                commandCount.className = 'command-count';
-                commandCount.textContent = '0'; // You would need to track commands per IP
-                
-                item.appendChild(ipText);
-                item.appendChild(commandCount);
-                ipList.appendChild(item);
+
+            // Create command items
+            for (const [command, count] of sortedCommands) {
+                const item = document.createElement('div');
+                item.className = 'command-item';
+                item.innerHTML = `
+                    <span class="command-text">${command}</span>
+                    <span class="command-count">${count}</span>
+                `;
+                topCommandsElement.appendChild(item);
             }
         }
-        
+
         // Show toast notification
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast');
-            const toastIcon = document.getElementById('toast-icon');
             const toastMessage = document.getElementById('toast-message');
-            
-            // Set icon based on type
+            const toastIcon = document.getElementById('toast-icon');
+
+            toast.className = 'toast';
+            toast.classList.add(type);
+
+            toastMessage.textContent = message;
+
             if (type === 'success') {
                 toastIcon.className = 'fas fa-check-circle';
-                toast.className = 'toast success show';
             } else if (type === 'error') {
-                toastIcon.className = 'fas fa-exclamation-circle';
-                toast.className = 'toast error show';
+                toastIcon.className = 'fas fa-times-circle';
             } else {
                 toastIcon.className = 'fas fa-info-circle';
-                toast.className = 'toast info show';
             }
-            
-            toastMessage.textContent = message;
-            
-            // Hide after 3 seconds
-            setTimeout(() => {
-                toast.className = 'toast';
+
+            toast.classList.add('show');
+
+            setTimeout(function () {
+                toast.classList.remove('show');
             }, 3000);
         }
-        
-        // Process log message
-        function processLogMessage(message) {
-            if (isPaused) return;
-            
-            // Skip duplicate connection messages
-            if (message.includes('Connected to log stream')) {
-                const now = Date.now();
-                if (now - lastConnectionMessage < connectionMessageThrottle) {
-                    return; // Skip this message
-                }
-                lastConnectionMessage = now;
+
+        // Update IP list
+        function updateIPList() {
+            ipList.innerHTML = '';
+
+            if (sessionStats.uniqueIps.size === 0) {
+                const item = document.createElement('li');
+                item.className = 'ip-item';
+                item.textContent = 'No IP addresses recorded yet';
+                ipList.appendChild(item);
+                return;
             }
-            
-            // Create log element
-            const logElement = document.createElement('div');
-            logElement.textContent = message;
-            
-            // Determine log type and classification
-            let logType = 'command';
-            let classification = null;
-            
-            if (message.includes('New SSH connection')) {
-                logType = 'connection';
-                sessionStats.connections++;
-                
-                // Extract IP address
-                const ipMatch = message.match(/from (\d+\.\d+\.\d+\.\d+)/);
-                if (ipMatch) {
-                    sessionStats.uniqueIps.add(ipMatch[1]);
-                }
-            } else if (message.includes('Auth attempt') || message.includes('Authentication')) {
-                logType = 'auth';
-                sessionStats.authAttempts++;
-            } else if (message.includes('Classification:')) {
-                // Extract command and classification
-                const commandMatch = message.match(/Command: (.+)/);
-                const classMatch = message.match(/Classification: (\w+)/);
-                
-                if (commandMatch && classMatch) {
-                    const command = commandMatch[1].trim();
-                    classification = classMatch[1].trim();
-                    
-                    // Update command stats
-                    commandStats[classification]++;
-                    
-                    // Update command frequency
-                    if (!commandFrequency[command]) {
-                        commandFrequency[command] = {
-                            count: 0,
-                            classification: classification
-                        };
-                    }
-                    commandFrequency[command].count++;
-                    
-                    sessionStats.commands++;
-                }
-            }
-            
-            // Apply styling based on content
-            if (classification === 'MALICIOUS') {
-                logElement.style.color = 'var(--danger-color)';
-                logElement.style.fontWeight = 'bold';
-            } else if (classification === 'SUSPICIOUS') {
-                logElement.style.color = 'var(--warning-color)';
-                logElement.style.fontWeight = 'bold';
-            } else if (classification === 'BENIGN') {
-                logElement.style.color = 'var(--success-color)';
-            } else if (classification === 'ANOMALOUS') {
-                logElement.style.color = 'var(--accent-color)';
-                logElement.style.fontWeight = 'bold';
-            } else if (message.includes('Authentication failed')) {
-                logElement.style.color = 'var(--danger-color)';
-            } else if (message.includes('Authentication success')) {
-                logElement.style.color = 'var(--success-color)';
-            }
-            
-            // Store log line data
-            const logLine = {
-                text: message,
-                type: logType,
-                classification: classification,
-                element: logElement
-            };
-            
-            logLines.push(logLine);
-            
-            // Check if this line should be visible based on current filters
-            if (shouldShowLogLine(logLine)) {
-                logContent.appendChild(logElement);
-                
-                // Auto-scroll if enabled
-                if (autoScroll) {
-                    logContent.scrollTop = logContent.scrollHeight;
-                }
-            }
-            
-            // Update UI
-            updateChart();
-            updateStats();
-            updateTopCommands();
-            updateSessionSummary();
-            
-            // Save data to localStorage
-            saveToLocalStorage();
-        }
-        
-        // Connect to event source
-        function connectEventSource() {
-            if (eventSource) {
-                eventSource.close();
-            }
-            
-            eventSource = new EventSource('/stream');
-            
-            eventSource.onopen = function() {
-                const connectionStatus = document.getElementById('connection-status');
-                connectionStatus.innerHTML = '<i class="fas fa-circle" style="color: var(--success-color);"></i> Connected';
-                showToast('Connected to log stream', 'success');
-            };
-            
-            eventSource.onerror = function() {
-                const connectionStatus = document.getElementById('connection-status');
-                connectionStatus.innerHTML = '<i class="fas fa-circle" style="color: var(--danger-color);"></i> Disconnected';
-                showToast('Connection lost. Reconnecting...', 'error');
-                
-                // Try to reconnect after a delay
-                setTimeout(connectEventSource, 5000);
-            };
-            
-            eventSource.onmessage = function(event) {
-                processLogMessage(event.data);
-                
-                // Check for IP and location data for map
-                const ipMatch = event.data.match(/IP: (\d+\.\d+\.\d+\.\d+)/);
-                if (ipMatch) {
-                    const ip = ipMatch[1];
-                    
-                    // Fetch geo coordinates for this IP
+
+            // Sort IPs for better readability
+            const sortedIPs = Array.from(sessionStats.uniqueIps).sort();
+
+            for (const ip of sortedIPs) {
+                const item = document.createElement('li');
+                item.className = 'ip-item';
+
+                // Create IP text
+                const ipText = document.createElement('span');
+                ipText.textContent = ip;
+                item.appendChild(ipText);
+
+                // Create lookup button
+                const lookupBtn = document.createElement('button');
+                lookupBtn.className = 'btn btn-primary';
+                lookupBtn.style.width = 'auto';
+                lookupBtn.style.padding = '5px 10px';
+                lookupBtn.style.margin = '0';
+                lookupBtn.innerHTML = '<i class="fas fa-search"></i> Lookup';
+                lookupBtn.addEventListener('click', function () {
                     fetch(`/geoip/${ip}`)
                         .then(response => response.json())
                         .then(data => {
                             if (data.latitude && data.longitude) {
-                                addAttackLocation(data.latitude, data.longitude, data.country_code, data.city);
+                                addAttackLocation(data.latitude, data.longitude, data.country, data.city);
+                                showToast(`Location added for ${ip}`, 'success');
+                            } else {
+                                showToast(`No location data for ${ip}`, 'error');
                             }
                         })
-                        .catch(error => console.error('Error fetching location:', error));
-                }
-            };
+                        .catch(error => {
+                            console.error('Error fetching location:', error);
+                            showToast(`Error looking up ${ip}`, 'error');
+                        });
+                });
+                item.appendChild(lookupBtn);
+
+                ipList.appendChild(item);
+            }
         }
-        
+
+        // Reset session data
+        function resetSessionData() {
+            // Clear all session statistics
+            commandStats = {
+                MALICIOUS: 0,
+                SUSPICIOUS: 0,
+                BENIGN: 0,
+                ANOMALOUS: 0
+            };
+
+            sessionStats = {
+                connections: 0,
+                commands: 0,
+                uniqueIps: new Set(),
+                authAttempts: 0
+            };
+
+            commandFrequency = {};
+            attackLocations = [];
+
+            // Clear log content
+            logContent.innerHTML = '';
+            logLines = [];
+
+            // Update UI elements
+            updateChart();
+            updateStats();
+            updateTopCommands();
+            updateSessionSummary();
+
+            // Clear localStorage
+            localStorage.removeItem('honeypotDashboardData');
+            localStorage.removeItem('attackMapData');
+
+            console.log('Session data reset');
+        }
+
         // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize map controls
-            initMapControls();
-            
+        document.addEventListener('DOMContentLoaded', function () {
             // Load data from localStorage
             loadFromLocalStorage();
-            
-            // Connect to event source
-            connectEventSource();
-            
+
+            // Connect to SSE stream
+            connectToStream();
+
+            // Set up filter checkboxes
+            showMalicious.addEventListener('change', applyFilters);
+            showSuspicious.addEventListener('change', applyFilters);
+            showBenign.addEventListener('change', applyFilters);
+            showAnomalous.addEventListener('change', applyFilters);
+            showConnections.addEventListener('change', applyFilters);
+            showAuth.addEventListener('change', applyFilters);
+
+            // Set up auto-scroll checkbox
+            autoScrollCheckbox.addEventListener('change', function () {
+                autoScroll = this.checked;
+                if (autoScroll) {
+                    logContent.scrollTop = logContent.scrollHeight;
+                }
+            });
+
             // Set up pause button
-            pauseBtn.addEventListener('click', function() {
+            pauseBtn.addEventListener('click', function () {
                 isPaused = !isPaused;
-                
+
                 if (isPaused) {
                     pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
                     showToast('Log stream paused', 'info');
@@ -1616,89 +1403,43 @@
                     showToast('Log stream resumed', 'info');
                 }
             });
-            
+
             // Set up clear button
-            clearBtn.addEventListener('click', function() {
-                logContent.innerHTML = '';
-                logLines = [];
-                commandStats = {
-                    MALICIOUS: 0,
-                    SUSPICIOUS: 0,
-                    BENIGN: 0,
-                    ANOMALOUS: 0
-                };
-                commandFrequency = {};
-                
-                // Keep connection stats
-                sessionStats.commands = 0;
-                
-                // Update UI
-                updateChart();
-                updateStats();
-                updateTopCommands();
-                updateSessionSummary();
-                
-                // Save to localStorage
-                saveToLocalStorage();
-                
-                showToast('Logs cleared', 'info');
+            clearBtn.addEventListener('click', function () {
+                resetSessionData();
+                showToast('All data cleared', 'success');
             });
-            
-            // Set up auto-scroll checkbox
-            autoScrollCheckbox.addEventListener('change', function() {
-                autoScroll = this.checked;
-                
-                if (autoScroll) {
-                    logContent.scrollTop = logContent.scrollHeight;
-                }
-            });
-            
-            // Ensure auto-scroll is activated by default
-            autoScroll = true;
-            autoScrollCheckbox.checked = true;
-            
-            // Set up filter checkboxes
-            showMalicious.addEventListener('change', applyFilters);
-            showSuspicious.addEventListener('change', applyFilters);
-            showBenign.addEventListener('change', applyFilters);
-            showAnomalous.addEventListener('change', applyFilters);
-            showConnections.addEventListener('change', applyFilters);
-            showAuth.addEventListener('change', applyFilters);
-            
-            // Set up show map button
-            showMapBtn.addEventListener('click', function() {
-                updateAttackMap();
-                mapModal.style.display = 'block';
-            });
-            
+
             // Set up show IPs button
-            showIpsBtn.addEventListener('click', function() {
+            showIpsBtn.addEventListener('click', function () {
                 updateIPList();
                 ipModal.style.display = 'block';
             });
-            
+
             // Set up modal close buttons
-            closeModal.addEventListener('click', function() {
+            closeModal.addEventListener('click', function () {
                 ipModal.style.display = 'none';
             });
-            
-            mapClose.addEventListener('click', function() {
-                mapModal.style.display = 'none';
-            });
-            
+
             // Close modals when clicking outside
-            window.addEventListener('click', function(event) {
+            window.addEventListener('click', function (event) {
                 if (event.target === ipModal) {
                     ipModal.style.display = 'none';
                 }
-                if (event.target === mapModal) {
-                    mapModal.style.display = 'none';
-                }
             });
-            
+
             // Clear data before unloading page
             window.addEventListener('beforeunload', clearLocalStorageOnUnload);
         });
+
+        function connectToEventStream() {
+            // Only connect if not already connected
+            if (!eventSource || eventSource.readyState === 2) {
+                eventSource = new EventSource('/stream');
+                // Set up event handlers...
+            }
+        }
     </script>
 </body>
+
 </html>

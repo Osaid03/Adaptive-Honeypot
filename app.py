@@ -12,6 +12,10 @@ import subprocess
 
 app = Flask(__name__)
 
+@app.route('/map')
+def map_page():
+    return render_template('map.html')
+
 # Try to load GeoIP database, but provide fallback if it fails
 try:
     geo_reader = geoip2.database.Reader("GeoLite2-City.mmdb")
@@ -64,6 +68,56 @@ def get_location(ip_address):
 @app.route("/geoip/<ip>")
 def geo_lookup(ip):
     return get_location(ip) or {"latitude": 0, "longitude": 0}
+
+@app.route('/api/attack-data')
+def attack_data():
+    """Get attack data for the map visualization."""
+    attack_locations = []
+    ip_counts = {}
+
+    # Check if log file exists
+    if not os.path.exists(LOG_FILE_PATH):
+        return jsonify([])
+
+    try:
+        # Read the log file
+        with open(LOG_FILE_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                try:
+                    data = json.loads(line)
+                    src_ip = data.get("src_ip")
+
+                    # Skip if no IP address
+                    if not src_ip:
+                        continue
+
+                    # Count occurrences of each IP
+                    if src_ip in ip_counts:
+                        ip_counts[src_ip] += 1
+                    else:
+                        ip_counts[src_ip] = 1
+
+                except json.JSONDecodeError:
+                    continue
+
+        # Process IP addresses to get location data
+        for ip, count in ip_counts.items():
+            location = get_location(ip)
+            if location and location.get("latitude") and location.get("longitude"):
+                attack_locations.append({
+                    "ip": ip,
+                    "lat": location.get("latitude"),
+                    "lng": location.get("longitude"),
+                    "count": count,
+                    "country": location.get("country", "Unknown"),
+                    "city": location.get("city", "Unknown")
+                })
+
+        return jsonify(attack_locations)
+
+    except Exception as e:
+        print(f"Error generating attack data: {e}")
+        return jsonify([])
 
 def check_for_anomalous_commands():
     """Check for new anomalous commands and send them to the event stream"""
@@ -245,8 +299,6 @@ def export_json():
 
     return Response(json.dumps(logs, indent=2), mimetype="application/json")
 
-# ===== ANOMALY REVIEW INTERFACE =====
-
 @app.route('/anomalies')
 def anomalies():
     # Load anomalous commands
@@ -411,40 +463,25 @@ def integrate_data():
 
 @app.route('/api/retrain', methods=['POST'])
 def api_retrain():
-    # Execute the retrain_model_inline.py script instead of retrain_model.py
+    # Execute the retrain_model script
     try:
-        result = subprocess.run(["python", "retrain_model_inline.py"],
-                            capture_output=True, text=True, check=True)
+        result = subprocess.run(
+            ["python", "retrain_model.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
         return jsonify({
             "success": True,
-            "message": "Model retraining completed successfully.",
+            "message": "Model retrained successfully.",
             "details": result.stdout
         })
     except subprocess.CalledProcessError as e:
         return jsonify({
             "success": False,
-            "message": f"Error retraining model: {str(e)}",
+            "message": "Error retraining model.",
             "details": e.stderr
         })
 
-@app.route('/retrain')
-def retrain():
-    return render_template('retrain.html')
-
-@app.route('/api/add_anomaly', methods=['POST'])
-def add_test_anomaly():
-    """API endpoint to manually add a test anomalous command"""
-    data = request.json
-    command = data.get('command', '')
-
-    if not command:
-        return jsonify({"success": False, "message": "No command provided"})
-
-    # Append to anomalous commands file
-    with open(ANOMALOUS_COMMANDS_FILE, 'a') as f:
-        f.write(f"{command}\n")
-
-    return jsonify({"success": True, "message": f"Added anomalous command: {command}"})
-
-if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

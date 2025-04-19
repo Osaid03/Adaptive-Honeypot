@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Origin Map - Adaptive Honeypot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --panel-bg: #21262d;
+            --accent-color: #58a6ff;
+            --success-color: #3fb950;
+            --warning-color: #d29922;
+            --danger-color: #f85149;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --border-color: #30363d;
+            --shadow-color: rgba(0, 255, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--secondary-bg);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: var(--danger-color);
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-link:hover {
+            background-color: var(--panel-bg);
+        }
+
+        .nav-link.active {
+            background-color: var(--panel-bg);
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+            height: calc(100vh - 70px);
+        }
+
+        .map-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .map-title {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            background-color: var(--panel-bg);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        /* Map Container */
+        .map-container {
+            flex: 1;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            background-color: var(--secondary-bg);
+        }
+
+        /* Stats Panel */
+        .stats-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(22, 27, 34, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 1000;
+            width: 300px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-title {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+
+        .stats-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .stats-toggle:hover {
+            color: var(--text-primary);
+        }
+
+        .stats-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-item {
+            background-color: var(--panel-bg);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Legend */
+        .map-legend {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            background-color: rgba(22, 27, 34, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .legend-title {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .legend-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+
+        .legend-label {
+            font-size: 0.9rem;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background-color: var(--success-color);
+        }
+
+        .toast.error {
+            background-color: var(--danger-color);
+        }
+
+        .toast.info {
+            background-color: var(--accent-color);
+        }
+
+        /* Loading Indicator */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(22, 27, 34, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--border-color);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Custom Leaflet Popup Styles */
+        .leaflet-popup-content-wrapper {
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .leaflet-popup-content {
+            margin: 12px;
+            line-height: 1.5;
+        }
+
+        .leaflet-popup-tip {
+            background-color: var(--secondary-bg);
+        }
+
+        .leaflet-popup-close-button {
+            color: var(--text-secondary);
+        }
+
+        .leaflet-popup-close-button:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .stats-panel {
+                width: calc(100% - 40px);
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+            }
+
+            .map-legend {
+                bottom: auto;
+                top: 20px;
+            }
+
+            .header {
+                padding: 10px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav {
+                gap: 10px;
+            }
+
+            .nav-link {
+                padding: 5px 8px;
+                font-size: 0.9rem;
+            }
+
+            .map-title {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-bug"></i>
+            <span>Adaptive Honeypot</span>
+        </div>
+        <nav class="nav">
+            <a href="/" class="nav-link">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="/map.html" class="nav-link active">
+                <i class="fas fa-map-marked-alt"></i> Attack Map
+            </a>
+            <a href="/anomalies" class="nav-link">
+                <i class="fas fa-search"></i> Review Anomalies
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="map-header">
+            <h1 class="map-title">
+                <i class="fas fa-map-marked-alt"></i> Attack Origin Map
+            </h1>
+            <div class="controls">
+                <button id="refresh-btn" class="btn">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
+                <button id="clear-btn" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Clear Data
+                </button>
+                <a href="/" class="btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <!-- Leaflet Map -->
+            <div id="map"></div>
+
+            <!-- Stats Panel -->
+            <div class="stats-panel">
+                <div class="stats-header">
+                    <h3 class="stats-title">Attack Statistics</h3>
+                    <button class="stats-toggle" id="stats-toggle">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+                <div class="stats-content" id="stats-content">
+                    <div class="stat-item">
+                        <div id="total-attacks" class="stat-value">0</div>
+                        <div class="stat-label">Total Attacks</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="unique-ips" class="stat-value">0</div>
+                        <div class="stat-label">Unique IPs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="countries-count" class="stat-value">0</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div id="top-country" class="stat-value">-</div>
+                        <div class="stat-label">Top Country</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Legend -->
+            <div class="map-legend">
+                <h3 class="legend-title">Legend</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #f85149;"></div>
+                        <span class="legend-label">High Activity (10+ attacks)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #d29922;"></div>
+                        <span class="legend-label">Medium Activity (5-9 attacks)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #3fb950;"></div>
+                        <span class="legend-label">Low Activity (1-4 attacks)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <div>Loading attack data...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i id="toast-icon" class="fas fa-info-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <script>
+        // Initialize variables
+        let map;
+        let attackMarkers = {};
+        let attackData = [];
+        let uniqueIPs = new Set();
+        let countries = new Set();
+        let countryStats = {};
+
+        // DOM elements
+        const refreshBtn = document.getElementById('refresh-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const statsToggle = document.getElementById('stats-toggle');
+        const statsContent = document.getElementById('stats-content');
+        const totalAttacksEl = document.getElementById('total-attacks');
+        const uniqueIPsEl = document.getElementById('unique-ips');
+        const countriesCountEl = document.getElementById('countries-count');
+        const topCountryEl = document.getElementById('top-country');
+        const loadingEl = document.getElementById('loading');
+
+        // Initialize Leaflet map
+        function initMap() {
+            // Create map with dark theme
+            map = L.map('map').setView([30, 0], 2);
+
+            // Add dark theme tile layer
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Load attack data
+            loadAttackData();
+        }
+
+        // Load attack data from localStorage or API
+        function loadAttackData() {
+            showLoading(true);
+
+            try {
+                // Try to load from localStorage first
+                const savedData = localStorage.getItem('attackMapData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    if (data.attackData && data.attackData.length > 0) {
+                        attackData = data.attackData;
+                        processAttackData();
+                        showLoading(false);
+                        showToast('Loaded attack data from cache', 'info');
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading data from localStorage:', error);
+            }
+
+            // If no data in localStorage or error, fetch from API
+            fetchAttackData();
+        }
+
+        // Fetch attack data from API
+        function fetchAttackData() {
+            // Simulate fetching data from backend
+            // In a real implementation, you would fetch from your backend API
+            setTimeout(() => {
+                // For demo purposes, generate some random attack data
+                generateDemoData();
+                processAttackData();
+                showLoading(false);
+                showToast('Fetched latest attack data', 'success');
+            }, 1500);
+        }
+
+        function loadAttackData() {
+            showLoading(true);
+            console.log("Loading attack data...");
+
+            fetch('/api/attack-data')
+                .then(response => {
+                    console.log("API response received:", response);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Attack data loaded:", data);
+                    attackData = data;
+                    if (data && data.length > 0) {
+                        processAttackData();  // Use processAttackData instead of updateMap
+                        showToast('Loaded attack data successfully', 'success');
+                    } else {
+                        showToast('No attack data found', 'info');
+                    }
+                    showLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error loading attack data:', error);
+                    showLoading(false);
+                    showToast('Error loading attack data', 'error');
+                });
+        }
+
+
+
+        // Call this when the page loads
+        document.addEventListener('DOMContentLoaded', loadAttackData);
+
+        // Process attack data and update map
+        function processAttackData() {
+            // Clear existing markers
+            clearMarkers();
+
+            // Reset statistics
+            uniqueIPs = new Set();
+            countries = new Set();
+            countryStats = {};
+
+            // Process each attack
+            attackData.forEach(attack => {
+                // Update statistics
+                uniqueIPs.add(attack.ip);
+                countries.add(attack.country);
+
+                // Update country stats
+                if (countryStats[attack.country]) {
+                    countryStats[attack.country]++;
+                } else {
+                    countryStats[attack.country] = 1;
+                }
+
+                // Add marker to map
+                addMarker(attack);
+            });
+
+            // Update statistics display
+            updateStats();
+        }
+
+        // Get marker icon based on attack count
+        function getMarkerIcon(count) {
+            // Determine color based on attack count
+            let color = '#3fb950'; // Green for low activity
+            if (count >= 10) {
+                color = '#f85149'; // Red for high activity
+            } else if (count >= 5) {
+                color = '#d29922'; // Orange for medium activity
+            }
+
+            // Create icon
+            return L.divIcon({
+                className: 'custom-map-marker',
+                html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
+                iconSize: [12, 12],
+                iconAnchor: [6, 6]
+            });
+        }
+
+        // Add marker to map
+        // Add marker to map
+        function addMarker(attack) {
+            // Skip if invalid coordinates
+            if (!attack.lat || !attack.lng ||
+                isNaN(attack.lat) || isNaN(attack.lng) ||
+                attack.lat < -90 || attack.lat > 90 ||
+                attack.lng < -180 || attack.lng > 180) {
+                console.error("Invalid coordinates:", attack);
+                return;
+            }
+
+            // Create marker key
+            const key = `${attack.country}-${attack.city}`;
+
+            // Create marker
+            const marker = L.marker([attack.lat, attack.lng], {
+                icon: getMarkerIcon(attack.count)
+            }).addTo(map);
+
+            // Add popup
+            marker.bindPopup(`
+        <strong>Location:</strong> ${attack.city}, ${attack.country}<br>
+        <strong>IP:</strong> ${attack.ip}<br>
+        <strong>Attacks:</strong> ${attack.count}
+    `);
+
+            // Store marker reference
+            attackMarkers[key] = marker;
+        }
+
+
+        // Create marker icon
+        function createMarkerIcon(count) {
+            // Determine size based on count
+            const size = Math.min(10 + count * 2, 30);
+
+            // Determine color based on count
+            let color;
+            if (count >= 10) {
+                color = '#f85149'; // High activity (red)
+            } else if (count >= 5) {
+                color = '#d29922'; // Medium activity (orange)
+            } else {
+                color = '#3fb950'; // Low activity (green)
+            }
+
+            // Create custom icon
+            return L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="width:${size}px; height:${size}px; background-color:${color}; border-radius:50%; box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.7);"></div>`,
+                iconSize: [size, size],
+                iconAnchor: [size / 2, size / 2]
+            });
+        }
+
+        // Update marker style based on count
+        function updateMarkerStyle(marker, count) {
+            const icon = createMarkerIcon(count);
+            marker.setIcon(icon);
+        }
+
+        // Create popup content
+        function createPopupContent(attack, count) {
+            return `
+                <div>
+                    <h3 style="margin:0 0 8px 0; color:#58a6ff;">${attack.city}, ${attack.country}</h3>
+                    <p><strong>Attack Count:</strong> ${count}</p>
+                    <p><strong>Last Attack:</strong> ${formatDate(attack.timestamp)}</p>
+                    <p><strong>Last Attack Type:</strong> ${attack.attackType}</p>
+                    <p><strong>Coordinates:</strong> ${attack.latitude.toFixed(2)}, ${attack.longitude.toFixed(2)}</p>
+                </div>
+            `;
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString();
+        }
+
+        // Clear all markers
+        // Clear all markers from the map
+        function clearMarkers() {
+            // Loop through stored markers and remove them
+            for (const key in attackMarkers) {
+                if (attackMarkers[key] && map) {
+                    try {
+                        map.removeLayer(attackMarkers[key]);
+                    } catch (e) {
+                        console.warn("Error removing marker:", e);
+                    }
+                }
+            }
+            // Reset markers object
+            attackMarkers = {};
+        }
+
+
+        // Update statistics display
+        function updateStats() {
+            totalAttacksEl.textContent = attackData.length;
+            uniqueIPsEl.textContent = uniqueIPs.size;
+            countriesCountEl.textContent = countries.size;
+
+            // Find top country
+            let topCountry = '';
+            let topCount = 0;
+
+            for (const country in countryStats) {
+                if (countryStats[country] > topCount) {
+                    topCount = countryStats[country];
+                    topCountry = country;
+                }
+            }
+
+            topCountryEl.textContent = topCountry || '-';
+        }
+
+        // Save attack data to localStorage
+        function saveAttackData() {
+            try {
+                const dataToSave = {
+                    attackData: attackData,
+                    lastUpdated: new Date().toISOString()
+                };
+
+                localStorage.setItem('attackMapData', JSON.stringify(dataToSave));
+                console.log('Attack data saved to localStorage');
+            } catch (error) {
+                console.error('Error saving attack data to localStorage:', error);
+            }
+        }
+
+        // Clear attack data
+        function clearAttackData() {
+            attackData = [];
+            clearMarkers();
+            updateStats();
+            localStorage.removeItem('attackMapData');
+            showToast('All attack data cleared', 'info');
+        }
+
+        // Show/hide loading indicator
+        function showLoading(show) {
+            loadingEl.style.display = show ? 'flex' : 'none';
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toast.className = 'toast';
+            toast.classList.add(type);
+
+            toastMessage.textContent = message;
+
+            if (type === 'success') {
+                toastIcon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                toastIcon.className = 'fas fa-times-circle';
+            } else {
+                toastIcon.className = 'fas fa-info-circle';
+            }
+
+            toast.classList.add('show');
+
+            setTimeout(function () {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Toggle stats panel
+        function toggleStats() {
+            if (statsContent.style.display === 'none') {
+                statsContent.style.display = 'grid';
+                statsToggle.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            } else {
+                statsContent.style.display = 'none';
+                statsToggle.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize map
+            initMap();
+
+            // Set up event listeners
+            refreshBtn.addEventListener('click', function () {
+                showToast('Refreshing attack data...', 'info');
+                fetchAttackData();
+            });
+
+            refreshBtn.addEventListener('click', function () {
+                // Clear localStorage cache to force fresh data
+                localStorage.removeItem('attackMapData');
+                // Reload attack data
+                loadAttackData();
+            });
+            clearBtn.addEventListener('click', function () {
+                if (confirm('Are you sure you want to clear all attack data?')) {
+                    clearAttackData();
+                }
+            });
+
+            statsToggle.addEventListener('click', toggleStats);
+        });
+    </script>
+</body>
+
+</html>
